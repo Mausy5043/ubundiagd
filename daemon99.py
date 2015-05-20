@@ -99,12 +99,12 @@ def do_xml(rpath):
 	#
 	usr							= commands.getoutput("whoami")
 	uname           = os.uname()
-	Tcpu            = float(commands.getoutput("cat /sys/class/thermal/thermal_zone0/temp"))/1000
-	fcpu            = float(commands.getoutput("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"))/1000
+	#Tcpu            = float(commands.getoutput("cat /sys/class/thermal/thermal_zone0/temp"))/1000
+	#fcpu            = float(commands.getoutput("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"))/1000
 	ubundiagdbranch = commands.getoutput("cat /home/pi/.ubundiagd.branch")
-	ubunbootbranch    = commands.getoutput("cat /home/pi/.ubunboot.branch")
 	uptime          = commands.getoutput("uptime")
 	dfh             = commands.getoutput("df -h")
+	mds							= commands.getoutput("cat /proc/mdstat |awk 'NR<2'")
 	freeh           = commands.getoutput("free -h")
 	psout           = commands.getoutput("ps -e -o pcpu,args | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
 	#
@@ -118,10 +118,13 @@ def do_xml(rpath):
 
 	f.write('<df>\n')
 	f.write(dfh + '\n')
+	f.write('-\n')
+	f.write(mds + '\n')
 	f.write('</df>\n')
 
 	f.write('<temperature>\n')
-	f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
+	f.write('--- no info ---')
+	#f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
 	f.write('</temperature>\n')
 
 	f.write('<memusage>\n')
