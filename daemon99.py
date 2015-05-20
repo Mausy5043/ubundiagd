@@ -104,7 +104,7 @@ def do_xml(rpath):
 	ubundiagdbranch = commands.getoutput("cat /home/pi/.ubundiagd.branch")
 	uptime          = commands.getoutput("uptime")
 	dfh             = commands.getoutput("df -h")
-	mds							= commands.getoutput("cat /proc/mdstat |awk 'NR<2'")
+	mds							= commands.getoutput("cat /proc/mdstat |awk 'NR<4'")
 	freeh           = commands.getoutput("free -h")
 	psout           = commands.getoutput("ps -e -o pcpu,args | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
 	#
@@ -123,7 +123,7 @@ def do_xml(rpath):
 	f.write('</df>\n')
 
 	f.write('<temperature>\n')
-	f.write('--- no info ---'\n)
+	f.write('--- no info ---\n')
 	#f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
 	f.write('</temperature>\n')
 
