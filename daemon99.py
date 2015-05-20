@@ -38,11 +38,11 @@ class MyDaemon(Daemon):
 		while True:
 			startTime=time.time()
 
-			if os.path.ismount(mount_path):
+			if os.path.exists(remote_path):
 				do_mv_data(remote_path)
 				do_xml(remote_path)
 			else:
-				if DEBUG:print "dataspool not available"
+				if DEBUG:print remote_path + " not available"
 
 			waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
 			if (waitTime > 0):
