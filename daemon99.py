@@ -25,7 +25,7 @@ class MyDaemon(Daemon):
 
 		myname = os.uname()[1]
 		# mount_path = '/srv/array1/dataspool/'
-		mount_path = '/tmp/test'
+		mount_path = '/tmp/test/'
 		remote_path = mount_path + myname
 		remote_lock = remote_path + '/client.lock'
 
