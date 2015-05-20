@@ -83,7 +83,7 @@ def do_mv_data(rpath):
 		if os.path.isfile(clientlock):
 			if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
 				if DEBUG:print "moving " + file
-			  shutil.move(file, rpath)
+				shutil.move(file, rpath)
 
 	for file in glob.glob(r'/tmp/ubundiagd/*.png'):
 		if os.path.isfile(clientlock):
