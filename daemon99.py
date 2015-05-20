@@ -123,7 +123,7 @@ def do_xml(rpath):
 	f.write('</df>\n')
 
 	f.write('<temperature>\n')
-	f.write('--- no info ---')
+	f.write('--- no info ---'\n)
 	#f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
 	f.write('</temperature>\n')
 
@@ -131,7 +131,7 @@ def do_xml(rpath):
 	f.write(freeh + '\n')
 	f.write('</memusage>\n')
 
-	f.write(' <uptime>\n')
+	f.write('<uptime>\n')
 	f.write(uptime + '\n')
 	f.write(uname[0]+ ' ' +uname[1]+ ' ' +uname[2]+ ' ' +uname[3]+ ' ' +uname[4]+ ' ' +platform.platform() +'\n')
 	f.write(' - ubundiagd   on: '+ ubundiagdbranch +'\n')
