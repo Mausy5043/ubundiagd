@@ -24,7 +24,8 @@ class MyDaemon(Daemon):
 		cycleTime = samples * sampleTime
 
 		myname = os.uname()[1]
-		mount_path = '/mnt/share1/'
+		# mount_path = '/srv/array1/dataspool/'
+		mount_path = '/tmp/test'
 		remote_path = mount_path + myname
 		remote_lock = remote_path + '/client.lock'
 
@@ -38,11 +39,10 @@ class MyDaemon(Daemon):
 			startTime=time.time()
 
 			if os.path.ismount(mount_path):
-				#print 'dataspool is mounted'
-				#lock(remote_lock)
 				do_mv_data(remote_path)
 				do_xml(remote_path)
-				#unlock(remote_lock)
+			else:
+				if DEBUG:print "dataspool not available"
 
 			waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
 			if (waitTime > 0):
@@ -54,14 +54,11 @@ def do_mv_data(rpath):
 	clientlock = rpath + '/client.lock'
 	count_internal_locks=1
 
-	#
-	#rpath='/tmp/test'
-	#
-
-	# wait 3 seconds for processes to finish
-	time.sleep(3)
+	# wait 5 seconds for processes to finish
+	time.sleep(5)
 
 	while os.path.isfile(hostlock):
+		if DEBUG:print "hostlock exists"
 		# wait while the server has locked the directory
 		time.sleep(1)
 
@@ -70,6 +67,7 @@ def do_mv_data(rpath):
 
 	# prevent race conditions
 	while os.path.isfile(hostlock):
+		if DEBUG:print "hostlock exists. WTF?"
 		# wait while the server has locked the directory
 		time.sleep(1)
 
@@ -78,23 +76,26 @@ def do_mv_data(rpath):
 		count_internal_locks=0
 		for file in glob.glob(r'/tmp/ubundiagd/*.lock'):
 			count_internal_locks += 1
+		if DEBUG:print "{0} internal locks exist".format(count_internal_locks)
 
 	for file in glob.glob(r'/tmp/ubundiagd/*.csv'):
 		#print file
 		if os.path.isfile(clientlock):
 			if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
+				if DEBUG:print "moving " + file
 			  shutil.move(file, rpath)
 
 	for file in glob.glob(r'/tmp/ubundiagd/*.png'):
 		if os.path.isfile(clientlock):
 			if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
+				if DEBUG:print "moving " + file
 				shutil.move(file, rpath)
 
 	unlock(clientlock)
-
+	if DEBUG:print "unlocked..."
 	return
 
-def do_xml(wpath):
+def do_xml(rpath):
 	#
 	usr							= commands.getoutput("whoami")
 	uname           = os.uname()
@@ -107,7 +108,7 @@ def do_xml(wpath):
 	freeh           = commands.getoutput("free -h")
 	psout           = commands.getoutput("ps -e -o pcpu,args | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
 	#
-	f = file(wpath + '/status.xml', 'w')
+	f = file(rpath + '/status.xml', 'w')
 
 	f.write('<server>\n')
 
@@ -131,7 +132,6 @@ def do_xml(wpath):
 	f.write(uptime + '\n')
 	f.write(uname[0]+ ' ' +uname[1]+ ' ' +uname[2]+ ' ' +uname[3]+ ' ' +uname[4]+ ' ' +platform.platform() +'\n')
 	f.write(' - ubundiagd   on: '+ ubundiagdbranch +'\n')
-	f.write(' - ubunboot    on: '+ ubunbootbranch +'\n')
 	f.write('\nTop 10 processes:\n' + psout +'\n')
 	f.write('</uptime>\n')
 
