@@ -78,14 +78,9 @@ def do_mv_data(rpath):
 			count_internal_locks += 1
 		if DEBUG:print "{0} internal locks exist".format(count_internal_locks)
 
-	for file in glob.glob(r'/tmp/ubundiagd/*.csv'):
+	#for file in glob.glob(r'/tmp/ubundiagd/*.csv'):
+	for file in glob.glob(r'/tmp/*.csv'):
 		#print file
-		if os.path.isfile(clientlock):
-			if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
-				if DEBUG:print "moving " + file
-				shutil.move(file, rpath)
-
-	for file in glob.glob(r'/tmp/ubundiagd/*.png'):
 		if os.path.isfile(clientlock):
 			if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
 				if DEBUG:print "moving " + file
@@ -101,7 +96,7 @@ def do_xml(rpath):
 	uname           = os.uname()
 	#Tcpu            = float(commands.getoutput("cat /sys/class/thermal/thermal_zone0/temp"))/1000
 	#fcpu            = float(commands.getoutput("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"))/1000
-	ubundiagdbranch = commands.getoutput("cat /home/pi/.ubundiagd.branch")
+	ubundiagdbranch = commands.getoutput("cat $HOME/.ubundiagd.branch")
 	uptime          = commands.getoutput("uptime")
 	dfh             = commands.getoutput("df -h")
 	mds							= commands.getoutput("cat /proc/mdstat |awk 'NR<4'")
