@@ -118,7 +118,7 @@ def do_xml(rpath):
 	f.write('</df>\n')
 
 	f.write('<temperature>\n')
-	f.write('--- no info ---\n')
+	f.write('--- no temperature info ---\n')
 	#f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
 	f.write('</temperature>\n')
 

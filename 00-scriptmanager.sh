@@ -66,7 +66,7 @@ if [[ -n "$DIFFd15" ]]; then
 fi
 if [[ -n "$DIFFd99" ]]; then
   logger -t ubundiagd "Source daemon99 has changed."
-  #./daemon99.py stop
+  ./daemon99.py stop
 fi
 
 if [[ -n "$DIFFlib" ]]; then
@@ -77,7 +77,7 @@ if [[ -n "$DIFFlib" ]]; then
   #./daemon13.py stop
   #./daemon14.py stop
   #./daemon15.py stop
-  #./daemon99.py stop
+  ./daemon99.py stop
 fi
 
 ######## (Re-)start daemons ######
@@ -100,6 +100,6 @@ function destale {
 #destale 13
 #destale 14
 #destale 15
-#destale 99
+destale 99
 
 popd
