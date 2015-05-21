@@ -82,13 +82,13 @@ def do_mv_data(rpath):
 		if os.path.isfile(clientlock):
 			if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
 				if DEBUG:print "moving legacy-data " + file
-					shutil.move(file, rpath)
+				shutil.move(file, rpath)
 
 	for file in glob.glob(r'/tmp/ubundiagd/*.csv'):
 		if os.path.isfile(clientlock):
 			if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
 				if DEBUG:print "moving data " + file
-					shutil.move(file, rpath)
+				shutil.move(file, rpath)
 
 	unlock(clientlock)
 	if DEBUG:print "unlocked..."
