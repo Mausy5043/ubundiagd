@@ -2,3 +2,5 @@
 **Diagnostics Gatherer for Ubuntu Server**
 
 This repository provides a number of python-based daemons that gather various system diagnostics.
+
+Beware: this is a work in progress
