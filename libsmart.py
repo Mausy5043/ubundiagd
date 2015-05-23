@@ -16,7 +16,7 @@ class SmartDisk():
     self.health   = "-"
     self.selftest = "-"
     self.info     = "-"
-    self.identity = commands.getoutput("sudo smartctl -i /dev/disk/by-id/" + self.wwn).splitlines()
+    self.identity = commands.getoutput("sudo smartctl -i " + self.wwn).splitlines()
     self.lasttime = -1
 
   def smart(self):
