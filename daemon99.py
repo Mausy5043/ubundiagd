@@ -139,7 +139,7 @@ def do_xml(rpath):
 	f.write('</df>\n')
 
 	f.write('<temperature>\n')
-	f.write('SSD: ' + Tsda + ' || disk1: ' + Tsdb + ' || disk2: ' + Tsdc + ' || disk3: ' + Tsdd + ' || disk4: ' + Tsde + '\n')
+	f.write('SSD: ' + Tsda + ' || disk1: ' + Tsdb + ' || disk2: ' + Tsdc + ' || disk3: ' + Tsdd + ' || disk4: ' + Tsde + ' [degC]\n')
 	#f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
 	f.write('</temperature>\n')
 
