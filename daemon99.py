@@ -140,11 +140,11 @@ def do_xml(rpath):
 	Hdd=sdd.gethealth()
 	Hde=sde.gethealth()
 	# Self-test info
-	Testa=sda.getselftest()
-	Testb=sdb.getselftest()
-	Testc=sdc.getselftest()
-	Testd=sdd.getselftest()
-	Teste=sde.getselftest()
+	Testa=sda.getlasttest()
+	Testb=sdb.getlasttest()
+	Testc=sdc.getlasttest()
+	Testd=sdd.getlasttest()
+	Teste=sde.getlasttest()
 	# Disk info
 	Infoa=sda.getinfo()
 	Infob=sdb.getinfo()
