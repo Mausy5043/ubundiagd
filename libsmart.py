@@ -57,11 +57,11 @@ class SmartDisk():
       if (line != ''):
         ls=line.split()
         if (line.split()[0] == "Model"):
-          retm = line.split(': ')[1]
+          retm = line.split(': ')[1].strip()
         if (line.split()[0] == "Device"):
-          retd = line.split(': ')[1]
+          retd = line.split(': ')[1].strip()
         if (line.split()[0] == "Serial"):
-          rets = line.split(': ')[1]
+          rets = line.split(': ')[1].strip()
     ret = retm + " " + retd + " (" + rets +")"
     return ret
 
