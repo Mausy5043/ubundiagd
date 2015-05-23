@@ -1,14 +1,20 @@
 #!/usr/bin/python
 
-# Usage:
-#
-
 class SmartDisk():
   """
   A class to access information on S.M.A.R.T. disks.
 
   Usage: (under construction)
   """
+  def __init__(self,diskid)
+    self.wwn = diskid
+
+  def smart(self)
+    self.smartcmd = "sudo smartctl -A /dev/disk/by-id/" + self.wwn
+    if DEBUG:print self.smartcmd
+    return "command defined"
+
+
 
 
 if __name__ == '__main__'
@@ -22,3 +28,5 @@ if __name__ == '__main__'
   sde=wwn-0x50014ee60507b79c
 
   DEBUG = True
+  info = SmartDisk(sda)
+  print info.smart
