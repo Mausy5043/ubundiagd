@@ -16,7 +16,7 @@ class SmartDisk():
     self.health   = "-"
     self.selftest = "-"
     self.info     = "-"
-    self.identity = commands.getoutput("sudo smartctl -i " + self.wwn).splitlines()
+    self.identity = commands.getoutput("sudo smartctl -i " + self.wwn +  + " |awk 'NR>4'").splitlines()
     self.lasttime = -1
 
   def smart(self):
@@ -24,9 +24,9 @@ class SmartDisk():
     # only read the S.M.A.R.T. data if current data is stale
     # data is considered stale if it is older than 4 minutes
     if ((t1 - self.lasttime) > (4*60)):
-      self.vars     = commands.getoutput("sudo smartctl -A " + self.wwn).splitlines()
-      self.info     = commands.getoutput("sudo smartctl -i " + self.wwn).splitlines()
-      self.health   = commands.getoutput("sudo smartctl -H " + self.wwn).splitlines()
+      self.vars     = commands.getoutput("sudo smartctl -A " + self.wwn + " |awk 'NR>4'").splitlines()
+      self.info     = commands.getoutput("sudo smartctl -i " + self.wwn + " |awk 'NR>4'").splitlines()
+      self.health   = commands.getoutput("sudo smartctl -H " + self.wwn + " |awk 'NR>4'").splitlines()
       self.selftest = commands.getoutput("sudo smartctl -l selftest " + self.wwn + "  |grep '\# 1'")
       self.lasttime = t1
     else:
@@ -51,7 +51,15 @@ class SmartDisk():
     return self.selftest
 
   def getinfo(self):
-    ret = self.wwn
+    ret=""
+    for line in self.identity
+      if (line.split()[0] == "Model"):
+        retm = "model"
+      if (line.split()[0] == "Device"):
+        retd = "device"
+      if (line.split()[0] == "Serial"):
+        rets = "serial"
+    ret = retm + " " + retd + " (" + rets +")"
     return ret
 
 
@@ -77,3 +85,4 @@ if __name__ == '__main__':
 
   print sda.getlasttest()
   print sdc.gethealth()
+  print sdb.getinfo()
