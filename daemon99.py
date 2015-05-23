@@ -10,6 +10,14 @@
 
 import os, sys, shutil, glob, platform, time, commands
 from libdaemon import Daemon
+import libsmart
+
+sda = SmartDisk("wwn-0x50026b723c0d6dd5")
+sdb = SmartDisk("wwn-0x5000c50050a30da3")
+sdc = SmartDisk("wwn-0x5000c50050a32d4f")
+sdd = SmartDisk("wwn-0x50014ee6055a237b")
+sde = SmartDisk("wwn-0x50014ee60507b79c")
+
 
 DEBUG = False
 
@@ -106,6 +114,17 @@ def do_xml(rpath):
 	freeh           = commands.getoutput("free -h")
 	psout           = commands.getoutput("ps -e -o pcpu,args | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
 	#
+	sda.smart()
+	sdb.smart()
+	sdc.smart()
+	sdd.smart()
+	sde.smart()
+	Tsda=sda.getinfo('194')
+	Tsdb=sdb.getinfo('194')
+	Tsdc=sdc.getinfo('194')
+	Tsdd=sdd.getinfo('194')
+	Tsde=sde.getinfo('194')
+	#
 	f = file(rpath + '/status.xml', 'w')
 
 	f.write('<server>\n')
@@ -121,7 +140,7 @@ def do_xml(rpath):
 	f.write('</df>\n')
 
 	f.write('<temperature>\n')
-	f.write('--- no temperature info ---\n')
+	f.write('sda: ' + Tsda + ' || sdb: ' + Tsdb + ' || sdc: ' + Tsdc + ' || sdd: ' + Tsdd + ' || sde: ' + Tsde + '\n')
 	#f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
 	f.write('</temperature>\n')
 
