@@ -21,6 +21,7 @@ class SmartDisk():
     # data is considered stale if it is older than 4 minutes
     if ((t1 - self.lasttime) > (4*60)):
       self.cmd = commands.getoutput("sudo smartctl -A /dev/disk/by-id/" + self.wwn)
+    else:
       if DEBUG:print "Using old data: "
     if DEBUG:print self.cmd
     return "OK"
@@ -41,4 +42,5 @@ if __name__ == '__main__':
   DEBUG = True
 
   info = SmartDisk(sda)
+  print info.smart()
   print info.smart()
