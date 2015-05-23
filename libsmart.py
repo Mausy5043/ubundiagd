@@ -33,7 +33,7 @@ class SmartDisk():
         ls=line.split()
         if (ls[0] == id):
           if DEBUG:print line.split()
-          print ret=ls[9]
+          ret=ls[9]
     return ret
 
 
