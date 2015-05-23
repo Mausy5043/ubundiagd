@@ -24,10 +24,10 @@ class SmartDisk():
     # only read the S.M.A.R.T. data if current data is stale
     # data is considered stale if it is older than 4 minutes
     if ((t1 - self.lasttime) > (4*60)):
-      self.vars     = commands.getoutput("sudo smartctl -A /dev/disk/by-id/" + self.wwn).splitlines()
-      self.info     = commands.getoutput("sudo smartctl -i /dev/disk/by-id/" + self.wwn).splitlines()
-      self.health   = commands.getoutput("sudo smartctl -H /dev/disk/by-id/" + self.wwn).splitlines()
-      self.selftest = commands.getoutput("sudo smartctl -l selftest /dev/disk/by-id/" + self.wwn + "  |grep '\# 1'")
+      self.vars     = commands.getoutput("sudo smartctl -A " + self.wwn).splitlines()
+      self.info     = commands.getoutput("sudo smartctl -i " + self.wwn).splitlines()
+      self.health   = commands.getoutput("sudo smartctl -H " + self.wwn).splitlines()
+      self.selftest = commands.getoutput("sudo smartctl -l " + self.wwn + "  |grep '\# 1'")
       self.lasttime = t1
     else:
       if DEBUG:print "Using old data: "
@@ -58,20 +58,21 @@ if __name__ == '__main__':
 
   DEBUG = False
 
-  sda = SmartDisk("wwn-0x50026b723c0d6dd5")
+  sda = SmartDisk("/dev/disk/by-id/wwn-0x50026b723c0d6dd5")
   sda.smart()
   print sda.getdata('194')
-  sdb = SmartDisk("wwn-0x5000c50050a30da3")
+  sdb = SmartDisk("/dev/disk/by-id/wwn-0x5000c50050a30da3")
   sdb.smart()
   print sdb.getdata('194')
-  sdc = SmartDisk("wwn-0x5000c50050a32d4f")
+  sdc = SmartDisk("/dev/disk/by-id/wwn-0x5000c50050a32d4f")
   sdc.smart()
   print sdc.getdata('194')
-  sdd = SmartDisk("wwn-0x50014ee6055a237b")
+  sdd = SmartDisk("/dev/disk/by-id/wwn-0x50014ee6055a237b")
   sdd.smart()
   print sdd.getdata('194')
-  sde = SmartDisk("wwn-0x50014ee60507b79c")
+  sde = SmartDisk("/dev/disk/by-id/wwn-0x50014ee60507b79c")
   sde.smart()
   print sde.getdata('194')
 
   print sda.getlasttest()
+  print sdc.getlasttest()

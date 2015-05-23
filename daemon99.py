@@ -14,12 +14,12 @@ from libsmart import SmartDisk
 
 # BEWARE
 # The disks identified here as `sda`, `sdb` etc. may not necessarily
-# be `/dev/sda`, `/dev/sdb` etc. on the system!!
-sda = SmartDisk("wwn-0x50026b723c0d6dd5")
-sdb = SmartDisk("wwn-0x5000c50050a30da3")
-sdc = SmartDisk("wwn-0x5000c50050a32d4f")
-sdd = SmartDisk("wwn-0x50014ee6055a237b")
-sde = SmartDisk("wwn-0x50014ee60507b79c")
+# be called `/dev/sda`, `/dev/sdb` etc. on the system!!
+sda = SmartDisk("/dev/disk/by-id/wwn-0x50026b723c0d6dd5")
+sdb = SmartDisk("/dev/disk/by-id/wwn-0x5000c50050a30da3")
+sdc = SmartDisk("/dev/disk/by-id/wwn-0x5000c50050a32d4f")
+sdd = SmartDisk("/dev/disk/by-id/wwn-0x50014ee6055a237b")
+sde = SmartDisk("/dev/disk/by-id/wwn-0x50014ee60507b79c")
 
 DEBUG = False
 
