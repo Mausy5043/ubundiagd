@@ -76,4 +76,4 @@ if __name__ == '__main__':
   print sde.getdata('194')
 
   print sda.getlasttest()
-  print sdc.getlasttest()
+  print sdc.gethealth()
