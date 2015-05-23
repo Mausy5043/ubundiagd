@@ -12,21 +12,23 @@ class SmartDisk():
   """
   def __init__(self,diskid):
     self.wwn = diskid
-    self.cmd=""
-    self.lasttime=-1
+    self.smartinfo = ""
+    self.lasttime = -1
 
   def smart(self):
     t1 = time.time()
     # only read the S.M.A.R.T. data if current data is stale
     # data is considered stale if it is older than 4 minutes
     if ((t1 - self.lasttime) > (4*60)):
-      self.cmd = commands.getoutput("sudo smartctl -A /dev/disk/by-id/" + self.wwn).splitlines()
+      self.smartinfo = commands.getoutput("sudo smartctl -A /dev/disk/by-id/" + self.wwn).splitlines()
       self.lasttime = t1
     else:
       if DEBUG:print "Using old data: "
     if DEBUG:print self.cmd
-    return "OK"
 
+  def getinfo(self,id):
+    for line in self.smartinfo:
+      if DEBUG:print line
 
 
 
@@ -42,6 +44,6 @@ if __name__ == '__main__':
 
   DEBUG = True
 
-  info = SmartDisk(sda)
-  print info.smart()
-  print info.smart()
+  sda = SmartDisk("wwn-0x50026b723c0d6dd5")
+  print sda.smart()
+  print sda.getinfo(1)
