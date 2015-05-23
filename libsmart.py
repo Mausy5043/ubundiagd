@@ -24,7 +24,7 @@ class SmartDisk():
       self.lasttime = t1
     else:
       if DEBUG:print "Using old data: "
-    if DEBUG:print self.cmd
+    if DEBUG:print self.smartinfo
 
   def getinfo(self,id):
     for line in self.smartinfo:
