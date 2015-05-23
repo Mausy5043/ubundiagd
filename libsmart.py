@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import commands
+import commands, time
 
 DEBUG = False
 
@@ -12,10 +12,17 @@ class SmartDisk():
   """
   def __init__(self,diskid):
     self.wwn = diskid
+    self.cmd=""
+    self.lasttime=-1
 
   def smart(self):
-    self.smartcmd = commands.getoutput("sudo smartctl -A /dev/disk/by-id/" + self.wwn)
-    if DEBUG:print self.smartcmd
+    t1 = time.time()
+    # only read the S.M.A.R.T. data if current data is stale
+    # data is considered stale if it is older than 4 minutes
+    if ((t1 - self.lasttime) > (4*60)):
+      self.cmd = commands.getoutput("sudo smartctl -A /dev/disk/by-id/" + self.wwn)
+      if DEBUG:print "Using old data: "
+    if DEBUG:print self.cmd
     return "OK"
 
 
