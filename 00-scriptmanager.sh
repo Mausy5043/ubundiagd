@@ -8,8 +8,6 @@ branch=$(cat ~/.ubundiagd.branch)
 clnt=$(hostname)
 pushd $HOME/ubundiagd
 
-# force recompilation of libraries
-rm *.pyc
 # Synchronise local copy with $branch
 
  git fetch origin
@@ -72,6 +70,7 @@ fi
 
 if [[ -n "$DIFFlibd" ]]; then
   logger -t ubundiagd "Source libdaemon has changed."
+  rm ./libdaemon.pyc
   # stop all daemons
   #./daemon11.py stop
   #./daemon12.py stop
@@ -83,6 +82,7 @@ fi
 
 if [[ -n "$DIFFlibs" ]]; then
   logger -t ubundiagd "Source libsmart has changed."
+  rm libsmart.pyc
   ./daemon99.py stop
 fi
 
