@@ -12,6 +12,9 @@ import os, sys, shutil, glob, platform, time, commands
 from libdaemon import Daemon
 from libsmart import SmartDisk
 
+# BEWARE
+# The disks identified here as `sda`, `sdb` etc. may not necessarily
+# be `/dev/sda`, `/dev/sdb` etc. on the system!!
 sda = SmartDisk("wwn-0x50026b723c0d6dd5")
 sdb = SmartDisk("wwn-0x5000c50050a30da3")
 sdc = SmartDisk("wwn-0x5000c50050a32d4f")
@@ -118,11 +121,18 @@ def do_xml(rpath):
 	sdc.smart()
 	sdd.smart()
 	sde.smart()
+	# disktemperature
 	Tsda=sda.getinfo('194')
 	Tsdb=sdb.getinfo('194')
 	Tsdc=sdc.getinfo('194')
 	Tsdd=sdd.getinfo('194')
 	Tsde=sde.getinfo('194')
+	# disk power-on time
+	Pta=sda.getinfo('9')
+	Ptb=sdb.getinfo('9')
+	Ptc=sdc.getinfo('9')
+	Ptd=sdd.getinfo('9')
+	Pte=sde.getinfo('9')
 	#
 	f = file(rpath + '/status.xml', 'w')
 
@@ -140,6 +150,28 @@ def do_xml(rpath):
 
 	f.write('<temperature>\n')
 	f.write('SSD: ' + Tsda + ' || disk1: ' + Tsdb + ' || disk2: ' + Tsdc + ' || disk3: ' + Tsdd + ' || disk4: ' + Tsde + ' [degC]\n')
+	f.write(' ')
+	f.write('SSD:\n')
+	f.write(' Name      : ' + '\n')
+	f.write(' PowerOn   : ' + Pta + '\n')
+	f.write(' Last test : ' + '\n')
+	f.write('disk1:\n')
+	f.write(' Name      : ' + '\n')
+	f.write(' PowerOn   : ' + Ptb + '\n')
+	f.write(' Last test : ' + '\n')
+	f.write('disk2:\n')
+	f.write(' Name      : ' + '\n')
+	f.write(' PowerOn   : ' + Ptc + '\n')
+	f.write(' Last test : ' + '\n')
+	f.write('disk3:\n')
+	f.write(' Name      : ' + '\n')
+	f.write(' PowerOn   : ' + Ptd + '\n')
+	f.write(' Last test : ' + '\n')
+	f.write('disk4:\n')
+	f.write(' Name      : ' + '\n')
+	f.write(' PowerOn   : ' + Pte + '\n')
+	f.write(' Last test : ' + '\n')
+	f.write(' ')
 	#f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
 	f.write('</temperature>\n')
 
