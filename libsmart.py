@@ -27,7 +27,7 @@ class SmartDisk():
       self.vars     = commands.getoutput("sudo smartctl -A /dev/disk/by-id/" + self.wwn).splitlines()
       self.info     = commands.getoutput("sudo smartctl -i /dev/disk/by-id/" + self.wwn).splitlines()
       self.health   = commands.getoutput("sudo smartctl -H /dev/disk/by-id/" + self.wwn).splitlines()
-      self.selftest = commands.getoutput("sudo smartctl -l selftest /dev/disk/by-id/" + self.wwn + "  |grep '# 1'").splitlines()
+      self.selftest = commands.getoutput("sudo smartctl -l selftest /dev/disk/by-id/" + self.wwn + "  |grep '\# 1'")
       self.lasttime = t1
     else:
       if DEBUG:print "Using old data: "
@@ -44,13 +44,13 @@ class SmartDisk():
     return ret
 
   def gethealth(self):
-    return str(self.health[4])
+    return self.health[4])]
 
   def getlasttest(self):
-    return str(self.selftest)
+    return self.selftest
 
   def getinfo(self):
-    ret = str(self.wwn)
+    ret = self.wwn
     return ret
 
 
