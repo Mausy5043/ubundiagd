@@ -51,38 +51,29 @@ class SmartDisk():
     return self.selftest
 
   def getinfo(self):
-    ret=""
+    ret=retm=retd=rets=""
     for line in self.identity:
-      if (line.split()[0] == "Model"):
-        retm = "model"
-      if (line.split()[0] == "Device"):
-        retd = "device"
-      if (line.split()[0] == "Serial"):
-        rets = "serial"
+      if DEBUG:print line
+      if (line != ''):
+        ls=line.split()
+        if (line.split()[0] == "Model"):
+          retm = "model"
+        if (line.split()[0] == "Device"):
+          retd = "device"
+        if (line.split()[0] == "Serial"):
+          rets = "serial"
     ret = retm + " " + retd + " (" + rets +")"
     return ret
 
 
 if __name__ == '__main__':
 
-  DEBUG = False
+  DEBUG = True
 
-  sda = SmartDisk("/dev/disk/by-id/wwn-0x50026b723c0d6dd5")
-  sda.smart()
-  print sda.getdata('194')
-  sdb = SmartDisk("/dev/disk/by-id/wwn-0x5000c50050a30da3")
-  sdb.smart()
-  print sdb.getdata('194')
-  sdc = SmartDisk("/dev/disk/by-id/wwn-0x5000c50050a32d4f")
-  sdc.smart()
-  print sdc.getdata('194')
-  sdd = SmartDisk("/dev/disk/by-id/wwn-0x50014ee6055a237b")
-  sdd.smart()
-  print sdd.getdata('194')
   sde = SmartDisk("/dev/disk/by-id/wwn-0x50014ee60507b79c")
   sde.smart()
   print sde.getdata('194')
 
-  print sda.getlasttest()
-  print sdc.gethealth()
-  print sdb.getinfo()
+  print sde.getlasttest()
+  print sde.gethealth()
+  print sde.getinfo()
