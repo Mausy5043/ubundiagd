@@ -6,10 +6,10 @@ class SmartDisk():
 
   Usage: (under construction)
   """
-  def __init__(self,diskid)
+  def __init__(self,diskid):
     self.wwn = diskid
 
-  def smart(self)
+  def smart(self):
     self.smartcmd = "sudo smartctl -A /dev/disk/by-id/" + self.wwn
     if DEBUG:print self.smartcmd
     return "command defined"
@@ -17,7 +17,7 @@ class SmartDisk():
 
 
 
-if __name__ == '__main__'
+if __name__ == '__main__':
   # do something
   sda=wwn-0x50026b723c0d6dd5
   sdb=wwn-0x5000c50050a30da3
