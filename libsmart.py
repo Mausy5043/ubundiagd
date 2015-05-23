@@ -34,4 +34,4 @@ if __name__ == '__main__':
   DEBUG = True
 
   info = SmartDisk(sda)
-  print info.smart
+  print info.smart()
