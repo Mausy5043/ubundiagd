@@ -44,7 +44,7 @@ class SmartDisk():
     return ret
 
   def gethealth(self):
-    return self.health[4])]
+    return self.health[4]
 
   def getlasttest(self):
     return self.selftest
