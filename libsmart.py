@@ -44,13 +44,13 @@ class SmartDisk():
     return ret
 
   def gethealth(self):
-    return self.health[4]
+    return str(self.health[4])
 
   def getlasttest(self):
-    return self.selftest
+    return str(self.selftest)
 
   def getinfo(self):
-    ret = self.wwn
+    ret = str(self.wwn)
     return ret
 
 
@@ -73,3 +73,5 @@ if __name__ == '__main__':
   sde = SmartDisk("wwn-0x50014ee60507b79c")
   sde.smart()
   print sde.getdata('194')
+
+  print sda.getlasttest()

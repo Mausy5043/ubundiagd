@@ -173,7 +173,7 @@ def do_xml(rpath):
 	f.write('---SSD---\n')
 	f.write(' Name      : ' + Infoa + '\n')
 	f.write(' PowerOn   : ' + Pta + '\n')
-	f.write(' Last test : ' + Testa +'\n')
+	f.write(' Last test : ' + 'Not available\n')
 	f.write('---disk1---\n')
 	f.write(' Name      : ' + Infob + '\n')
 	f.write(' PowerOn   : ' + Ptb + '\n')
