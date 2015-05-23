@@ -10,7 +10,7 @@
 
 import os, sys, shutil, glob, platform, time, commands
 from libdaemon import Daemon
-from libsmart import SmartLib
+from libsmart import SmartDisk
 
 sda = SmartDisk("wwn-0x50026b723c0d6dd5")
 sdb = SmartDisk("wwn-0x5000c50050a30da3")
