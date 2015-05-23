@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+DEBUG = True
+
 class SmartDisk():
   """
   A class to access information on S.M.A.R.T. disks.
@@ -11,7 +13,7 @@ class SmartDisk():
 
   def smart(self):
     self.smartcmd = "sudo smartctl -A /dev/disk/by-id/" + self.wwn
-    if DEBUG:print self.smartcmd
+    print self.smartcmd
     return "command defined"
 
 
