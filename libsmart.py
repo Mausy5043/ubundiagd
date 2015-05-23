@@ -39,15 +39,21 @@ class SmartDisk():
 
 
 if __name__ == '__main__':
-  # do something
-  #sda="wwn-0x50026b723c0d6dd5"
-  #sdb="wwn-0x5000c50050a30da3"
-  #sdc="wwn-0x5000c50050a32d4f"
-  # sdd="wwn-0x50014ee6055a237b"
-  # sde="wwn-0x50014ee60507b79c"
 
-  DEBUG = True
+  DEBUG = False
 
   sda = SmartDisk("wwn-0x50026b723c0d6dd5")
   sda.smart()
-  sda.getinfo('194')
+  print sda.getinfo('194')
+  sdb = SmartDisk("wwn-0x5000c50050a30da3")
+  sdb.smart()
+  print sdb.getinfo('194')
+  sdc = SmartDisk("wwn-0x5000c50050a32d4f")
+  sdc.smart()
+  print sdc.getinfo('194')
+  sdd = SmartDisk("wwn-0x50014ee6055a237b")
+  sdd.smart()
+  print sdd.getinfo('194')
+  sde = SmartDisk("wwn-0x50014ee60507b79c")
+  sde.smart()
+  print sde.getinfo('194')
