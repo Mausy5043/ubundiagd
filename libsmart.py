@@ -70,10 +70,15 @@ if __name__ == '__main__':
 
   DEBUG = True
 
-  sde = SmartDisk("/dev/disk/by-id/wwn-0x50014ee60507b79c")
-  sde.smart()
-  print sde.getdata('194')
+  sdd = SmartDisk("/dev/disk/by-id/wwn-0x50014ee60507b79c")
+  sdd.smart()
 
-  print sde.getlasttest()
-  print sde.gethealth()
-  print sde.getinfo()
+  print sdd.getdata('194')
+  print "last test:"
+  print sdd.getlasttest()
+  print "wwn"
+  print sdd.getinfo()
+  print "health"
+  print sdd.gethealth()
+  print "data 9"
+  print sdd.getdata('9')
