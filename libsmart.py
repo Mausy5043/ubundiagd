@@ -27,7 +27,7 @@ class SmartDisk():
       self.vars     = commands.getoutput("sudo smartctl -A " + self.wwn).splitlines()
       self.info     = commands.getoutput("sudo smartctl -i " + self.wwn).splitlines()
       self.health   = commands.getoutput("sudo smartctl -H " + self.wwn).splitlines()
-      self.selftest = commands.getoutput("sudo smartctl -l " + self.wwn + "  |grep '\# 1'")
+      self.selftest = commands.getoutput("sudo smartctl -l selftest " + self.wwn + "  |grep '\# 1'")
       self.lasttime = t1
     else:
       if DEBUG:print "Using old data: "
