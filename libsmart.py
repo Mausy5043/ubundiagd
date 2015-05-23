@@ -52,7 +52,7 @@ class SmartDisk():
 
   def getinfo(self):
     ret=""
-    for line in self.identity
+    for line in self.identity:
       if (line.split()[0] == "Model"):
         retm = "model"
       if (line.split()[0] == "Device"):
