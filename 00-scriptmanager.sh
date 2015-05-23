@@ -17,7 +17,8 @@ rm *.pyc
  # git diff --name-only
  # git log --graph --oneline --date-order --decorate --color --all
 
- DIFFlib=$(git --no-pager diff --name-only $branch..origin/$branch -- ./libdaemon.py)
+ DIFFlibd=$(git --no-pager diff --name-only $branch..origin/$branch -- ./libdaemon.py)
+ DIFFlibs=$(git --no-pager diff --name-only $branch..origin/$branch -- ./libsmart.py)
  DIFFd11=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon11.py)
  DIFFd12=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon12.py)
  DIFFd13=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon13.py)
@@ -69,7 +70,7 @@ if [[ -n "$DIFFd99" ]]; then
   ./daemon99.py stop
 fi
 
-if [[ -n "$DIFFlib" ]]; then
+if [[ -n "$DIFFlibd" ]]; then
   logger -t ubundiagd "Source libdaemon has changed."
   # stop all daemons
   #./daemon11.py stop
@@ -77,6 +78,11 @@ if [[ -n "$DIFFlib" ]]; then
   #./daemon13.py stop
   #./daemon14.py stop
   #./daemon15.py stop
+  ./daemon99.py stop
+fi
+
+if [[ -n "$DIFFlibs" ]]; then
+  logger -t ubundiagd "Source libsmart has changed."
   ./daemon99.py stop
 fi
 
