@@ -25,25 +25,29 @@ class SmartDisk():
     else:
       if DEBUG:print "Using old data: "
     if DEBUG:print self.smartinfo
+    return 0
 
   def getinfo(self,id):
     for line in self.smartinfo:
-      if DEBUG:print line
+      if (line != ''):
+        ls=line.split()
+        if (ls[0] == id):
+          if DEBUG:print line.split()
+          print ret=ls[9]
+    return ret
 
 
 
 if __name__ == '__main__':
   # do something
-  sda="wwn-0x50026b723c0d6dd5"
-  sdb="wwn-0x5000c50050a30da3"
-  sdc="wwn-0x5000c50050a32d4f"
-  #sdd="wwn-0x5000c50052c28f7d"
-  sdd="wwn-0x50014ee6055a237b"
-  #sde="wwn-0x5000c50050f3630b"
-  sde="wwn-0x50014ee60507b79c"
+  #sda="wwn-0x50026b723c0d6dd5"
+  #sdb="wwn-0x5000c50050a30da3"
+  #sdc="wwn-0x5000c50050a32d4f"
+  # sdd="wwn-0x50014ee6055a237b"
+  # sde="wwn-0x50014ee60507b79c"
 
   DEBUG = True
 
   sda = SmartDisk("wwn-0x50026b723c0d6dd5")
-  print sda.smart()
-  print sda.getinfo(1)
+  sda.smart()
+  sda.getinfo('194')
