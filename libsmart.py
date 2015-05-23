@@ -20,7 +20,7 @@ class SmartDisk():
     # only read the S.M.A.R.T. data if current data is stale
     # data is considered stale if it is older than 4 minutes
     if ((t1 - self.lasttime) > (4*60)):
-      self.cmd = commands.getoutput("sudo smartctl -A /dev/disk/by-id/" + self.wwn)
+      self.cmd = commands.getoutput("sudo smartctl -A /dev/disk/by-id/" + self.wwn).splitlines()
       self.lasttime = t1
     else:
       if DEBUG:print "Using old data: "
