@@ -18,7 +18,6 @@ sdc = SmartDisk("wwn-0x5000c50050a32d4f")
 sdd = SmartDisk("wwn-0x50014ee6055a237b")
 sde = SmartDisk("wwn-0x50014ee60507b79c")
 
-
 DEBUG = False
 
 class MyDaemon(Daemon):
@@ -140,7 +139,7 @@ def do_xml(rpath):
 	f.write('</df>\n')
 
 	f.write('<temperature>\n')
-	f.write('sda: ' + Tsda + ' || sdb: ' + Tsdb + ' || sdc: ' + Tsdc + ' || sdd: ' + Tsdd + ' || sde: ' + Tsde + '\n')
+	f.write('SSD: ' + Tsda + ' || disk1: ' + Tsdb + ' || disk2: ' + Tsdc + ' || disk3: ' + Tsdd + ' || disk4: ' + Tsde + '\n')
 	#f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
 	f.write('</temperature>\n')
 
