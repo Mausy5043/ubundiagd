@@ -18,8 +18,8 @@ class MyDaemon(Daemon):
 		sampleptr = 0
 		samples = 1
 		datapoints = 1
-
-		sampleTime = 300
+		# 16 samples/hr:
+		sampleTime = 225
 		cycleTime = samples * sampleTime
 		# sync to whole minute
 		waitTime = (cycleTime + sampleTime) - (time.time() % cycleTime)
