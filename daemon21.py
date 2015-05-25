@@ -61,7 +61,7 @@ def do_report(result):
 	#result = ', '.join(map(str, result))
 	flock = '/tmp/ubundiagd/21.lock'
 	lock(flock)
-	f = file('/tmp/ubundiagd/21-aux-ambient.csv.txt', 'a')
+	f = file('/tmp/ubundiagd/21-aux-ambient.csv', 'a')
 	f.write('{0}, {1}\n'.format(outDate, result) )
 	f.close()
 	unlock(flock)
