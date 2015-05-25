@@ -72,7 +72,6 @@ fi
 
 if [[ -n "$DIFFlibd" ]]; then
   logger -t ubundiagd "Source libdaemon has changed."
-  rm ./libdaemon.pyc
   # stop all daemons
   ./daemon11.py stop
   ./daemon12.py stop
@@ -81,12 +80,14 @@ if [[ -n "$DIFFlibd" ]]; then
   ./daemon15.py stop
   ./daemon19.py stop
   ./daemon99.py stop
+  rm ./libdaemon.pyc
 fi
 
 if [[ -n "$DIFFlibs" ]]; then
   logger -t ubundiagd "Source libsmart has changed."
-  rm libsmart.pyc
+  ./daemon19.py stop
   ./daemon99.py stop
+  rm libsmart.pyc
 fi
 
 ######## (Re-)start daemons ######
