@@ -52,8 +52,18 @@ class MyDaemon(Daemon):
 
 def do_work():
 	# Read the ambient temperature
-	Tamb = commands.getoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
-	return  '{0}'.format(Tamb)
+	stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
+	if stsTamb > 0:
+		if DEBUG:print "***"
+		if DEBUG:print stsAmb
+		time.sleep(2)
+		stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
+
+	if stsTamb > 0:
+		if DEBUG:print "***"
+		if DEBUG:print stsAmb
+		Tamb = "NaN"
+	return  Tamb
 
 def do_report(result):
 	# Get the time and date in human-readable form and UN*X-epoch...
