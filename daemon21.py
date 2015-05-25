@@ -51,7 +51,7 @@ class MyDaemon(Daemon):
 				time.sleep(waitTime)
 
 def do_work():
-	# Read the CPU temperature
+	# Read the ambient temperature
 	Tamb = commands.getoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
 	return  '{0}'.format(Tamb)
 

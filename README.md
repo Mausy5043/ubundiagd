@@ -8,7 +8,7 @@ The code used to daemonise python code was borrowed from previous work by:
 - Sander Marechal (see: http://www.jejik.com/articles/2007/02/a_simple_unix_linux_daemon_in_python/)
 - Charles Menguy (see: http://stackoverflow.com/questions/10217067/implementing-a-full-python-unix-style-daemon-process)
 
-and modified for my particular use-case. This includes a bash-script that keeps the daemons running. 
+and modified for my particular use-case. This includes a bash-script that keeps the daemons running.
 
 NO code is provided for further processing of the data. E.g. adding the data to a rrdtool-database and/or graphing the data. This functionality is offered elsewhere.
 
@@ -19,4 +19,5 @@ Following daemons are provided:
 - daemon14 - Memory usage (from `/proc/meminfo`)
 - daemon15 - Size of logfiles (`kern.log`, `smartd.log` and `syslog.log`)
 - daemon19 - Temperature of the disk-array in degC (requires `smartmontools`)
+- daemon21 - Ambient temperature as supplied by the TEMPer USB device. (requires `temperv14`; source supplied with this repository)
 - daemon99 - Data uploading to the server
