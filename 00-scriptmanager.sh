@@ -109,7 +109,7 @@ destale 12
 destale 13
 destale 14
 destale 15
-#destale 19
+destale 19
 destale 99
 
 popd
