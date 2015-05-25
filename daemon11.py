@@ -31,14 +31,16 @@ class MyDaemon(Daemon):
 		while True:
 			startTime = time.time()
 
-			result = do_work()
-			data[sampleptr] = int(result)
+			result = do_work().split(', ')
+			if DEBUG:print result
+			data[sampleptr] = map(float, result)
 
 			# report sample average
 			sampleptr = sampleptr + 1
 			if (sampleptr == samples):
-				somma = sum(data[:])
-				averages = somma / samples
+				somma = map(sum,zip(*data))
+				averages = [format(s / samples, '.3f') for s in somma]
+				if DEBUG:print averages
 				do_report(averages)
 				sampleptr = 0
 
@@ -60,10 +62,11 @@ def do_work():
 def do_report(result):
 	# Get the time and date in human-readable form and UN*X-epoch...
 	outDate = commands.getoutput("date '+%F %H:%M:%S, %s'")
+	result = ', '.join(map(str, result))
 	flock = '/tmp/ubundiagd/11.lock'
 	lock(flock)
 	f = file('/tmp/ubundiagd/11-t-cpu.csv', 'a')
-	f.write('{0}, {1}\n'.format(outDate, float(float(result)/1000)) )
+	f.write('{0}, {1}\n'.format(outDate, result) )
 	f.close()
 	unlock(flock)
 	return

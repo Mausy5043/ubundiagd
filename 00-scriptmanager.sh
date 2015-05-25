@@ -45,7 +45,7 @@ fi
 
 if [[ -n "$DIFFd11" ]]; then
   logger -t ubundiagd "Source daemon11 has changed."
-  #./daemon11.py stop
+  ./daemon11.py stop
 fi
 if [[ -n "$DIFFd12" ]]; then
   logger -t ubundiagd "Source daemon12 has changed."
@@ -72,7 +72,7 @@ if [[ -n "$DIFFlibd" ]]; then
   logger -t ubundiagd "Source libdaemon has changed."
   rm ./libdaemon.pyc
   # stop all daemons
-  #./daemon11.py stop
+  ./daemon11.py stop
   ./daemon12.py stop
   ./daemon13.py stop
   ./daemon14.py stop
@@ -101,7 +101,7 @@ function destale {
   fi
 }
 
-#destale 11
+destale 11
 destale 12
 destale 13
 destale 14
