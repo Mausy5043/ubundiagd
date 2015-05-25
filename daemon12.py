@@ -44,6 +44,7 @@ class MyDaemon(Daemon):
 				averages[3]=int(data[sampleptr-1][3])
 				averages[4]=int(data[sampleptr-1][4])
 				averages[5]=int(data[sampleptr-1][5])
+				if DEBUG:print averages
 				do_report(averages)
 				sampleptr = 0
 
@@ -72,7 +73,7 @@ def do_report(result):
 	result = ', '.join(map(str, result))
 	flock = '/tmp/ubundiagd/12.lock'
 	lock(flock)
-	f = file('/tmp/ubundiagd/12-load-cpu.csv', 'a')
+	f = file('/tmp/ubundiagd/12-load-cpu.txt', 'a')
 	f.write('{0}, {1}\n'.format(outDate, result) )
 	f.close()
 	unlock(flock)
