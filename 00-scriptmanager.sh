@@ -22,9 +22,7 @@ pushd $HOME/ubundiagd
  DIFFd13=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon13.py)
  DIFFd14=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon14.py)
  DIFFd15=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon15.py)
- DIFFd16=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon16.py)
- DIFFd17=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon17.py)
- DIFFd18=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon18.py)
+ DIFFd19=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon19.py)
  DIFFd99=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon99.py)
 
  git pull
@@ -63,6 +61,10 @@ if [[ -n "$DIFFd15" ]]; then
   logger -t ubundiagd "Source daemon15 has changed."
   ./daemon15.py stop
 fi
+if [[ -n "$DIFFd19" ]]; then
+  logger -t ubundiagd "Source daemon19 has changed."
+  ./daemon19.py stop
+fi
 if [[ -n "$DIFFd99" ]]; then
   logger -t ubundiagd "Source daemon99 has changed."
   ./daemon99.py stop
@@ -77,6 +79,7 @@ if [[ -n "$DIFFlibd" ]]; then
   ./daemon13.py stop
   ./daemon14.py stop
   ./daemon15.py stop
+  ./daemon19.py stop
   ./daemon99.py stop
 fi
 
@@ -106,6 +109,7 @@ destale 12
 destale 13
 destale 14
 destale 15
+#destale 19
 destale 99
 
 popd
