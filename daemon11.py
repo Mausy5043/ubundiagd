@@ -49,11 +49,11 @@ class MyDaemon(Daemon):
 
 def do_work():
 	# Read the CPU temperature
-  list = commands.getoutput("sensors").splitlines()
-  outTemp = list[17].split()[1].decode('ascii','ignore').replace('C','')
+	list = commands.getoutput("sensors").splitlines()
+	outTemp = list[17].split()[1].decode('ascii','ignore').replace('C','')
 
-  # Read the Motherboard temperature
-  outMBTemp = list[16].split()[1].decode('ascii','ignore').replace('C','')
+	# Read the Motherboard temperature
+	outMBTemp = list[16].split()[1].decode('ascii','ignore').replace('C','')
 
 	return  '{0}, {1}'.format(outTemp, outMBTemp)
 
