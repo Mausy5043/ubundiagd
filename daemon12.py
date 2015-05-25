@@ -32,8 +32,8 @@ class MyDaemon(Daemon):
 			startTime = time.time()
 
 			result = do_work().split(',')
-
 			data[sampleptr] = map(float, result)
+			
 			# report sample average
 			sampleptr = sampleptr + 1
 			if (sampleptr == samples):
