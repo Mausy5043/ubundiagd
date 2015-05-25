@@ -20,6 +20,8 @@ sdb = SmartDisk("/dev/disk/by-id/wwn-0x982717808011923456x")
 sdc = SmartDisk("/dev/disk/by-id/wwn-0x3264916919181922304x")
 sdd = SmartDisk("/dev/disk/by-id/wwn-0x2556643098891800577x")
 sde = SmartDisk("/dev/disk/by-id/wwn-0x13230455334254301185x")
+#sdf
+#sdg
 
 DEBUG = False
 
@@ -67,6 +69,9 @@ def do_work():
 	sdc.smart()
 	sdd.smart()
 	sde.smart()
+	#sdf
+	#sdg
+	
 	# disktemperature
 	Tsda=sda.getdata('194')
 	Tsdb=sdb.getdata('194')
