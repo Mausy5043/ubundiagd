@@ -60,7 +60,7 @@ def do_work():
 		if device == "lo":
 			loIn = int(list[line].split()[1])
 			loOut = int(list[line].split()[9])
-		if device == "eth0":
+		if device == "p17p1":
 			etIn = int(list[line].split()[1])
 			etOut = int(list[line].split()[9])
 		if device == "wlan0":
