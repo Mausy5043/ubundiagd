@@ -16,11 +16,10 @@ DEBUG = False
 class MyDaemon(Daemon):
 	def run(self):
 		sampleptr = 0
-		samples = 5
+		samples = 1
 		datapoints = 1
-		data = range(samples)
 
-		sampleTime = 12
+		sampleTime = 60
 		cycleTime = samples * sampleTime
 		# sync to whole minute
 		waitTime = (cycleTime + sampleTime) - (time.time() % cycleTime)
@@ -33,16 +32,12 @@ class MyDaemon(Daemon):
 
 			result = do_work()
 			if DEBUG:print result
-			data[sampleptr] = float(result)
+			data = result
 
 			# report sample average
 			sampleptr = sampleptr + 1
 			if (sampleptr == samples):
-				if DEBUG:print data
-				somma = sum(data[:])
-				averages = somma / samples
-				if DEBUG:print averages
-				do_report(averages)
+				do_report(data)
 				sampleptr = 0
 
 			waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
@@ -55,13 +50,13 @@ def do_work():
 	stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
 	if stsTamb > 0:
 		if DEBUG:print "***"
-		if DEBUG:print stsAmb
+		if DEBUG:print stsTamb
 		time.sleep(2)
 		stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
 
 	if stsTamb > 0:
 		if DEBUG:print "***"
-		if DEBUG:print stsAmb
+		if DEBUG:print stsTamb
 		Tamb = "NaN"
 	return  Tamb
 
