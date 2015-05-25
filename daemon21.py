@@ -53,13 +53,12 @@ class MyDaemon(Daemon):
 def do_work():
 	# Read the CPU temperature
 	Tamb = commands.getoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
-	if DEBUG:print Tamb
 	return  '{0}'.format(Tamb)
 
 def do_report(result):
 	# Get the time and date in human-readable form and UN*X-epoch...
 	outDate = commands.getoutput("date '+%F %H:%M:%S, %s'")
-	result = ', '.join(map(str, result))
+	#result = ', '.join(map(str, result))
 	flock = '/tmp/ubundiagd/21.lock'
 	lock(flock)
 	f = file('/tmp/ubundiagd/21-aux-ambient.csv.txt', 'a')
