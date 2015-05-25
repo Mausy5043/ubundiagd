@@ -17,7 +17,7 @@ class MyDaemon(Daemon):
 	def run(self):
 		sampleptr = 0
 		samples = 5
-		datapoints = 1
+		datapoints = 2
 		data = range(samples)
 
 		sampleTime = 12
@@ -49,14 +49,13 @@ class MyDaemon(Daemon):
 
 def do_work():
 	# Read the CPU temperature
-	outTemp = commands.getoutput("cat /sys/class/thermal/thermal_zone0/temp")
-	if float(outTemp) > 75000:
-	  # can't believe my sensors. Probably a glitch. Wait a while then measure again
-	  time.sleep(7)
-	  outTemp = commands.getoutput("cat /sys/class/thermal/thermal_zone0/temp")
-	  outTemp = float(outTemp) + 0.1
+  list = commands.getoutput("sensors").splitlines()
+  outTemp = list[17].split()[1].decode('ascii','ignore').replace('C','')
 
-	return outTemp
+  # Read the Motherboard temperature
+  outMBTemp = list[16].split()[1].decode('ascii','ignore').replace('C','')
+
+	return  '{0}, {1}'.format(outTemp, outMBTemp)
 
 def do_report(result):
 	# Get the time and date in human-readable form and UN*X-epoch...
