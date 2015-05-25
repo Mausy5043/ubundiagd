@@ -27,7 +27,7 @@ class MyDaemon(Daemon):
 	def run(self):
 		sampleptr = 0
 		samples = 5
-		datapoints = 5
+		datapoints = 7
 		data = [[None]*datapoints for _ in range(samples)]
 
 		sampleTime = 12
@@ -73,9 +73,11 @@ def do_work():
 	Tsdc=sdc.getdata('194')
 	Tsdd=sdd.getdata('194')
 	Tsde=sde.getdata('194')
+	Tsdf=0
+	Tsdg=0
 
 	if DEBUG: print Tsda, Tsdb, Tsdc, Tsdd, Tsde
-	return '{0}, {1}, {2}, {3}'.format(Tsda, Tsdb, Tsdc, Tsdd, Tsde)
+	return '{0}, {1}, {2}, {3}, {4}'.format(Tsda, Tsdb, Tsdc, Tsdd, Tsde)
 
 def do_report(result):
 	# Get the time and date in human-readable form and UN*X-epoch...
@@ -84,7 +86,8 @@ def do_report(result):
 	flock = '/tmp/ubundiagd/19.lock'
 	lock(flock)
 	f = file('/tmp/ubundiagd/19-tempdisk.csv', 'a')
-	f.write('{0}, {1}\n'.format(outDate, result) )
+	# write out a NaN for disks sdf and sdg
+	f.write('{0}, {1}, {2}, {3}\n'.format(outDate, result,"NaN, "NaN") )
 	f.close()
 	unlock(flock)
 	return
