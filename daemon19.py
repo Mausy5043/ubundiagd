@@ -34,8 +34,10 @@ class MyDaemon(Daemon):
 		cycleTime = samples * sampleTime
 		# sync to whole minute
 		waitTime = (cycleTime + sampleTime) - (time.time() % cycleTime)
-		if DEBUG:print "Waiting {0} s".format(int(waitTime))
-		time.sleep(waitTime)
+		if DEBUG:
+			print "NOT waiting {0} s.".format(waitTime)
+		else:
+			time.sleep(waitTime)
 		while True:
 			startTime = time.time()
 
