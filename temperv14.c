@@ -92,24 +92,24 @@ usb_dev_handle *find_lvr_winusb();
 void usb_detach(usb_dev_handle *lvr_winusb, int iInterface) {
         int ret;
 
-	ret = usb_detach_kernel_driver_np(lvr_winusb, iInterface);
-	if(ret) {
-		if(errno == ENODATA) {
-			if(debug) {
-				printf("Device already detached\n");
-			}
-		} else {
-			if(debug) {
-				printf("Detach failed: %s[%d]\n",
-				       strerror(errno), errno);
-				printf("Continuing anyway\n");
-			}
-		}
-	} else {
-		if(debug) {
-			printf("detach successful\n");
-		}
-	}
+  ret = usb_detach_kernel_driver_np(lvr_winusb, iInterface);
+  if(ret) {
+    if(errno == ENODATA) {
+      if(debug) {
+        printf("Device already detached\n");
+      }
+    } else {
+      if(debug) {
+        printf("Detach failed: %s[%d]\n",
+               strerror(errno), errno);
+        printf("Continuing anyway\n");
+      }
+    }
+  } else {
+    if(debug) {
+      printf("detach successful\n");
+    }
+  }
 }
 
 usb_dev_handle* setup_libusb_access() {
@@ -360,15 +360,15 @@ int main( int argc, char **argv) {
        case '?':
        case 'h':
          printf("pcsensor version %s\n",VERSION);
-	 printf("      Aviable options:\n");
-	 printf("          -h help\n");
-	 printf("          -v verbose\n");
-	 printf("          -l[n] loop every 'n' seconds, default value is 5s\n");
-	 printf("          -c output only in Celsius\n");
-	 printf("          -f output only in Fahrenheit\n");
-	 printf("          -m output for mrtg integration\n");
+   printf("      Aviable options:\n");
+   printf("          -h help\n");
+   printf("          -v verbose\n");
+   printf("          -l[n] loop every 'n' seconds, default value is 5s\n");
+   printf("          -c output only in Celsius\n");
+   printf("          -f output only in Fahrenheit\n");
+   printf("          -m output for mrtg integration\n");
 
-	 exit(EXIT_FAILURE);
+   exit(EXIT_FAILURE);
        default:
          if (isprint (optopt))
            fprintf (stderr, "Unknown option `-%c'.\n", optopt);
@@ -407,9 +407,9 @@ int main( int argc, char **argv) {
      do {
            control_transfer(lvr_winusb, uTemperatura );
            interrupt_read_temperatura(lvr_winusb, &tempc);
-		//tempc = (tempc - substract);
-		tempc *= slope;
-		tempc += offset;
+    //tempc = (tempc - substract);
+    tempc *= slope;
+    tempc += offset;
 
            t = time(NULL);
            local = localtime(&t);
@@ -434,15 +434,15 @@ int main( int argc, char **argv) {
               } else if (formato==1) {
                   printf("%.2f\n", tempc);
               } else {
-				  printf("%04d/%02d/%02d %02d:%02d:%02d ",
-							  local->tm_year +1900,
-							  local->tm_mon + 1,
-							  local->tm_mday,
-							  local->tm_hour,
-							  local->tm_min,
-							  local->tm_sec);
+          printf("%04d/%02d/%02d %02d:%02d:%02d ",
+                local->tm_year +1900,
+                local->tm_mon + 1,
+                local->tm_mday,
+                local->tm_hour,
+                local->tm_min,
+                local->tm_sec);
 
-				  printf("Temperature %.2fF %.2fC\n", (9.0 / 5.0 * tempc + 32.0), tempc);
+          printf("Temperature %.2fF %.2fC\n", (9.0 / 5.0 * tempc + 32.0), tempc);
               }
            }
 

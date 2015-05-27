@@ -14,89 +14,89 @@ from libdaemon import Daemon
 DEBUG = False
 
 class MyDaemon(Daemon):
-	def run(self):
-		sampleptr = 0
-		samples = 1
-		datapoints = 1
-		# 16 samples/hr:
-		sampleTime = 225
-		cycleTime = samples * sampleTime
-		# sync to whole minute
-		waitTime = (cycleTime + sampleTime) - (time.time() % cycleTime)
-		if DEBUG:
-			print "NOT waiting {0} s.".format(waitTime)
-		else:
-			time.sleep(waitTime)
-		while True:
-			startTime = time.time()
+  def run(self):
+    sampleptr = 0
+    samples = 1
+    datapoints = 1
+    # 16 samples/hr:
+    sampleTime = 225
+    cycleTime = samples * sampleTime
+    # sync to whole minute
+    waitTime = (cycleTime + sampleTime) - (time.time() % cycleTime)
+    if DEBUG:
+      print "NOT waiting {0} s.".format(waitTime)
+    else:
+      time.sleep(waitTime)
+    while True:
+      startTime = time.time()
 
-			result = do_work()
-			if DEBUG:print result
-			data = result
+      result = do_work()
+      if DEBUG:print result
+      data = result
 
-			# report sample average
-			sampleptr = sampleptr + 1
-			if (sampleptr == samples):
-				do_report(data)
-				sampleptr = 0
+      # report sample average
+      sampleptr = sampleptr + 1
+      if (sampleptr == samples):
+        do_report(data)
+        sampleptr = 0
 
-			waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
-			if (waitTime > 0):
-				if DEBUG:print "Waiting {0} s".format(waitTime)
-				time.sleep(waitTime)
+      waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
+      if (waitTime > 0):
+        if DEBUG:print "Waiting {0} s".format(waitTime)
+        time.sleep(waitTime)
 
 def do_work():
-	# Read the ambient temperature
-	stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
-	if stsTamb > 0:
-		if DEBUG:print "***"
-		if DEBUG:print stsTamb
-		time.sleep(2)
-		stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
+  # Read the ambient temperature
+  stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
+  if stsTamb > 0:
+    if DEBUG:print "***"
+    if DEBUG:print stsTamb
+    time.sleep(2)
+    stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
 
-	if stsTamb > 0:
-		if DEBUG:print "***"
-		if DEBUG:print stsTamb
-		Tamb = "NaN"
-	return  Tamb
+  if stsTamb > 0:
+    if DEBUG:print "***"
+    if DEBUG:print stsTamb
+    Tamb = "NaN"
+  return  Tamb
 
 def do_report(result):
-	# Get the time and date in human-readable form and UN*X-epoch...
-	outDate = commands.getoutput("date '+%F %H:%M:%S, %s'")
-	#result = ', '.join(map(str, result))
-	flock = '/tmp/ubundiagd/21.lock'
-	lock(flock)
-	f = file('/tmp/ubundiagd/21-aux-ambient.csv', 'a')
-	f.write('{0}, {1}\n'.format(outDate, result) )
-	f.close()
-	unlock(flock)
-	return
+  # Get the time and date in human-readable form and UN*X-epoch...
+  outDate = commands.getoutput("date '+%F %H:%M:%S, %s'")
+  #result = ', '.join(map(str, result))
+  flock = '/tmp/ubundiagd/21.lock'
+  lock(flock)
+  f = file('/tmp/ubundiagd/21-aux-ambient.csv', 'a')
+  f.write('{0}, {1}\n'.format(outDate, result) )
+  f.close()
+  unlock(flock)
+  return
 
 def lock(fname):
-	open(fname, 'a').close()
+  open(fname, 'a').close()
 
 def unlock(fname):
-	if os.path.isfile(fname):
-		os.remove(fname)
+  if os.path.isfile(fname):
+    os.remove(fname)
 
 if __name__ == "__main__":
-	daemon = MyDaemon('/tmp/ubundiagd/21.pid')
-	if len(sys.argv) == 2:
-		if 'start' == sys.argv[1]:
-			daemon.start()
-		elif 'stop' == sys.argv[1]:
-			daemon.stop()
-		elif 'restart' == sys.argv[1]:
-			daemon.restart()
-		elif 'foreground' == sys.argv[1]:
-			# assist with debugging.
-			print "Debug-mode started. Use <Ctrl>+C to stop."
-			DEBUG = True
-			daemon.run()
-		else:
-			print "Unknown command"
-			sys.exit(2)
-		sys.exit(0)
-	else:
-		print "usage: %s start|stop|restart|foreground" % sys.argv[0]
-		sys.exit(2)
+  daemon = MyDaemon('/tmp/ubundiagd/21.pid')
+  if len(sys.argv) == 2:
+    if 'start' == sys.argv[1]:
+      daemon.start()
+    elif 'stop' == sys.argv[1]:
+      daemon.stop()
+    elif 'restart' == sys.argv[1]:
+      daemon.restart()
+    elif 'foreground' == sys.argv[1]:
+      # assist with debugging.
+      print "Debug-mode started. Use <Ctrl>+C to stop."
+      DEBUG = True
+      daemon.run()
+    else:
+      print "Unknown command"
+      sys.exit(2)
+    sys.exit(0)
+  else:
+    print "usage: %s start|stop|restart|foreground" % sys.argv[0]
+    sys.exit(2)
