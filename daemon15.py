@@ -13,6 +13,7 @@ import os, sys, time, math, commands
 from libdaemon import Daemon
 
 DEBUG = False
+IS_SYSTEMD = os.path.isfile('/bin/journalctl')
 
 class MyDaemon(Daemon):
   def run(self):
