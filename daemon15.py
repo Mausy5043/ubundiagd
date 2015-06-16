@@ -47,9 +47,17 @@ class MyDaemon(Daemon):
 
 def do_work():
   # 3 datapoints gathered here
-  kernlog = commands.getoutput("wc -l /var/log/kern.log").split()[0]
-  messlog = commands.getoutput("wc -l /var/log/smartd.log").split()[0]
-  syslog  = commands.getoutput("wc -l /var/log/syslog").split()[0]
+  kernlog=messlog=syslog=0
+
+  if IS_SYSTEMD:
+  #
+    kernlog = commands.getoutput("journalctl --since=00:00:00 --no-pager |grep -i 'fail\|smart' |wc -l").split()[0]
+    messlog = commands.getoutput("journalctl --since=00:00:00 --no-pager |grep -i 'warn\|error' |wc -l").split()[0]
+    syslog  = commands.getoutput("journalctl --since=00:00:00 --no-pager |wc -l").split()[0]
+  else:
+    kernlog = commands.getoutput("wc -l /var/log/kern.log").split()[0]
+    messlog = commands.getoutput("wc -l /var/log/smartd.log").split()[0]
+    syslog  = commands.getoutput("wc -l /var/log/syslog").split()[0]
 
   return '{0}, {1}, {2}'.format(kernlog, messlog, syslog)
 
