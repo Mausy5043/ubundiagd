@@ -53,7 +53,7 @@ def do_work():
   #
     kernlog = commands.getoutput("journalctl --since=00:00:00 --no-pager |grep -i 'fail\|smartd' |wc -l").split()[0]
     messlog = commands.getoutput("journalctl --since=00:00:00 --no-pager |grep -i 'warn\|error' |wc -l").split()[0]
-    syslog  = commands.getoutput("journalctl --since=00:00:00 --no-pager |grep -v 'smart' |wc -l").split()[0]
+    syslog  = commands.getoutput("journalctl --since=00:00:00 --no-pager |grep -v 'smart\|pam' |wc -l").split()[0]
   else:
     kernlog = commands.getoutput("wc -l /var/log/kern.log").split()[0]
     messlog = commands.getoutput("wc -l /var/log/smartd.log").split()[0]
