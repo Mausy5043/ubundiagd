@@ -112,7 +112,7 @@ def do_xml(rpath):
   ubundiagdbranch = commands.getoutput("cat $HOME/.ubundiagd.branch")
   uptime          = commands.getoutput("uptime")
   dfh             = commands.getoutput("df -h")
-  mds              = commands.getoutput("cat /proc/mdstat |awk 'NR<4'")
+  mds              = commands.getoutput("cat /proc/mdstat |awk 'NR<5'")
   freeh           = commands.getoutput("free -h")
   psout           = commands.getoutput("ps -e -o pcpu,args | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
   #
