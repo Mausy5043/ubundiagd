@@ -114,7 +114,7 @@ def do_xml(rpath):
   dfh             = commands.getoutput("df -h")
   mds              = commands.getoutput("cat /proc/mdstat |awk 'NR<5'")
   freeh           = commands.getoutput("free -h")
-  psout           = commands.getoutput("ps -e -o pcpu,args | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
+  psout           = commands.getoutput("ps -e -o pcpu,args | cut -c -132 | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
   #
   sda.smart()
   sdb.smart()
