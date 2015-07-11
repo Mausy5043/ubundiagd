@@ -17,7 +17,7 @@ from libsmart import SmartDisk
 # be called `/dev/sda`, `/dev/sdb` etc. on the system!!
 sda = SmartDisk("/dev/disk/by-id/wwn-0x7914297948508409858x",1)
 sdb = SmartDisk("/dev/disk/by-id/wwn-0x1138954418312597505x",1)
-sdc = SmartDisk("/dev/disk/by-id/wwn-0x3264916919181922304x",1)
+sdc = SmartDisk("/dev/disk/by-id/wwn-0x4891478331354402817x",1)
 sdd = SmartDisk("/dev/disk/by-id/wwn-0x2556643098891800577x",1)
 sde = SmartDisk("/dev/disk/by-id/wwn-0x13230455334254301185x",1)
 
