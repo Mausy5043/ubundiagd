@@ -11,6 +11,7 @@
 import os, sys, shutil, glob, platform, time, commands
 from libdaemon import Daemon
 from libsmart import SmartDisk
+from subprocess import Popen, PIPE
 
 # BEWARE
 # The disks identified here as `sda`, `sdb` etc. may not necessarily
@@ -105,16 +106,25 @@ def do_mv_data(rpath):
 
 def do_xml(rpath):
   #
-  usr              = commands.getoutput("whoami")
+  usr             = commands.getoutput("whoami")
   uname           = os.uname()
-  #Tcpu            = float(commands.getoutput("cat /sys/class/thermal/thermal_zone0/temp"))/1000
-  #fcpu            = float(commands.getoutput("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"))/1000
+  #Tcpu           = float(commands.getoutput("cat /sys/class/thermal/thermal_zone0/temp"))/1000
+  #fcpu           = float(commands.getoutput("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"))/1000
   ubundiagdbranch = commands.getoutput("cat $HOME/.ubundiagd.branch")
   uptime          = commands.getoutput("uptime")
   dfh             = commands.getoutput("df -h")
-  mds              = commands.getoutput("cat /proc/mdstat |awk 'NR<5'")
+  mds             = commands.getoutput("cat /proc/mdstat |awk 'NR<5'")
   freeh           = commands.getoutput("free -h")
-  psout           = commands.getoutput("ps -e -o pcpu,args | cut -c -132 | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
+  #psout          = commands.getoutput("ps -e -o pcpu,args | cut -c -132 | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
+  p1              = Popen('ps -e -o pcpu,args', stdout=PIPE)
+  p2              = Popen('cut -c -132', stdin=p1.stdout, stdout=PIPE)
+  p3              = Popen('awk 'NR>2'', stdin=p2.stdout, stdout=PIPE)
+  p4              = Popen('sort -nr', stdin=p3.stdout)
+  p5              = Popen('head -10', stdin=p4.stdout)
+  p6              = Popen("sed 's/&/\&amp;/g'", stdin=p5.stdout)
+  p7              = Popen("sed 's/>/\&gt;/g'", stdin=p6.stdout)
+  psout           = p7.stdout.read()
+
   #
   sda.smart()
   sdb.smart()
