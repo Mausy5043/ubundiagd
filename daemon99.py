@@ -11,7 +11,7 @@
 import os, sys, shutil, glob, platform, time, commands
 from libdaemon import Daemon
 from libsmart import SmartDisk
-from subprocess import Popen, PIPE
+import subprocess
 
 # BEWARE
 # The disks identified here as `sda`, `sdb` etc. may not necessarily
@@ -116,13 +116,13 @@ def do_xml(rpath):
   mds             = commands.getoutput("cat /proc/mdstat |awk 'NR<5'")
   freeh           = commands.getoutput("free -h")
   #psout          = commands.getoutput("ps -e -o pcpu,args | cut -c -132 | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
-  p1              = Popen('ps -e -o pcpu,args', stdout=PIPE)
-  p2              = Popen('cut -c -132', stdin=p1.stdout, stdout=PIPE)
-  p3              = Popen('awk 'NR>2'', stdin=p2.stdout, stdout=PIPE)
-  p4              = Popen('sort -nr', stdin=p3.stdout)
-  p5              = Popen('head -10', stdin=p4.stdout)
-  p6              = Popen("sed 's/&/\&amp;/g'", stdin=p5.stdout)
-  p7              = Popen("sed 's/>/\&gt;/g'", stdin=p6.stdout)
+  p1              = subprocess.Popen(["ps", "-e", "-o", "pcpu,args"], stdout=subprocess.PIPE)
+  p2              = subprocess.Popen(["cut", "-c", "-132"], stdin=p1.stdout, stdout=subprocess.PIPE)
+  p3              = subprocess.Popen(["awk", "NR>2"], stdin=p2.stdout, stdout=subprocess.PIPE)
+  p4              = subprocess.Popen(["sort", "-nr"], stdin=p3.stdout, stdout=subprocess.PIPE)
+  p5              = subprocess.Popen(["head", "-10"], stdin=p4.stdout, stdout=subprocess.PIPE)
+  p6              = subprocess.Popen(["sed", "s/&/\&amp;/g"], stdin=p5.stdout, stdout=subprocess.PIPE)
+  p7              = subprocess. Popen(["sed", "s/>/\&gt;/g"], stdin=p6.stdout, stdout=subprocess.PIPE)
   psout           = p7.stdout.read()
 
   #
