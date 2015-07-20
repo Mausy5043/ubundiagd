@@ -14,6 +14,7 @@ from libdaemon import Daemon
 
 DEBUG = False
 IS_SYSTEMD = os.path.isfile('/bin/journalctl')
+os.nice(10)
 
 class MyDaemon(Daemon):
   def run(self):
