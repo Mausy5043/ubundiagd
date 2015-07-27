@@ -196,35 +196,38 @@ def do_xml(rpath):
   #f.write(' Last test : ' + 'Not available\n')
   if not "PASSED" in Hda:
     f.write('             ' + Hda +'\n')
-  if not(RBCsda==0):
+  if not(RBCsda=="0"):
     f.write('              Retired Block Count (5) = ' + RBCsda +'\n')
   f.write('---disk1---\n')
   f.write(' Name      : ' + Infob + '\n')
   f.write(' PowerOn   : ' + Ptb + '\n')
   if not "without" in Testb:
     f.write(' Last test : ' + Testb +'\n')
-  if "PASSED" in Hdb:
+  if not "PASSED" in Hdb:
     f.write('             ' + Hdb +'\n')
-  if not(RBCsdb==0):
-    if not(OUsdb==0):
+  if not(RBCsdb=="0"):
+    if not(OUsdb=="0"):
       f.write('              Retired Block Count (5) = ' + RBCsdb + ' - Offline Uncorrectable (198) = ' + OUsdb +'\n')
   f.write('---disk2---\n')
   f.write(' Name      : ' + Infoc + '\n')
   f.write(' PowerOn   : ' + Ptc + '\n')
   f.write(' Last test : ' + Testc +'\n')
-  f.write('             ' + Hdc +'\n')
+  if not "PASSED" in Hdc:
+    f.write('             ' + Hdc +'\n')
   f.write('              Retired Block Count (5) = ' + RBCsdc + ' - Offline Uncorrectable (198) = ' + OUsdc +'\n')
   f.write('---disk3---\n')
   f.write(' Name      : ' + Infod + '\n')
   f.write(' PowerOn   : ' + Ptd + '\n')
   f.write(' Last test : ' + Testd +'\n')
-  f.write('             ' + Hdd +'\n')
+  if not "PASSED" in Hdd:
+    f.write('             ' + Hdd +'\n')
   f.write('              Retired Block Count (5) = ' + RBCsdd + ' - Offline Uncorrectable (198) = ' + OUsdd +'\n')
   f.write('---disk4---\n')
   f.write(' Name      : ' + Infoe + '\n')
   f.write(' PowerOn   : ' + Pte + '\n')
   f.write(' Last test : ' + Teste +'\n')
-  f.write('             ' + Hde +'\n')
+  if not "PASSED" in Hde:
+    f.write('             ' + Hde +'\n')
   f.write('              Retired Block Count (5) = ' + RBCsde + ' - Offline Uncorrectable (198) = ' + OUsde +'\n')
   f.write(' ')
   #f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
