@@ -214,21 +214,27 @@ def do_xml(rpath):
   f.write(' Last test : ' + Testc +'\n')
   if not "PASSED" in Hdc:
     f.write('             ' + Hdc +'\n')
-  f.write('              Retired Block Count (5) = ' + RBCsdc + ' - Offline Uncorrectable (198) = ' + OUsdc +'\n')
+  if not(RBCsdc=="0"):
+    if not(OUsdc=="0"):
+        f.write('              Retired Block Count (5) = ' + RBCsdc + ' - Offline Uncorrectable (198) = ' + OUsdc +'\n')
   f.write('---disk3---\n')
   f.write(' Name      : ' + Infod + '\n')
   f.write(' PowerOn   : ' + Ptd + '\n')
   f.write(' Last test : ' + Testd +'\n')
   if not "PASSED" in Hdd:
     f.write('             ' + Hdd +'\n')
-  f.write('              Retired Block Count (5) = ' + RBCsdd + ' - Offline Uncorrectable (198) = ' + OUsdd +'\n')
+  if not(RBCsdd=="0"):
+    if not(OUsdd=="0"):
+      f.write('              Retired Block Count (5) = ' + RBCsdd + ' - Offline Uncorrectable (198) = ' + OUsdd +'\n')
   f.write('---disk4---\n')
   f.write(' Name      : ' + Infoe + '\n')
   f.write(' PowerOn   : ' + Pte + '\n')
   f.write(' Last test : ' + Teste +'\n')
   if not "PASSED" in Hde:
     f.write('             ' + Hde +'\n')
-  f.write('              Retired Block Count (5) = ' + RBCsde + ' - Offline Uncorrectable (198) = ' + OUsde +'\n')
+  if not(RBCsde=="0"):
+    if not(OUsde=="0"):
+      f.write('              Retired Block Count (5) = ' + RBCsde + ' - Offline Uncorrectable (198) = ' + OUsde +'\n')
   f.write(' ')
   #f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
   f.write('</temperature>\n')
