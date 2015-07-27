@@ -193,15 +193,21 @@ def do_xml(rpath):
   f.write('---SSD---\n')
   f.write(' Name      : ' + Infoa + '\n')
   f.write(' PowerOn   : ' + Pta + '\n')
-  f.write(' Last test : ' + 'Not available\n')
-  f.write('             ' + Hda +'\n')
-  f.write('              Retired Block Count (5) = ' + RBCsda +'\n')
+  #f.write(' Last test : ' + 'Not available\n')
+  if not "PASSED" in Hda:
+    f.write('             ' + Hda +'\n')
+  if not(RBCsda==0):
+    f.write('              Retired Block Count (5) = ' + RBCsda +'\n')
   f.write('---disk1---\n')
   f.write(' Name      : ' + Infob + '\n')
   f.write(' PowerOn   : ' + Ptb + '\n')
-  f.write(' Last test : ' + Testb +'\n')
-  f.write('             ' + Hdb +'\n')
-  f.write('              Retired Block Count (5) = ' + RBCsdb + ' - Offline Uncorrectable (198) = ' + OUsdb +'\n')
+  if not "without" in Testb:
+    f.write(' Last test : ' + Testb +'\n')
+  if "PASSED" in Hdb:
+    f.write('             ' + Hdb +'\n')
+  if not(RBCsdb==0):
+    if not(OUsdb==0):
+      f.write('              Retired Block Count (5) = ' + RBCsdb + ' - Offline Uncorrectable (198) = ' + OUsdb +'\n')
   f.write('---disk2---\n')
   f.write(' Name      : ' + Infoc + '\n')
   f.write(' PowerOn   : ' + Ptc + '\n')
