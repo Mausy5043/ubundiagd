@@ -212,7 +212,7 @@ def do_xml(rpath):
   f.write(' Name      : ' + Infoc + '\n')
   f.write(' PowerOn   : ' + Ptc + '\n')
   if not "without" in Testc:
-  f.write(' Last test : ' + Testc +'\n')
+    f.write(' Last test : ' + Testc +'\n')
   if not "PASSED" in Hdc:
     f.write('             ' + Hdc +'\n')
   if not(RBCsdc=="0"):
@@ -222,7 +222,7 @@ def do_xml(rpath):
   f.write(' Name      : ' + Infod + '\n')
   f.write(' PowerOn   : ' + Ptd + '\n')
   if not "without" in Testd:
-  f.write(' Last test : ' + Testd +'\n')
+    f.write(' Last test : ' + Testd +'\n')
   if not "PASSED" in Hdd:
     f.write('             ' + Hdd +'\n')
   if not(RBCsdd=="0"):
@@ -232,7 +232,7 @@ def do_xml(rpath):
   f.write(' Name      : ' + Infoe + '\n')
   f.write(' PowerOn   : ' + Pte + '\n')
   if not "without" in Teste:
-  f.write(' Last test : ' + Teste +'\n')
+    f.write(' Last test : ' + Teste +'\n')
   if not "PASSED" in Hde:
     f.write('             ' + Hde +'\n')
   if not(RBCsde=="0"):
