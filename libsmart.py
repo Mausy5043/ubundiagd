@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
   DEBUG = True
 
-  sda = SmartDisk("/dev/sda")
+  sda = SmartDisk("/dev/sda",1)
   sda.smart()
 
   print sda.getdata('194')
