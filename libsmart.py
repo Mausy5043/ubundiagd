@@ -62,10 +62,8 @@ class SmartDisk():
   def getlasttest(self):
     return self.selftest
 
-
   def getinfo(self):
     return self.identity
-
 
 if __name__ == '__main__':
 
