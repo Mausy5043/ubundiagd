@@ -47,12 +47,12 @@ class MyDaemon(Daemon):
 
 def do_work():
   # Read the ambient temperature
-  stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
+  stsTamb, Tamb = commands.getstatusoutput("cat /tmp/temperv14.dat")
   if stsTamb > 0:
     if DEBUG:print "***"
     if DEBUG:print stsTamb
     time.sleep(2)
-    stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
+    stsTamb, Tamb = commands.getstatusoutput("cat /tmp/temperv14.dat")
 
   if stsTamb > 0:
     if DEBUG:print "***"
