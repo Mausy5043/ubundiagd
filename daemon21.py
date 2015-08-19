@@ -58,14 +58,15 @@ def do_work():
   # Read the ambient temperature
   if os.path.isfile(datafile):
     Tamb = commands.getoutput("cat /tmp/temperv14.dat")
+    Tamb = float(Tamb)
   else:
     Tamb = "NaN"
 
-  if Tamb > 45:
+  if Tamb > 45.0:
     if DEBUG:print "*** Ambient temperature too high ***"
     if DEBUG:print Tamb
     Tamb = "NaN"
-  if Tamb < 5:
+  if Tamb < 5.0:
     if DEBUG:print "*** Ambient temperature too low ***"
     if DEBUG:print Tamb
     Tamb = "NaN"
