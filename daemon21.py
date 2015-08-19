@@ -47,6 +47,7 @@ class MyDaemon(Daemon):
 
 def do_work():
   lockfile="/tmp/temperv14.lock"
+  datafile="/tmp/temperv14.dat"
   # prevent race conditions
   time.sleep(3)
   while os.path.isfile(lockfile):
@@ -55,7 +56,10 @@ def do_work():
     time.sleep(1)
 
   # Read the ambient temperature
-  Tamb = commands.getoutput("cat /tmp/temperv14.dat")
+  if os.path.isfile(datafile):
+    Tamb = commands.getoutput("cat /tmp/temperv14.dat")
+  else:
+    Tamb = "NaN"
 
   if Tamb > 45:
     if DEBUG:print "*** Ambient temperature too high ***"
@@ -65,7 +69,7 @@ def do_work():
     if DEBUG:print "*** Ambient temperature too low ***"
     if DEBUG:print Tamb
     Tamb = "NaN"
-    
+
   return  Tamb
 
 def do_report(result):
