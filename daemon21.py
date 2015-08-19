@@ -19,7 +19,7 @@ class MyDaemon(Daemon):
     samples = 1
     datapoints = 1
     # 16 samples/hr:
-    sampleTime = 225
+    sampleTime = 60*3
     cycleTime = samples * sampleTime
     # sync to whole minute
     waitTime = (cycleTime + sampleTime) - (time.time() % cycleTime)
@@ -46,18 +46,26 @@ class MyDaemon(Daemon):
         time.sleep(waitTime)
 
 def do_work():
-  # Read the ambient temperature
-  stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
-  if stsTamb > 0:
-    if DEBUG:print "***"
-    if DEBUG:print stsTamb
-    time.sleep(2)
-    stsTamb, Tamb = commands.getstatusoutput("sudo /srv/array1/rbin/boson/temperv14 -c")
+  lockfile="/tmp/temperv14.lock"
+  # prevent race conditions
+  time.sleep(3)
+  while os.path.isfile(lockfile):
+    if DEBUG:print "lockfile exists. Waiting..."
+    # wait while the server has locked the directory
+    time.sleep(1)
 
-  if stsTamb > 0:
-    if DEBUG:print "***"
-    if DEBUG:print stsTamb
+  # Read the ambient temperature
+  Tamb = commands.getoutput("cat /tmp/temperv14.dat")
+
+  if Tamb > 45:
+    if DEBUG:print "*** Ambient temperature too high ***"
+    if DEBUG:print Tamb
     Tamb = "NaN"
+  if Tamb < 5:
+    if DEBUG:print "*** Ambient temperature too low ***"
+    if DEBUG:print Tamb
+    Tamb = "NaN"
+    
   return  Tamb
 
 def do_report(result):
