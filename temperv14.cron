@@ -1,7 +1,7 @@
 #
 #
-# This file should be move to /etc/cron.d/temperv14.cron
-#
+# This file should be move to /etc/cron.d/temperv14
+# NOTE: no extension!
 #
 #
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
