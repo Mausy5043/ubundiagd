@@ -57,8 +57,11 @@ def do_work():
 
   # Read the ambient temperature
   if os.path.isfile(datafile):
-    Tamb = commands.getoutput("cat /tmp/temperv14.dat")
-    Tamb = float(Tamb)
+    if os.stat(datafile).st_size == 0:
+      Tamb = commands.getoutput("cat /tmp/temperv14.dat")
+      Tamb = float(Tamb)
+    else:
+      Tamb = "NaN"
   else:
     Tamb = "NaN"
 
