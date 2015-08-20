@@ -9,5 +9,5 @@ fi
 
 touch $lf
 /srv/array1/rbin/boson/temperv14 -c >$of
-chmod 777 $of
+chmod 744 $of
 rm $lf
