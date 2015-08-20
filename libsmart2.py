@@ -11,7 +11,7 @@ class SmartDisk():
   Usage: (under construction)
   """
   def __init__(self,diskid):
-    self.diskid   = "smartinfo-" + diskid
+    self.diskid   = "/tmp/ubundiagd/smartinfo-" + diskid
     self.vars     = "-"
     self.health   = "-"
     self.selftest = "-"
@@ -47,7 +47,7 @@ class SmartDisk():
     return ret
 
   def gethealth(self):
-    return self.health[0]
+    return self.health
 
   def getlasttest(self):
     return self.selftest
@@ -59,15 +59,28 @@ if __name__ == '__main__':
 
   DEBUG = True
 
+  print "**** Initialisation ****"
   sda = SmartDisk("wwn-0x4891478331354402817x")
+  print " "
+  print "**** smart() ****"
   sda.smart()
 
+  print " "
+  print "**** getdata(194) ****"
   print sda.getdata('194')
-  print "last test:"
+
+  print " "
+  print "**** getlasttest() ****"
   print sda.getlasttest()
-  print "diskid"
+
+  print " "
+  print "**** getinfo() ****"
   print sda.getinfo()
-  print "health"
+
+  print " "
+  print "**** gethealth() ****"
   print sda.gethealth()
-  print "data 9"
+
+  print " "
+  print "**** getdata(9) ****"
   print sda.getdata('9')
