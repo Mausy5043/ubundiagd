@@ -46,8 +46,8 @@ class MyDaemon(Daemon):
         time.sleep(waitTime)
 
 def do_work():
-  lockfile="/tmp/temperv14.lock"
-  datafile="/tmp/temperv14.dat"
+  lockfile="/tmp/ubundiagd/temperv14.lock"
+  datafile="/tmp/ubundiagd/temperv14.dat"
   # prevent race conditions
   time.sleep(3)
   while os.path.isfile(lockfile):
@@ -58,7 +58,7 @@ def do_work():
   # Read the ambient temperature
   if os.path.isfile(datafile):
     if os.stat(datafile).st_size > 0:
-      Tamb = commands.getoutput("cat /tmp/temperv14.dat")
+      Tamb = commands.getoutput("cat /tmp/ubundiagd/temperv14.dat")
       Tamb = float(Tamb)
     else:
       if DEBUG:print "datafile has NULL-size!"

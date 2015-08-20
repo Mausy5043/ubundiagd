@@ -1,7 +1,11 @@
 #! /bin/bash
 
-of="/tmp/temperv14.dat"
-lf="/tmp/temperv14.lock"
+of="/tmp/ubundiagd/temperv14.dat"
+lf="/tmp/ubundiagd/temperv14.lock"
+
+if [[ ! -d /tmp/ubundiagd ]]; then
+  mkdir /tmp/ubundiagd
+fi
 
 touch $lf
 /srv/array1/rbin/boson/temperv14 -c >$of
