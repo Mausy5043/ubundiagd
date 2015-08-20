@@ -10,7 +10,7 @@
 
 import os, sys, time, math, commands
 from libdaemon import Daemon
-from new_libsmart import SmartDisk
+from libsmart2 import SmartDisk
 
 # BEWARE
 # The disks identified here as `sda`, `sdb` etc. may not necessarily
@@ -88,9 +88,9 @@ def do_report(result):
   # Get the time and date in human-readable form and UN*X-epoch...
   outDate = commands.getoutput("date '+%F %H:%M:%S, %s'")
   result = ', '.join(map(str, result))
-  flock = '/tmp/ubundiagd/n19.lock'
+  flock = '/tmp/ubundiagd/19.lock'
   lock(flock)
-  f = file('/tmp/ubundiagd/n19-tempdisk.dat', 'a')
+  f = file('/tmp/ubundiagd/19-tempdisk.dat', 'a')
   # write out a NaN for disks sdf and sdg
   f.write('{0}, {1}, NaN, NaN\n'.format(outDate, result) )
   f.close()
@@ -105,7 +105,7 @@ def unlock(fname):
     os.remove(fname)
 
 if __name__ == "__main__":
-  daemon = MyDaemon('/tmp/ubundiagd/n19.pid')
+  daemon = MyDaemon('/tmp/ubundiagd/19.pid')
   if len(sys.argv) == 2:
     if 'start' == sys.argv[1]:
       daemon.start()
