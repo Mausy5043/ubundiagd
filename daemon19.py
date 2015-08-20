@@ -28,7 +28,7 @@ DEBUG = False
 class MyDaemon(Daemon):
   def run(self):
     sampleptr = 0
-    samples = 12
+    samples = 1
     datapoints = 7
     data = [[None]*datapoints for _ in range(samples)]
 
