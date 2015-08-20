@@ -90,7 +90,7 @@ def do_report(result):
   result = ', '.join(map(str, result))
   flock = '/tmp/ubundiagd/19.lock'
   lock(flock)
-  f = file('/tmp/ubundiagd/19-tempdisk.dat', 'a')
+  f = file('/tmp/ubundiagd/19-tempdisk.csv', 'a')
   # write out a NaN for disks sdf and sdg
   f.write('{0}, {1}, NaN, NaN\n'.format(outDate, result) )
   f.close()
