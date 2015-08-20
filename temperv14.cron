@@ -1,9 +1,9 @@
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 #
 #
 # This file should be move to /etc/cron.d/temperv14
 # NOTE: no extension!
 #
 #
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 # m     h       dom     mon     dow     command
-*/5     *       *       *       *       root  ( /home/beheer/ubundiagd/temperv14.sh |logger -p info -t temper )
+*/3     *       *       *       *       root  ( /home/beheer/ubundiagd/temperv14.sh |logger -p info -t temperv14 )
