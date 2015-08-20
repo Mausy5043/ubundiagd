@@ -24,7 +24,7 @@ function smart1999 {
     smartctl -i "/dev/disk/by-id/"$1 |awk 'NR>4' >$rf"-"$1"-i.dat"
   fi
   smartctl -A "/dev/disk/by-id/"$1 |awk 'NR>7' >$rf"-"$1"-A.dat"
-  smartctl -H "/dev/disk/by-id/"$1 |awk 'NR>4' >$rf"-"$1"-H.dat"
+  smartctl -H "/dev/disk/by-id/"$1 |grep 'test result' >$rf"-"$1"-H.dat"
   smartctl -l selftest "/dev/disk/by-id/"$1 |grep '\# 1' >$rf"-"$1"-l.dat"
   chmod 744 $rf-*
 }
