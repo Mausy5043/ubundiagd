@@ -16,11 +16,11 @@ import subprocess
 # BEWARE
 # The disks identified here as `sda`, `sdb` etc. may not necessarily
 # be called `/dev/sda`, `/dev/sdb` etc. on the system!!
-sda = SmartDisk("wwn-0x7914297948508409858x",1)
-sdb = SmartDisk("wwn-0x1138954418312597505x",1)
-sdc = SmartDisk("wwn-0x4891478331354402817x",1)
-sdd = SmartDisk("wwn-0x2556643098891800577x",1)
-sde = SmartDisk("wwn-0x13230455334254301185x",1)
+sda = SmartDisk("wwn-0x7914297948508409858x")
+sdb = SmartDisk("wwn-0x1138954418312597505x")
+sdc = SmartDisk("wwn-0x4891478331354402817x")
+sdd = SmartDisk("wwn-0x2556643098891800577x")
+sde = SmartDisk("wwn-0x13230455334254301185x")
 
 DEBUG = False
 
