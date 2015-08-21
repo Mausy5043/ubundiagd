@@ -16,7 +16,7 @@ pushd $HOME/ubundiagd
  # git log --graph --oneline --date-order --decorate --color --all
 
  DIFFlibd=$(git --no-pager diff --name-only $branch..origin/$branch -- ./libdaemon.py)
- DIFFlibs=$(git --no-pager diff --name-only $branch..origin/$branch -- ./libsmart.py)
+ DIFFlibs=$(git --no-pager diff --name-only $branch..origin/$branch -- ./libsmart2.py)
  DIFFd11=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon11.py)
  DIFFd12=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon12.py)
  DIFFd13=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon13.py)
