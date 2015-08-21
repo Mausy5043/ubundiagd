@@ -10,17 +10,17 @@
 
 import os, sys, shutil, glob, platform, time, commands
 from libdaemon import Daemon
-from libsmart import SmartDisk
+from libsmart2 import SmartDisk
 import subprocess
 
 # BEWARE
 # The disks identified here as `sda`, `sdb` etc. may not necessarily
 # be called `/dev/sda`, `/dev/sdb` etc. on the system!!
-sda = SmartDisk("/dev/disk/by-id/wwn-0x7914297948508409858x",1)
-sdb = SmartDisk("/dev/disk/by-id/wwn-0x1138954418312597505x",1)
-sdc = SmartDisk("/dev/disk/by-id/wwn-0x4891478331354402817x",1)
-sdd = SmartDisk("/dev/disk/by-id/wwn-0x2556643098891800577x",1)
-sde = SmartDisk("/dev/disk/by-id/wwn-0x13230455334254301185x",1)
+sda = SmartDisk("wwn-0x7914297948508409858x",1)
+sdb = SmartDisk("wwn-0x1138954418312597505x",1)
+sdc = SmartDisk("wwn-0x4891478331354402817x",1)
+sdd = SmartDisk("wwn-0x2556643098891800577x",1)
+sde = SmartDisk("wwn-0x13230455334254301185x",1)
 
 DEBUG = False
 
