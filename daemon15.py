@@ -61,7 +61,7 @@ def do_work():
     #       specified priorities.
     kernlog = commands.getoutput("journalctl --since=00:00:00 --no-pager -p 3 |wc -l").split()[0]
     messlog = commands.getoutput("journalctl --since=00:00:00 --no-pager -p 4 |wc -l").split()[0]
-    syslog  = commands.getoutput("journalctl --since=00:00:00 --no-pager |grep -v 'smart\|pam' |wc -l").split()[0]
+    syslog  = commands.getoutput("journalctl --since=00:00:00 --no-pager      |wc -l").split()[0]
   else:
     kernlog = commands.getoutput("wc -l /var/log/kern.log").split()[0]
     messlog = commands.getoutput("wc -l /var/log/smartd.log").split()[0]
