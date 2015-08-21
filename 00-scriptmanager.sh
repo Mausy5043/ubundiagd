@@ -93,7 +93,7 @@ if [[ -n "$DIFFlibs" ]]; then
   logger -t ubundiagd "Source libsmart has changed."
   ./daemon19.py stop
   ./daemon99.py stop
-  rm libsmart.pyc
+  rm libsmart2.pyc
 fi
 
 ######## (Re-)start daemons ######
