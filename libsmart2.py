@@ -7,6 +7,8 @@ DEBUG = False
 class SmartDisk():
   """
   A class to access information on S.M.A.R.T. disks.
+  This relies on a seperate script to read the S.M.A.R.T. data and store it in
+  the directory `/tmp/ubundiagd`
 
   Usage: (under construction)
   """
