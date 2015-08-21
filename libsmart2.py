@@ -33,7 +33,6 @@ class SmartDisk():
     self.vars     = commands.getoutput("cat " + self.diskid + "-A.dat").splitlines()
     self.health   = commands.getoutput("cat " + self.diskid + "-H.dat")
     self.selftest = commands.getoutput("cat " + self.diskid + "-l.dat")
-
     self.identity = commands.getoutput("cat " + self.diskid + "-i.dat").splitlines()
     retm=retd=rets=""
     for line in self.identity:
@@ -48,7 +47,7 @@ class SmartDisk():
           rets = line.split(': ')[1].strip()
     self.identity = retm + " || " + retd + " (" + rets +")"
 
-    if DEBUG:print self.vars
+    if DEBUG:print self.identity
     return 0
 
   def getdata(self,id):
