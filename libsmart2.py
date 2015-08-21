@@ -10,7 +10,10 @@ class SmartDisk():
   This relies on a seperate script to read the S.M.A.R.T. data and store it in
   the directory `/tmp/ubundiagd`
 
-  Usage: (under construction)
+  Usage:
+    from libsmart2 import SmartDisk
+
+    see example code at bottom of this file.
   """
   def __init__(self,diskid):
     self.diskid   = "/tmp/ubundiagd/smartinfo-" + diskid
