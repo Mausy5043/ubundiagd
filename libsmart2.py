@@ -33,6 +33,21 @@ class SmartDisk():
     self.vars     = commands.getoutput("cat " + self.diskid + "-A.dat").splitlines()
     self.health   = commands.getoutput("cat " + self.diskid + "-H.dat")
     self.selftest = commands.getoutput("cat " + self.diskid + "-l.dat")
+
+    self.identity = commands.getoutput("cat " + self.diskid + "-i.dat").splitlines()
+    retm=retd=rets=""
+    for line in self.identity:
+      if DEBUG:print line
+      if (line != ''):
+        ls=line.split()
+        if (ls[0] == "Model"):
+          retm = line.split(': ')[1].strip()
+        if (ls[0] == "Device") and (ls[1] == "Model:"):
+          retd = line.split(': ')[1].strip()
+        if (ls[0] == "Serial"):
+          rets = line.split(': ')[1].strip()
+    self.identity = retm + " || " + retd + " (" + rets +")"
+
     if DEBUG:print self.vars
     return 0
 
