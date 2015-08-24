@@ -8,6 +8,7 @@
 
 # daemon19.py measures the temperature of the diskarray.
 
+import syslog, traceback
 import os, sys, time, math, commands
 from libdaemon import Daemon
 from libsmart2 import SmartDisk
@@ -117,6 +118,9 @@ if __name__ == "__main__":
       # assist with debugging.
       print "Debug-mode started. Use <Ctrl>+C to stop."
       DEBUG = True
+      if DEBUG:
+      	logtext = "Daemon logging is ON"
+      	syslog.syslog(syslog.LOG_DEBUG, logtext)
       daemon.run()
     else:
       print "Unknown command"

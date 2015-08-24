@@ -9,6 +9,7 @@
 # daemon15.py measures the size of selected logfiles.
 # These are all counters, therefore no averaging is needed.
 
+import syslog, traceback
 import os, sys, time, math, commands
 from libdaemon import Daemon
 
@@ -102,6 +103,9 @@ if __name__ == "__main__":
       # assist with debugging.
       print "Debug-mode started. Use <Ctrl>+C to stop."
       DEBUG = True
+      if DEBUG:
+      	logtext = "Daemon logging is ON"
+      	syslog.syslog(syslog.LOG_DEBUG, logtext)
       daemon.run()
     else:
       print "Unknown command"

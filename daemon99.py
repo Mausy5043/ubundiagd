@@ -8,6 +8,7 @@
 
 # daemon99.py creates an XML-file and uploads data to the server.
 
+import syslog, traceback
 import os, sys, shutil, glob, platform, time, commands
 from libdaemon import Daemon
 from libsmart2 import SmartDisk
@@ -274,6 +275,9 @@ if __name__ == "__main__":
       # assist with debugging.
       print "Debug-mode started. Use <Ctrl>+C to stop."
       DEBUG = True
+      if DEBUG:
+      	logtext = "Daemon logging is ON"
+      	syslog.syslog(syslog.LOG_DEBUG, logtext)
       daemon.run()
     else:
       print "Unknown command"
