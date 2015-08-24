@@ -47,18 +47,33 @@ class MyDaemon(Daemon):
     else:
       time.sleep(waitTime)
     while True:
-      startTime=time.time()
+      try:
+        startTime=time.time()
 
-      if os.path.exists(remote_path):
-        do_mv_data(remote_path)
-        do_xml(remote_path)
-      else:
-        if DEBUG:print remote_path + " not available"
+        if os.path.exists(remote_path):
+          do_mv_data(remote_path)
+          do_xml(remote_path)
+        else:
+          if DEBUG:print remote_path + " not available"
 
-      waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
-      if (waitTime > 0):
-        if DEBUG:print "Waiting {0} s".format(waitTime)
-        time.sleep(waitTime)
+        waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
+        if (waitTime > 0):
+          if DEBUG:print "Waiting {0} s".format(waitTime)
+          time.sleep(waitTime)
+      except Exception as e:
+        if DEBUG:
+          print("Unexpected error:")
+          print e.message
+        syslog.syslog(e.__doc__)
+        syslog_trace(traceback.format_exc())
+        raise
+
+def syslog_trace(trace):
+	'''Log a python stack trace to syslog'''
+	log_lines = trace.split('\n')
+	for line in log_lines:
+		if len(line):
+			syslog.syslog(line)
 
 def do_mv_data(rpath):
   hostlock = rpath + '/host.lock'

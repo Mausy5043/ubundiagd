@@ -42,25 +42,40 @@ class MyDaemon(Daemon):
     else:
       time.sleep(waitTime)
     while True:
-      startTime = time.time()
+      try:
+        startTime = time.time()
 
-      result = do_work().split(',')
-      if DEBUG: print result
+        result = do_work().split(',')
+        if DEBUG: print result
 
-      data[sampleptr] = map(float, result)
-      # report sample average
-      sampleptr = sampleptr + 1
-      if (sampleptr == samples):
-        somma = map(sum,zip(*data))
-        averages = [format(s / samples, '.3f') for s in somma]
-        if DEBUG:print averages
-        do_report(averages)
-        sampleptr = 0
+        data[sampleptr] = map(float, result)
+        # report sample average
+        sampleptr = sampleptr + 1
+        if (sampleptr == samples):
+          somma = map(sum,zip(*data))
+          averages = [format(s / samples, '.3f') for s in somma]
+          if DEBUG:print averages
+          do_report(averages)
+          sampleptr = 0
 
-      waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
-      if (waitTime > 0):
-        if DEBUG:print "Waiting {0} s".format(int(waitTime))
-        time.sleep(waitTime)
+        waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
+        if (waitTime > 0):
+          if DEBUG:print "Waiting {0} s".format(int(waitTime))
+          time.sleep(waitTime)
+      except Exception as e:
+        if DEBUG:
+          print("Unexpected error:")
+          print e.message
+        syslog.syslog(e.__doc__)
+        syslog_trace(traceback.format_exc())
+        raise
+
+def syslog_trace(trace):
+	'''Log a python stack trace to syslog'''
+	log_lines = trace.split('\n')
+	for line in log_lines:
+		if len(line):
+			syslog.syslog(line)
 
 def do_work():
   # 5 datapoints gathered here
