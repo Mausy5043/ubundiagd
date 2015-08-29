@@ -271,8 +271,9 @@ def do_xml(rpath):
   return
 
 def lock(fname):
-  fd = open(fname, 'a').close()
+  fd = open(fname, 'a')
   os.fchown(fd, 1000, -1)
+  close(fd)
 
 def unlock(fname):
   if os.path.isfile(fname):
