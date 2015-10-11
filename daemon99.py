@@ -69,11 +69,11 @@ class MyDaemon(Daemon):
         raise
 
 def syslog_trace(trace):
-	'''Log a python stack trace to syslog'''
-	log_lines = trace.split('\n')
-	for line in log_lines:
-		if len(line):
-			syslog.syslog(line)
+  '''Log a python stack trace to syslog'''
+  log_lines = trace.split('\n')
+  for line in log_lines:
+    if len(line):
+      syslog.syslog(line)
 
 def do_mv_data(rpath):
   hostlock = rpath + '/host.lock'
@@ -291,8 +291,8 @@ if __name__ == "__main__":
       print "Debug-mode started. Use <Ctrl>+C to stop."
       DEBUG = True
       if DEBUG:
-      	logtext = "Daemon logging is ON"
-      	syslog.syslog(syslog.LOG_DEBUG, logtext)
+        logtext = "Daemon logging is ON"
+        syslog.syslog(syslog.LOG_DEBUG, logtext)
       daemon.run()
     else:
       print "Unknown command"
