@@ -39,7 +39,7 @@ class MyDaemon(Daemon):
     sampleTime = 60
     cycleTime = samples * sampleTime
     # sync to whole minute
-    waitTime = (cycleTime + sampleTime) - (time.time() % (cycleTime/cycles))
+    waitTime = (cycleTime + sampleTime) - (time.time() % cycleTime)
     if DEBUG:
       print "NOT waiting {0} s.".format(waitTime)
     else:
