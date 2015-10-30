@@ -10,11 +10,11 @@ rf="/tmp/ubundiagd/smartinfo"
 # BEWARE
 # The disks identified here as `sda`, `sdb` etc. may not necessarily
 # be called `/dev/sda`, `/dev/sdb` etc. on the system!!
-sda="wwn-0x50026b723c0d6dd5" # was 0x13230455334254301185x"
-sdb="wwn-0x50014ee261020fce" # was 0x7914297948508409858x"
-sdc="wwn-0x50014ee605a043e2" # was 0x1138954418312597505x"
-sdd="wwn-0x50014ee6055a237b" # was 0x4891478331354402817x"
-sde="wwn-0x50014ee60507b79c" # was 0x2556643098891800577x"
+sda="wwn-0x50026b723c0d6dd5" # SSD 50026B723C0D6DD5"
+sdb="wwn-0x50014ee261020fce" # WD-WCC4N5PF96KD"
+sdc="wwn-0x50014ee605a043e2" # WD-WMC4N0K01249"
+sdd="wwn-0x50014ee6055a237b" # WD-WMC4N0J6Y6LW"
+sde="wwn-0x50014ee60507b79c" # WD-WMC4N0E24DVU"
 #sdf=""
 #sdg=""
 
