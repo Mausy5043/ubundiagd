@@ -1,7 +1,7 @@
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 #
 #
-# This file should be move to /etc/cron.d/smartinfo19-99
+# This file should be moved to /etc/cron.d/smartinfo19-99
 # NOTE: no extension!
 #
 #
