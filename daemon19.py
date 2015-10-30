@@ -16,11 +16,11 @@ from libsmart2 import SmartDisk
 # BEWARE
 # The disks identified here as `sda`, `sdb` etc. may not necessarily
 # be called `/dev/sda`, `/dev/sdb` etc. on the system!!
-sda = SmartDisk("wwn-0x50014ee261020fce") # was 0x7914297948508409858x"
-sdb = SmartDisk("wwn-0x50014ee605a043e2") # was 0x1138954418312597505x"
-sdc = SmartDisk("wwn-0x50014ee6055a237b") # was 0x4891478331354402817x"
-sdd = SmartDisk("wwn-0x50014ee60507b79c") # was 0x2556643098891800577x"
-sde = SmartDisk("wwn-0x50026b723c0d6dd5") # was 0x13230455334254301185x"
+sda = SmartDisk("wwn-0x50026b723c0d6dd5") # was 0x13230455334254301185x"
+sdb = SmartDisk("wwn-0x50014ee261020fce") # was 0x7914297948508409858x"
+sdc = SmartDisk("wwn-0x50014ee605a043e2") # was 0x1138954418312597505x"
+sdd = SmartDisk("wwn-0x50014ee6055a237b") # was 0x4891478331354402817x"
+sde = SmartDisk("wwn-0x50014ee60507b79c") # was 0x2556643098891800577x"
 #sda = SmartDisk("wwn-0x7914297948508409858x")
 #sdb = SmartDisk("wwn-0x1138954418312597505x")
 #sdc = SmartDisk("wwn-0x4891478331354402817x")
