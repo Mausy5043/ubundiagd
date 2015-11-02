@@ -74,8 +74,10 @@ def do_work():
   # Read the ambient temperature
   if os.path.isfile(datafile):
     if os.stat(datafile).st_size > 0:
-      Tamb = commands.getoutput("cat /tmp/ubundiagd/temperv14.dat")
-      Tamb = float(Tamb)
+      f   = file(datafile,'r')
+      cat = f.read().strip('\n')
+      f.close()
+      Tamb = float(cat)
     else:
       if DEBUG:print "datafile has NULL-size!"
       Tamb = "NaN"
