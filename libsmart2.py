@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import commands, time
+import commands, time, os
 
 DEBUG = False
 
