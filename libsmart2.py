@@ -39,10 +39,10 @@ class SmartDisk():
     #self.health   = commands.getoutput("cat " + self.diskid + "-H.dat")
     #self.selftest = commands.getoutput("cat " + self.diskid + "-l.dat")
     #self.identity = commands.getoutput("cat " + self.diskid + "-i.dat").splitlines()
-    self.vars     = cat(self.diskid + "-A.dat").splitlines()
-    self.health   = cat(self.diskid + "-H.dat")
-    self.selftest = cat(self.diskid + "-l.dat")
-    self.identity = cat(self.diskid + "-i.dat").splitlines()
+    self.vars     = self.cat(self.diskid + "-A.dat").splitlines()
+    self.health   = self.cat(self.diskid + "-H.dat")
+    self.selftest = self.cat(self.diskid + "-l.dat")
+    self.identity = self.cat(self.diskid + "-i.dat").splitlines()
     retm=retd=rets=""
     for line in self.identity:
       if DEBUG:print line
@@ -78,7 +78,7 @@ class SmartDisk():
   def getinfo(self):
     return self.identity
 
-  def cat(filename):
+  def cat(self,filename):
     ret = ""
     if os.path.isfile(filename):
       f = file(filename,'r')
