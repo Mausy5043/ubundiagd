@@ -69,13 +69,18 @@ def syslog_trace(trace):
     if len(line):
       syslog.syslog(syslog.LOG_ALERT,line)
 
+def cat(filename):
+  ret = ""
+  if os.path.isfile(filename):
+    f = file(filename,'r')
+    ret = f.read().strip('\n')
+    f.close()
+  return ret
+
 def do_work():
   # 6 datapoints gathered here
-  fi   = "/proc/loadavg"
-  f    = file(fi,'r')
-  outHistLoad = f.read().strip('\n').replace(" ",", ").replace("/",", ")
-  f.close()
-  
+  outHistLoad = cat("/proc/loadavg").replace(" ",", ").replace("/",", ")
+
   # 5 datapoints gathered here
   outCpu = commands.getoutput("vmstat 1 2").splitlines()[3].split()
   outCpuUS = outCpu[12]

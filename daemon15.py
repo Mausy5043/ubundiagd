@@ -11,6 +11,7 @@
 
 import syslog, traceback
 import os, sys, time, math, commands
+from subprocess import check_output
 from libdaemon import Daemon
 
 DEBUG = False
@@ -79,11 +80,13 @@ def do_work():
     warnlog = commands.getoutput("journalctl --since=00:00:00 --no-pager -p 4 |wc -l").split()[0]
     syslog  = commands.getoutput("journalctl --since=00:00:00 --no-pager      |wc -l").split()[0]
   else:
-    critlog = commands.getoutput("wc -l /var/log/kern.log").split()[0]
-    warnlog = commands.getoutput("wc -l /var/log/smartd.log").split()[0]
-    syslog  = commands.getoutput("wc -l /var/log/syslog").split()[0]
-
+    critlog = wc("/var/log/kern.log")
+    warnlog = wc("/var/log/smartd.log")
+    syslog  = wc("/var/log/syslog")
   return '{0}, {1}, {2}'.format(critlog, warnlog, syslog)
+
+def wc(filename):
+  return int(check_output(["wc", "-l", filename]).split()[0])
 
 def do_report(result):
   # Get the time and date in human-readable form and UN*X-epoch...
