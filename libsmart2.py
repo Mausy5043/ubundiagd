@@ -20,7 +20,7 @@ class SmartDisk():
     self.vars     = "-"
     self.health   = "-"
     self.selftest = "-"
-    self.identity = commands.getoutput("cat " + self.diskid + "-i.dat").splitlines()
+    self.identity = self.cat(self.diskid + "-i.dat").splitlines()
     retm=retd=rets=""
     for line in self.identity:
       if DEBUG:print line
@@ -35,10 +35,6 @@ class SmartDisk():
     self.identity = retm + " || " + retd + " (" + rets +")"
 
   def smart(self):
-    #self.vars     = commands.getoutput("cat " + self.diskid + "-A.dat").splitlines()
-    #self.health   = commands.getoutput("cat " + self.diskid + "-H.dat")
-    #self.selftest = commands.getoutput("cat " + self.diskid + "-l.dat")
-    #self.identity = commands.getoutput("cat " + self.diskid + "-i.dat").splitlines()
     self.vars     = self.cat(self.diskid + "-A.dat").splitlines()
     self.health   = self.cat(self.diskid + "-H.dat")
     self.selftest = self.cat(self.diskid + "-l.dat")

@@ -61,6 +61,14 @@ def syslog_trace(trace):
     if len(line):
       syslog.syslog(syslog.LOG_ALERT,line)
 
+def cat(filename):
+  ret = ""
+  if os.path.isfile(filename):
+    f = file(filename,'r')
+    ret = f.read().strip('\n')
+    f.close()
+  return ret
+
 def do_work():
   lockfile="/tmp/ubundiagd/temperv14.lock"
   datafile="/tmp/ubundiagd/temperv14.dat"
@@ -74,10 +82,7 @@ def do_work():
   # Read the ambient temperature
   if os.path.isfile(datafile):
     if os.stat(datafile).st_size > 0:
-      f   = file(datafile,'r')
-      cat = f.read().strip('\n')
-      f.close()
-      Tamb = float(cat)
+      Tamb = float(cat(datafile))
     else:
       if DEBUG:print "datafile has NULL-size!"
       Tamb = "NaN"
