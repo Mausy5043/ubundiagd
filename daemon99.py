@@ -124,12 +124,18 @@ def do_xml(rpath):
   #
   usr             = commands.getoutput("whoami")
   uname           = os.uname()
-  #Tcpu           = float(commands.getoutput("cat /sys/class/thermal/thermal_zone0/temp"))/1000
-  #fcpu           = float(commands.getoutput("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"))/1000
-  ubundiagdbranch = commands.getoutput("cat $HOME/.ubundiagd.branch")
+
+  #Tcpu           =
+  #fcpu           = 
+
+  fi              = "/home/"+ usr +"/.ubundiagd.branch"
+  f 							= file(fi,'r')
+  ubundiagdbranch = f.read().strip('\n')
+  f.close()
+
   uptime          = commands.getoutput("uptime")
   dfh             = commands.getoutput("df -h")
-  mds             = commands.getoutput("cat /proc/mdstat |awk 'NR<5'")
+  mds             = commands.getoutput("cat /proc/mdstat |awk 'NR<5'")  #FIXME
   freeh           = commands.getoutput("free -h")
   #psout          = commands.getoutput("ps -e -o pcpu,args | cut -c -132 | awk 'NR>2' | sort -nr | head -10 | sed 's/&/\&amp;/g' | sed 's/>/\&gt;/g'")
   p1              = subprocess.Popen(["ps", "-e", "-o", "pcpu,args"], stdout=subprocess.PIPE)
