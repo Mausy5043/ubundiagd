@@ -4,8 +4,10 @@
 # * It synchronises the local copy of ubundiagd with the current github branch
 # * It checks the state of and (re-)starts daemons if they are not (yet) running.
 
-branch=$(cat ~/.ubundiagd.branch)
-clnt=$(hostname)
+CLNT=$(hostname)
+ME=$(whoami)
+branch=$(cat /home/$ME/.ubundiagd.branch)
+
 pushd $HOME/ubundiagd
 
 # Synchronise local copy with $branch
