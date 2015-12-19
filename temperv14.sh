@@ -4,7 +4,7 @@ of="/tmp/ubundiagd/temperv14.dat"
 lf="/tmp/ubundiagd/temperv14.lock"
 
 if [[ ! -d /tmp/ubundiagd ]]; then
-  mkdir /tmp/ubundiagd
+  mkdir -m 777 /tmp/ubundiagd
 fi
 
 touch $lf

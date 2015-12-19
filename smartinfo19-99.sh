@@ -30,7 +30,7 @@ function smart1999 {
 }
 
 if [[ ! -d /tmp/ubundiagd ]]; then
-  mkdir /tmp/ubundiagd
+  mkdir -m 777 /tmp/ubundiagd
 fi
 
 touch $rf".lock"
