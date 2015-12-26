@@ -31,11 +31,20 @@ class MyDaemon(Daemon):
 
         result = do_work()
         if DEBUG:print result
-        data = result
+        #data = result
+
+        data.append(map(float, result))
+        if (len(data) > samples):data.pop(0)
 
         # report sample average
+        #if (startTime % reportTime < sampleTime):
+        #  do_report(data)
+
         if (startTime % reportTime < sampleTime):
-          do_report(data)
+          if DEBUG:print data
+          averages = sum(data[:]) / len(data)
+          if DEBUG:print averages
+          do_report(averages)
 
         waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
         if (waitTime > 0):
