@@ -31,9 +31,8 @@ class MyDaemon(Daemon):
 
         result = do_work()
         if DEBUG:print result
-        #data = result
 
-        data.append(map(float, result))
+        data.append(float(result))
         if (len(data) > samples):data.pop(0)
 
         # report sample average
