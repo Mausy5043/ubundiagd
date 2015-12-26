@@ -44,6 +44,7 @@ class MyDaemon(Daemon):
           averages[4]=int(data[-1][4])
           averages[5]=int(data[-1][5])
           if DEBUG:print averages
+          do_report(averages)
 
         waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
         if (waitTime > 0):
