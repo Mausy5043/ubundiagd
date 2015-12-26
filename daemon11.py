@@ -16,35 +16,29 @@ DEBUG = False
 
 class MyDaemon(Daemon):
   def run(self):
-    sampleptr = 0
-    samples = 5
-    datapoints = 2
-    data = range(samples)
+    reportTime = 60                                 # time [s] between reports
+    cycles = 3                                      # number of cycles to aggregate
+    samplesperCycle = 5                             # total number of samples in each cycle
+    samples = samplesperCycle * cycles              # total number of samples averaged
+    sampleTime = reportTime/samplesperCycle         # time [s] between samples
+    cycleTime = samples * sampleTime                # time [s] per cycle
 
-    sampleTime = 12
-    cycleTime = samples * sampleTime
-    # sync to whole minute
-    waitTime = (cycleTime + sampleTime) - (time.time() % cycleTime)
-    if DEBUG:
-      print "NOT waiting {0} s.".format(waitTime)
-    else:
-      time.sleep(waitTime)
+    data = []                                       # array for holding sampledata
+
     while True:
       try:
         startTime = time.time()
 
         result = do_work().split(', ')
         if DEBUG:print result
-        data[sampleptr] = map(float, result)
+        data.append(map(float, result))
+        if (len(data) > samples):data.pop(0)
 
         # report sample average
-        sampleptr = sampleptr + 1
-        if (sampleptr == samples):
+        if (startTime % reportTime < sampleTime):
           somma = map(sum,zip(*data))
           averages = [format(s / samples, '.3f') for s in somma]
           if DEBUG:print averages
-          do_report(averages)
-          sampleptr = 0
 
         waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
         if (waitTime > 0):
