@@ -30,15 +30,17 @@ class MyDaemon(Daemon):
         startTime = time.time()
 
         result = do_work().split(', ')
-        if DEBUG:print result
+        if DEBUG:print "result   :",result
         data.append(map(float, result))
         if (len(data) > samples):data.pop(0)
 
         # report sample average
         if (startTime % reportTime < sampleTime):
+          if DEBUG:print "data     :",data
           somma = map(sum,zip(*data))
-          averages = [format(s / samples, '.3f') for s in somma]
-          if DEBUG:print averages
+          averages = [format(s / len(data), '.3f') for s in somma]
+          if DEBUG:print "averages :",averages
+          do_report(averages)
 
         waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
         if (waitTime > 0):

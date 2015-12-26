@@ -39,7 +39,7 @@ class MyDaemon(Daemon):
           somma = map(sum,zip(*data))
           # not all entries should be float
           # 0.37, 0.18, 0.17, 4, 143, 32147, 3, 4, 93, 0, 0
-          averages = [format(s / samples, '.3f') for s in somma]
+          averages = [format(s / len(data), '.3f') for s in somma]
           averages[3]=int(data[-1][3])
           averages[4]=int(data[-1][4])
           averages[5]=int(data[-1][5])
