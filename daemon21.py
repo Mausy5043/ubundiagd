@@ -78,7 +78,9 @@ def do_work():
   # prevent race conditions
   time.sleep(3)
   while os.path.isfile(lockfile):
-    if DEBUG:print "lockfile exists. Waiting..."
+    logmessage = "lockfile exists. Waiting..."
+    if DEBUG:print logmessage
+    syslog.syslog(syslog.LOG_INFO,logmessage)
     # wait while the server has locked the directory
     time.sleep(1)
 
@@ -87,18 +89,26 @@ def do_work():
     if os.stat(datafile).st_size > 0:
       Tamb = float(cat(datafile))
     else:
-      if DEBUG:print "datafile has NULL-size!"
+      logmessage = "datafile has NULL-size"
+      if DEBUG:print logmessage
+      syslog.syslog(syslog.LOG_INFO,logmessage)
       Tamb = "NaN"
   else:
-    if DEBUG:print "datafile doesn't exist!"
+    logmessage = "datafile doesn't exist"
+    if DEBUG:print logmessage
+    syslog.syslog(syslog.LOG_INFO,logmessage)
     Tamb = "NaN"
 
   if Tamb > 45.0:
-    if DEBUG:print "*** Ambient temperature too high ***"
+    logmessage = "*** Ambient temperature too high ***"
+    if DEBUG:print logmessage
+    syslog.syslog(syslog.LOG_INFO,logmessage)
     if DEBUG:print Tamb
     Tamb = "NaN"
   if Tamb < 5.0:
-    if DEBUG:print "*** Ambient temperature too low ***"
+    logmessage = "*** Ambient temperature too low ***"
+    if DEBUG:print logmessage
+    syslog.syslog(syslog.LOG_INFO,logmessage)
     if DEBUG:print Tamb
     Tamb = "NaN"
 

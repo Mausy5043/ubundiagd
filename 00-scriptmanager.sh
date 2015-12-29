@@ -6,37 +6,37 @@
 
 CLNT=$(hostname)
 ME=$(whoami)
-branch=$(cat /home/$ME/.ubundiagd.branch)
+branch=$(cat "$HOME"/.ubundiagd.branch)
 
-pushd $HOME/ubundiagd
+pushd "$HOME"/ubundiagd
 
-# Synchronise local copy with $branch
+# Synchronise local copy with "$branch"
 
  git fetch origin
  # Check which code has changed
  # git diff --name-only
  # git log --graph --oneline --date-order --decorate --color --all
 
- DIFFlibd=$(git --no-pager diff --name-only $branch..origin/$branch -- ./libdaemon.py)
- DIFFlibs=$(git --no-pager diff --name-only $branch..origin/$branch -- ./libsmart2.py)
- DIFFd11=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon11.py)
- DIFFd12=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon12.py)
- DIFFd13=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon13.py)
- DIFFd14=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon14.py)
- DIFFd15=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon15.py)
- DIFFd19=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon19.py)
- DIFFd21=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon21.py)
- DIFFd99=$(git --no-pager diff --name-only $branch..origin/$branch -- ./daemon99.py)
+ DIFFlibd=$(git --no-pager diff --name-only "$branch"..origin/"$branch" -- ./libdaemon.py)
+ DIFFlibs=$(git --no-pager diff --name-only "$branch"..origin/"$branch" -- ./libsmart2.py)
+ DIFFd11=$(git --no-pager diff --name-only "$branch"..origin/"$branch" -- ./daemon11.py)
+ DIFFd12=$(git --no-pager diff --name-only "$branch"..origin/"$branch" -- ./daemon12.py)
+ DIFFd13=$(git --no-pager diff --name-only "$branch"..origin/"$branch" -- ./daemon13.py)
+ DIFFd14=$(git --no-pager diff --name-only "$branch"..origin/"$branch" -- ./daemon14.py)
+ DIFFd15=$(git --no-pager diff --name-only "$branch"..origin/"$branch" -- ./daemon15.py)
+ DIFFd19=$(git --no-pager diff --name-only "$branch"..origin/"$branch" -- ./daemon19.py)
+ DIFFd21=$(git --no-pager diff --name-only "$branch"..origin/"$branch" -- ./daemon21.py)
+ DIFFd99=$(git --no-pager diff --name-only "$branch"..origin/"$branch" -- ./daemon99.py)
 
  git pull
  git fetch origin
- git checkout $branch
- git reset --hard origin/$branch && \
+ git checkout "$branch"
+ git reset --hard origin/"$branch" && \
  git clean -f -d
 
 #python -m compileall .
 # Set permissions
-chmod -R 744 *
+chmod -R 744 ./*
 
 if [[ ! -d /tmp/ubundiagd ]]; then
   mkdir /tmp/ubundiagd
