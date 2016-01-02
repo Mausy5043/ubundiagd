@@ -103,30 +103,31 @@ def cat(filename):
 def do_work():
   lockfile="/tmp/ubundiagd/temperv14.lock"
   datafile="/tmp/ubundiagd/temperv14.dat"
-  # prevent race conditions
+  # We assume success and re-set flag on failure.
   succes = True
+  # Prevent race conditions. Give `temperv14` some time to do its thing.
   time.sleep(3)
   while os.path.isfile(lockfile):
     logmessage = "lockfile exists. Waiting..."
     if DEBUG:print logmessage
     syslog.syslog(syslog.LOG_INFO,logmessage)
-    # wait while the server has locked the directory
+    # wait while the server-app has locked the directory
     time.sleep(1)
 
-  # Read the ambient temperature
+  # Read the ambient temperature from the file
   if os.path.isfile(datafile):
     if os.stat(datafile).st_size > 0:
       Tamb = float(cat(datafile))
     else:
       succes = False
-      logmessage = "datafile has NULL-size"
+      logmessage = "That's odd... datafile has NULL-size!"
       if DEBUG:print logmessage
-      syslog.syslog(syslog.LOG_INFO,logmessage)
+      syslog.syslog(syslog.LOG_ALERT,logmessage)
   else:
     succes = False
-    logmessage = "datafile doesn't exist"
+    logmessage = "Datafile has vanished!"
     if DEBUG:print logmessage
-    syslog.syslog(syslog.LOG_INFO,logmessage)
+    syslog.syslog(syslog.LOG_ALERT,logmessage)
 
   if (Tamb > 45.0) and succes:
     logmessage = "*** Ambient temperature too high *** (%s)" % (Tamb)
