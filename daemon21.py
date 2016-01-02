@@ -62,7 +62,7 @@ class MyDaemon(Daemon):
           if DEBUG:print data
           averages = sum(data[:]) / len(data)
           if DEBUG:print averages
-          do_report(averages)
+          do_report(averages, consql)
 
         waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
         if (waitTime > 0):
@@ -138,7 +138,7 @@ def do_work():
 
   return  Tamb
 
-def do_report(result):
+def do_report(result, cnsql):
   # Get the time and date in human-readable form and UN*X-epoch...
   outDate = time.strftime('%Y-%m-%dT%H:%M:%S, %s')
   flock = '/tmp/ubundiagd/21.lock'
