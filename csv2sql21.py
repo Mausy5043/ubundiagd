@@ -21,7 +21,10 @@ def do_writesample(cnsql, sample):
   sample = sample.split(', ')
   sample_time = sample[0]
   sample_epoch = int(sample[1])
-  temperature = float(sample[2])
+  if (sample[2] == "NaN") or (sample[2] == "nan"):
+    print "not storing NAN"
+  else:
+    temperature = float(sample[2])
 
   try:
     cursql = cnsql.cursor()

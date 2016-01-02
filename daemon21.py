@@ -139,7 +139,7 @@ def do_work():
     syslog.syslog(syslog.LOG_INFO,logmessage)
     succes = False
 
-  if succes = False: Tamb = "NaN"
+  if (succes == False):Tamb = "NaN"
 
   return  Tamb
 
