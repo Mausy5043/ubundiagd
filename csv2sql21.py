@@ -23,15 +23,23 @@ def do_writesample(cnsql, sample):
   sample_epoch = int(sample[1])
   temperature = float(sample[2])
 
-  cursql = cnsql.cursor()
-  cmd = ('INSERT INTO temper '
-                    '(sample_time, sample_epoch, temperature) '
-                    'VALUES (%s, %s, %s)')
-  dat = (sample_time, sample_epoch, temperature)
-  print cmd,dat
-  cursql.execute(cmd, dat)
-  cnsql.commit()
-  cursql.close()
+  try:
+    cursql = cnsql.cursor()
+    cmd = ('INSERT INTO temper '
+                      '(sample_time, sample_epoch, temperature) '
+                      'VALUES (%s, %s, %s)')
+    dat = (sample_time, sample_epoch, temperature)
+    print cmd,dat
+    cursql.execute(cmd, dat)
+    cnsql.commit()
+    cursql.close()
+  except mdb.Error, e:
+    print("*** MySQL error")
+    print "**** Error %d: %s" % (e.args[0],e.args[1])
+    if cursql:    # attempt to close connection to MySQLdb
+      print("***** Closing cursor")
+      cursql.close()
+    print(e.__doc__)
 
 if __name__ == "__main__":
   try:              # Initialise MySQLdb
