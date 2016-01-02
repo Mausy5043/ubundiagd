@@ -62,9 +62,9 @@ class MyDaemon(Daemon):
           if DEBUG:print data
           averages = sum(data[:]) / len(data)
           if DEBUG:print averages
-          if (averages == "NaN") or (averages == "nan"):
+          if math.isnan(averages):
             if DEBUG: print "not reporting NAN"
-            time.sleep(1)
+            #time.sleep(1)
           else:
             do_report(averages, consql)
 
