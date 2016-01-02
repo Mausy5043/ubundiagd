@@ -64,7 +64,7 @@ class MyDaemon(Daemon):
           if DEBUG:print averages
           if (averages == "NaN") or (averages == "nan"):
             if DEBUG: print "not reporting NAN"
-            sleep 1
+            time.sleep(1)
           else:
             do_report(averages, consql)
 
