@@ -62,7 +62,11 @@ class MyDaemon(Daemon):
           if DEBUG:print data
           averages = sum(data[:]) / len(data)
           if DEBUG:print averages
-          do_report(averages, consql)
+          if (averages == "NaN") or (averages == "nan"):
+            if DEBUG: print "not reporting NAN"
+            sleep 1
+          else:
+            do_report(averages, consql)
 
         waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
         if (waitTime > 0):
@@ -100,6 +104,7 @@ def do_work():
   lockfile="/tmp/ubundiagd/temperv14.lock"
   datafile="/tmp/ubundiagd/temperv14.dat"
   # prevent race conditions
+  succes = True
   time.sleep(3)
   while os.path.isfile(lockfile):
     logmessage = "lockfile exists. Waiting..."
@@ -113,28 +118,28 @@ def do_work():
     if os.stat(datafile).st_size > 0:
       Tamb = float(cat(datafile))
     else:
+      succes = False
       logmessage = "datafile has NULL-size"
       if DEBUG:print logmessage
       syslog.syslog(syslog.LOG_INFO,logmessage)
-      Tamb = "NaN"
   else:
+    succes = False
     logmessage = "datafile doesn't exist"
     if DEBUG:print logmessage
     syslog.syslog(syslog.LOG_INFO,logmessage)
-    Tamb = "NaN"
 
-  if Tamb > 45.0:
+  if (Tamb > 45.0) and succes:
     logmessage = "*** Ambient temperature too high *** (%s)" % (Tamb)
     if DEBUG:print logmessage
     syslog.syslog(syslog.LOG_INFO,logmessage)
-    if DEBUG:print Tamb
-    Tamb = "NaN"
-  if Tamb < 5.0:
+    succes = False
+  if (Tamb < 5.0) and succes:
     logmessage = "*** Ambient temperature too low *** (%s)" % (Tamb)
     if DEBUG:print logmessage
     syslog.syslog(syslog.LOG_INFO,logmessage)
-    if DEBUG:print Tamb
-    Tamb = "NaN"
+    succes = False
+
+  if succes = False: Tamb = "NaN"
 
   return  Tamb
 
