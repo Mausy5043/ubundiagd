@@ -22,8 +22,7 @@ if __name__ == "__main__":
   data = cat(infile).splitlines()
   print data[-1].split(', ')
   for entry in range(0, len(data)):
-    print data[entry]
-  print data[0]
-  print data[1]
-  print data[-1]
-  print data[len(data)]
+    sample = data[entry].split(', ')
+  print data[0].split(', ')
+  print data[1].split(', ')
+  print data[-1].split(', ')

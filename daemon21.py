@@ -124,13 +124,13 @@ def do_work():
     Tamb = "NaN"
 
   if Tamb > 45.0:
-    logmessage = "*** Ambient temperature too high ***"
+    logmessage = "*** Ambient temperature too high *** (%s)" % (Tamb)
     if DEBUG:print logmessage
     syslog.syslog(syslog.LOG_INFO,logmessage)
     if DEBUG:print Tamb
     Tamb = "NaN"
   if Tamb < 5.0:
-    logmessage = "*** Ambient temperature too low ***"
+    logmessage = "*** Ambient temperature too low *** (%s)" % (Tamb)
     if DEBUG:print logmessage
     syslog.syslog(syslog.LOG_INFO,logmessage)
     if DEBUG:print Tamb
