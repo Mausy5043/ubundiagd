@@ -5,6 +5,7 @@
 # Feed CSV-data into the MySQL database
 
 import MySQLdb as mdb
+import os
 
 infile = "/srv/array1/datastore/boson/21-aux-ambient.csv"
 
@@ -18,5 +19,11 @@ def cat(filename):
 
 
 if __name__ == "__main__":
-  cat(infile)
-  print len(ret)
+  data = cat(infile).splitlines()
+  print data[-1].split(', ')
+  for entry in range(0, len(data)):
+    print data[entry]
+  print data[0]
+  print data[1]
+  print data[-1]
+  print data[len(data)]
