@@ -151,8 +151,9 @@ def do_report(result, cnsql):
   t_sample=outDate.split(',')
   cursql = cnsql.cursor()
   cmd = ('INSERT INTO temper '
-                    '(sample_time, sample_epoch, raw_value, temperature) '
-                    'VALUES (%s, %s, %s, %s)')
+                    '(sample_time, sample_epoch, temperature) '
+                    'VALUES (%s, %s, %s)')
+  if DEBUG: print cmd, "// result = ",result
   dat = (t_sample[0], int(t_sample[1]), result )
   cursql.execute(cmd, dat)
   cnsql.commit()
