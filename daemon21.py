@@ -11,11 +11,34 @@
 import syslog, traceback
 import os, sys, time, math, commands
 from libdaemon import Daemon
+import MySQLdb as mdb
 
 DEBUG = False
 
 class MyDaemon(Daemon):
   def run(self):
+    try:              # Initialise MySQLdb
+      consql = mdb.connect(host='sql.lan', db='domotica', read_default_file='~/.my.cnf')
+
+      if consql.open: # Hardware initialised succesfully -> get a cursor on the DB.
+        cursql = consql.cursor()
+        cursql.execute("SELECT VERSION()")
+        versql = cursql.fetchone()
+        cursql.close()
+        logtext = "{0} : {1}".format("Attached to MySQL server", versql)
+        syslog.syslog(syslog.LOG_INFO, logtext)
+    except mdb.Error, e:
+      if DEBUG:
+        print("Unexpected MySQL error")
+        print "Error %d: %s" % (e.args[0],e.args[1])
+      if consql:    # attempt to close connection to MySQLdb
+        if DEBUG:print("Closing MySQL connection")
+        consql.close()
+        syslog.syslog(syslog.LOG_ALERT,"Closed MySQL connection")
+      syslog.syslog(syslog.LOG_ALERT,e.__doc__)
+      syslog_trace(traceback.format_exc())
+      raise
+
     reportTime = 180                                # time [s] between reports
     cycles = 1                                      # number of cycles to aggregate
     samplesperCycle = 1                             # total number of samples in each cycle
@@ -35,10 +58,6 @@ class MyDaemon(Daemon):
         data.append(float(result))
         if (len(data) > samples):data.pop(0)
 
-        # report sample average
-        #if (startTime % reportTime < sampleTime):
-        #  do_report(data)
-
         if (startTime % reportTime < sampleTime):
           if DEBUG:print data
           averages = sum(data[:]) / len(data)
@@ -53,6 +72,11 @@ class MyDaemon(Daemon):
         if DEBUG:
           print("Unexpected error:")
           print e.message
+        # attempt to close connection to MySQLdb
+        if consql:
+          if DEBUG:print("Closing MySQL connection")
+          consql.close()
+          syslog.syslog(syslog.LOG_ALERT,"Closed MySQL connection")
         syslog.syslog(syslog.LOG_ALERT,e.__doc__)
         syslog_trace(traceback.format_exc())
         raise
@@ -116,14 +140,23 @@ def do_work():
 
 def do_report(result):
   # Get the time and date in human-readable form and UN*X-epoch...
-  outDate = commands.getoutput("date '+%F %H:%M:%S, %s'")
-  #result = ', '.join(map(str, result))
+  outDate = time.strftime('%Y-%m-%dT%H:%M:%S, %s')
   flock = '/tmp/ubundiagd/21.lock'
   lock(flock)
   f = file('/tmp/ubundiagd/21-aux-ambient.csv', 'a')
   f.write('{0}, {1}\n'.format(outDate, result) )
   f.close()
   unlock(flock)
+
+  t_sample=outDate.split(',')
+  cursql = cnsql.cursor()
+  cmd = ('INSERT INTO temper '
+                    '(sample_time, sample_epoch, raw_value, temperature) '
+                    'VALUES (%s, %s, %s, %s)')
+  dat = (t_sample[0], int(t_sample[1]), result )
+  cursql.execute(cmd, dat)
+  cnsql.commit()
+  cursql.close()
   return
 
 def lock(fname):
