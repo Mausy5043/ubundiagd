@@ -93,12 +93,6 @@ def do_mv_data(rpath):
       count_internal_locks += 1
     if DEBUG:print "{0} internal locks exist".format(count_internal_locks)
 
-  for file in glob.glob(r'/tmp/*.csv'):
-    if os.path.isfile(clientlock):
-      if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
-        if DEBUG:print "moving legacy-data " + file
-        shutil.move(file, rpath)
-
   for file in glob.glob(r'/tmp/ubundiagd/*.csv'):
     if os.path.isfile(clientlock):
       if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
