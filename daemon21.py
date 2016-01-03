@@ -40,7 +40,7 @@ class MyDaemon(Daemon):
       raise
 
     reportTime = 180                                # time [s] between reports
-    cycles = 1                                      # number of cycles to aggregate
+    cycles = 5                                      # number of cycles to aggregate
     samplesperCycle = 1                             # total number of samples in each cycle
     samples = samplesperCycle * cycles              # total number of samples averaged
     sampleTime = reportTime/samplesperCycle         # time [s] between samples
