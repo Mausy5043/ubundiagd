@@ -6,10 +6,10 @@
 
 # Adapted by M.Hendrix [2015]
 
-# daemon99.py creates an XML-file and uploads data to the server.
+# daemon99.py creates an XML-file on the server.
 
 import syslog, traceback
-import os, sys, shutil, glob, platform, time, commands
+import os, sys, platform, time, commands
 from libdaemon import Daemon
 from libsmart2 import SmartDisk
 import subprocess
@@ -51,7 +51,6 @@ class MyDaemon(Daemon):
         startTime=time.time()
 
         if os.path.exists(remote_path):
-          do_mv_data(remote_path)
           do_xml(remote_path)
         else:
           if DEBUG:print remote_path + " not available"
@@ -75,58 +74,13 @@ def syslog_trace(trace):
     if len(line):
       syslog.syslog(syslog.LOG_ALERT,line)
 
-def do_mv_data(rpath):
-  hostlock = rpath + '/host.lock'
-  clientlock = rpath + '/client.lock'
-  count_internal_locks=1
-
-  # wait 5 seconds for processes to finish
-  time.sleep(5)
-
-  while os.path.isfile(hostlock):
-    if DEBUG:print "hostlock exists"
-    # wait while the server has locked the directory
-    time.sleep(1)
-
-  # server already sets the client.lock. Do it anyway.
-  lock(clientlock)
-
-  # prevent race conditions
-  while os.path.isfile(hostlock):
-    if DEBUG:print "hostlock exists. WTF?"
-    # wait while the server has locked the directory
-    time.sleep(1)
-
-  while (count_internal_locks > 0):
-    time.sleep(1)
-    count_internal_locks=0
-    for file in glob.glob(r'/tmp/ubundiagd/*.lock'):
-      count_internal_locks += 1
-    if DEBUG:print "{0} internal locks exist".format(count_internal_locks)
-
-  for file in glob.glob(r'/tmp/*.csv'):
-    if os.path.isfile(clientlock):
-      if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
-        if DEBUG:print "moving legacy-data " + file
-        shutil.move(file, rpath)
-
-  for file in glob.glob(r'/tmp/ubundiagd/*.csv'):
-    if os.path.isfile(clientlock):
-      if not (os.path.isfile(rpath + "/" + os.path.split(file)[1])):
-        if DEBUG:print "moving data " + file
-        shutil.move(file, rpath)
-
-  unlock(clientlock)
-  if DEBUG:print "unlocked..."
-  return
-
 def do_xml(rpath):
   #
   usr             = commands.getoutput("whoami")
   uname           = os.uname()
 
   #Tcpu           =
-  #fcpu           = 
+  #fcpu           =
 
   fi              = "/home/"+ usr +"/.ubundiagd.branch"
   f 							= file(fi,'r')
