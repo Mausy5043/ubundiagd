@@ -54,9 +54,10 @@ class MyDaemon(Daemon):
 
         result = do_work()
         if DEBUG:print result
-
-        data.append(float(result))
-        if (len(data) > samples):data.pop(0)
+        if result != "NaN":
+          # We can't handle NaNs so we skip those. Otherwise append to the array.
+          data.append(float(result))
+          if (len(data) > samples):data.pop(0)
 
         if (startTime % reportTime < sampleTime):
           if DEBUG:print data
