@@ -76,13 +76,14 @@ def syslog_trace(trace):
 
 def do_xml(rpath):
   #
-  usr             = commands.getoutput("whoami")
+  #usr             = commands.getoutput("whoami")
+  home						= os.path.expanduser('~')
   uname           = os.uname()
 
   #Tcpu           =
   #fcpu           =
 
-  fi              = "/home/"+ usr +"/.ubundiagd.branch"
+  fi              = home +"/.ubundiagd.branch"
   f 							= file(fi,'r')
   ubundiagdbranch = f.read().strip('\n')
   f.close()
