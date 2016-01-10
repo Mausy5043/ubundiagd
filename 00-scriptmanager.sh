@@ -26,6 +26,7 @@ pushd "$HOME/ubundiagd"
  DIFFd15=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./daemon15.py)
  DIFFd19=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./daemon19.py)
  DIFFd21=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./daemon21.py)
+ DIFFd97=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./daemon97.py)
  DIFFd98=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./daemon98.py)
  DIFFd99=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./daemon99.py)
 
@@ -73,13 +74,17 @@ if [[ -n "$DIFFd21" ]]; then
   logger -t ubundiagd "Source daemon21 has changed."
   ./daemon21.py stop
 fi
-if [[ -n "$DIFFd99" ]]; then
-  logger -t ubundiagd "Source daemon99 has changed."
-  ./daemon99.py stop
+if [[ -n "$DIFFd97" ]]; then
+  logger -t ubundiagd "Source daemon97 has changed."
+  ./daemon97.py stop
 fi
 if [[ -n "$DIFFd98" ]]; then
   logger -t ubundiagd "Source daemon98 has changed."
   ./daemon98.py stop
+fi
+if [[ -n "$DIFFd99" ]]; then
+  logger -t ubundiagd "Source daemon99 has changed."
+  ./daemon99.py stop
 fi
 
 if [[ -n "$DIFFlibd" ]]; then
@@ -92,6 +97,7 @@ if [[ -n "$DIFFlibd" ]]; then
   ./daemon15.py stop
   ./daemon19.py stop
   ./daemon21.py stop
+  ./daemon97.py stop
   ./daemon98.py stop
   ./daemon99.py stop
   rm ./libdaemon.pyc
@@ -126,6 +132,7 @@ destale 14
 destale 15
 destale 19
 destale 21
+destale 97
 destale 98
 destale 99
 
