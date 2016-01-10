@@ -48,13 +48,14 @@ class MyDaemon(Daemon):
 
         if (startTime % reportTime < sampleTime):
           if DEBUG:print data
-          averages = sum(data[:]) / len(data)
-          if DEBUG:print averages
-          if math.isnan(averages):
-            if DEBUG: print "not reporting NAN"
-            #time.sleep(1)
-          else:
-            do_report(averages, flock, fdata)
+          if (len(data) > 0):
+            averages = sum(data[:]) / len(data)
+            if DEBUG:print averages
+            if math.isnan(averages):
+              if DEBUG: print "not reporting NAN"
+              #time.sleep(1)
+            else:
+              do_report(averages, flock, fdata)
 
         waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
         if (waitTime > 0):
