@@ -11,6 +11,7 @@
 import syslog, traceback
 import os, sys, platform, time, commands
 from libdaemon import Daemon
+import ConfigParser
 from libsmart2 import SmartDisk
 import subprocess
 
@@ -27,25 +28,26 @@ DEBUG = False
 
 class MyDaemon(Daemon):
   def run(self):
-    sampleptr = 0
-    samples = 1
-    #datapoints = 1
-    #data = range(samples)
+    iniconf = ConfigParser.ConfigParser()
+    inisection = "99"
+    home = os.path.expanduser('~')
+    s = iniconf.read(home + '/ubundiagd/config.ini')
+    if DEBUG: print "config file : ", s
+    if DEBUG: print iniconf.items(inisection)
+    reportTime = iniconf.getint(inisection, "reporttime")
+    cycles = iniconf.getint(inisection, "cycles")
+    samplesperCycle = iniconf.getint(inisection, "samplespercycle")
+    flock = iniconf.get(inisection, "lockfile")
 
-    sampleTime = 60
-    cycleTime = samples * sampleTime
+    samples = samplesperCycle * cycles              # total number of samples averaged
+    sampleTime = reportTime/samplesperCycle         # time [s] between samples
+    cycleTime = samples * sampleTime                # time [s] per cycle
 
     myname = os.uname()[1]
     mount_path = '/srv/array1/dataspool/'
     remote_path = mount_path + myname
     remote_lock = remote_path + '/client.lock'
 
-    # sync to whole minute
-    waitTime = (cycleTime + sampleTime) - (time.time() % cycleTime)
-    if DEBUG:
-      print "NOT waiting {0} s.".format(waitTime)
-    else:
-      time.sleep(waitTime)
     while True:
       try:
         startTime=time.time()
@@ -66,13 +68,6 @@ class MyDaemon(Daemon):
         syslog.syslog(syslog.LOG_ALERT,e.__doc__)
         syslog_trace(traceback.format_exc())
         raise
-
-def syslog_trace(trace):
-  '''Log a python stack trace to syslog'''
-  log_lines = trace.split('\n')
-  for line in log_lines:
-    if len(line):
-      syslog.syslog(syslog.LOG_ALERT,line)
 
 def do_xml(rpath):
   #
@@ -237,6 +232,13 @@ def lock(fname):
 def unlock(fname):
   if os.path.isfile(fname):
     os.remove(fname)
+
+def syslog_trace(trace):
+  # Log a python stack trace to syslog
+  log_lines = trace.split('\n')
+  for line in log_lines:
+    if len(line):
+      syslog.syslog(syslog.LOG_ALERT,line)
 
 if __name__ == "__main__":
   daemon = MyDaemon('/tmp/ubundiagd/99.pid')

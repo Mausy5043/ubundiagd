@@ -11,37 +11,24 @@
 import syslog, traceback
 import os, sys, time, math, commands
 from libdaemon import Daemon
-import MySQLdb as mdb
+import ConfigParser
 
 DEBUG = False
 
 class MyDaemon(Daemon):
   def run(self):
-    try:              # Initialise MySQLdb
-      consql = mdb.connect(host='sql.lan', db='domotica', read_default_file='~/.my.cnf')
+    iniconf = ConfigParser.ConfigParser()
+    inisection = "21"
+    home = os.path.expanduser('~')
+    s = iniconf.read(home + '/ubundiagd/config.ini')
+    if DEBUG: print "config file : ", s
+    if DEBUG: print iniconf.items(inisection)
+    reportTime = iniconf.getint(inisection, "reporttime")
+    cycles = iniconf.getint(inisection, "cycles")
+    samplesperCycle = iniconf.getint(inisection, "samplespercycle")
+    flock = iniconf.get(inisection, "lockfile")
+    fdata = iniconf.get(inisection, "resultfile")
 
-      if consql.open: # Hardware initialised succesfully -> get a cursor on the DB.
-        cursql = consql.cursor()
-        cursql.execute("SELECT VERSION()")
-        versql = cursql.fetchone()
-        cursql.close()
-        logtext = "{0} : {1}".format("Attached to MySQL server", versql)
-        syslog.syslog(syslog.LOG_INFO, logtext)
-    except mdb.Error, e:
-      if DEBUG:
-        print("Unexpected MySQL error")
-        print "Error %d: %s" % (e.args[0],e.args[1])
-      if consql:    # attempt to close connection to MySQLdb
-        if DEBUG:print("Closing MySQL connection")
-        consql.close()
-        syslog.syslog(syslog.LOG_ALERT,"Closed MySQL connection")
-      syslog.syslog(syslog.LOG_ALERT,e.__doc__)
-      syslog_trace(traceback.format_exc())
-      raise
-
-    reportTime = 180                                # time [s] between reports
-    cycles = 5                                      # number of cycles to aggregate
-    samplesperCycle = 1                             # total number of samples in each cycle
     samples = samplesperCycle * cycles              # total number of samples averaged
     sampleTime = reportTime/samplesperCycle         # time [s] between samples
     cycleTime = samples * sampleTime                # time [s] per cycle
@@ -67,7 +54,7 @@ class MyDaemon(Daemon):
             if DEBUG: print "not reporting NAN"
             #time.sleep(1)
           else:
-            do_report(averages, consql)
+            do_report(averages, flock, fdata)
 
         waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
         if (waitTime > 0):
@@ -77,21 +64,9 @@ class MyDaemon(Daemon):
         if DEBUG:
           print("Unexpected error:")
           print e.message
-        # attempt to close connection to MySQLdb
-        if consql:
-          if DEBUG:print("Closing MySQL connection")
-          consql.close()
-          syslog.syslog(syslog.LOG_ALERT,"Closed MySQL connection")
         syslog.syslog(syslog.LOG_ALERT,e.__doc__)
         syslog_trace(traceback.format_exc())
         raise
-
-def syslog_trace(trace):
-  '''Log a python stack trace to syslog'''
-  log_lines = trace.split('\n')
-  for line in log_lines:
-    if len(line):
-      syslog.syslog(syslog.LOG_ALERT,line)
 
 def cat(filename):
   ret = ""
@@ -149,26 +124,25 @@ def do_work():
 
   return  Tamb
 
-def do_report(result, cnsql):
+def do_report(result, flock, fdata):
   # Get the time and date in human-readable form and UN*X-epoch...
   outDate = time.strftime('%Y-%m-%dT%H:%M:%S, %s')
-  flock = '/tmp/ubundiagd/21.lock'
   lock(flock)
-  f = file('/tmp/ubundiagd/21-aux-ambient.csv', 'a')
+  f = file(fdata, 'a')
   f.write('{0}, {1}\n'.format(outDate, result) )
   f.close()
   unlock(flock)
 
-  t_sample=outDate.split(',')
-  cursql = cnsql.cursor()
-  cmd = ('INSERT INTO temper '
-                    '(sample_time, sample_epoch, temperature) '
-                    'VALUES (%s, %s, %s)')
-  if DEBUG: print cmd, "// result = ",result
-  dat = (t_sample[0], int(t_sample[1]), result )
-  cursql.execute(cmd, dat)
-  cnsql.commit()
-  cursql.close()
+  # t_sample=outDate.split(',')
+  # cursql = cnsql.cursor()
+  # cmd = ('INSERT INTO temper '
+  #                   '(sample_time, sample_epoch, temperature) '
+  #                   'VALUES (%s, %s, %s)')
+  # if DEBUG: print cmd, "// result = ",result
+  # dat = (t_sample[0], int(t_sample[1]), result )
+  # cursql.execute(cmd, dat)
+  # cnsql.commit()
+  # cursql.close()
 
 def lock(fname):
   open(fname, 'a').close()
@@ -176,6 +150,13 @@ def lock(fname):
 def unlock(fname):
   if os.path.isfile(fname):
     os.remove(fname)
+
+def syslog_trace(trace):
+  # Log a python stack trace to syslog
+  log_lines = trace.split('\n')
+  for line in log_lines:
+    if len(line):
+      syslog.syslog(syslog.LOG_ALERT,line)
 
 if __name__ == "__main__":
   daemon = MyDaemon('/tmp/ubundiagd/21.pid')

@@ -13,6 +13,7 @@ import syslog, traceback
 import os, sys, time, math, commands
 from subprocess import check_output
 from libdaemon import Daemon
+import ConfigParser
 
 DEBUG = False
 IS_SYSTEMD = os.path.isfile('/bin/journalctl')
@@ -20,9 +21,18 @@ os.nice(10)
 
 class MyDaemon(Daemon):
   def run(self):
-    reportTime = 60                                 # time [s] between reports
-    cycles = 1                                      # number of cycles to aggregate
-    samplesperCycle = 1                             # total number of samples in each cycle
+    iniconf = ConfigParser.ConfigParser()
+    inisection = "15"
+    home = os.path.expanduser('~')
+    s = iniconf.read(home + '/ubundiagd/config.ini')
+    if DEBUG: print "config file : ", s
+    if DEBUG: print iniconf.items(inisection)
+    reportTime = iniconf.getint(inisection, "reporttime")
+    cycles = iniconf.getint(inisection, "cycles")
+    samplesperCycle = iniconf.getint(inisection, "samplespercycle")
+    flock = iniconf.get(inisection, "lockfile")
+    fdata = iniconf.get(inisection, "resultfile")
+
     samples = samplesperCycle * cycles              # total number of samples averaged
     sampleTime = reportTime/samplesperCycle         # time [s] between samples
     cycleTime = samples * sampleTime                # time [s] per cycle
@@ -37,7 +47,7 @@ class MyDaemon(Daemon):
         data = map(int, result)
 
         if (startTime % reportTime < sampleTime):
-          do_report(data)
+          do_report(data, flock, fdata)
 
         waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
         if (waitTime > 0):
@@ -50,13 +60,6 @@ class MyDaemon(Daemon):
         syslog.syslog(syslog.LOG_ALERT,e.__doc__)
         syslog_trace(traceback.format_exc())
         raise
-
-def syslog_trace(trace):
-  '''Log a python stack trace to syslog'''
-  log_lines = trace.split('\n')
-  for line in log_lines:
-    if len(line):
-      syslog.syslog(syslog.LOG_ALERT,line)
 
 def do_work():
   # 3 datapoints gathered here
@@ -83,14 +86,12 @@ def do_work():
 def wc(filename):
   return int(check_output(["wc", "-l", filename]).split()[0])
 
-def do_report(result):
+def do_report(result, flock, fdata):
   # Get the time and date in human-readable form and UN*X-epoch...
   outDate = commands.getoutput("date '+%F %H:%M:%S, %s'")
-
   result = ', '.join(map(str, result))
-  flock = '/tmp/ubundiagd/15.lock'
   lock(flock)
-  f = file('/tmp/ubundiagd/15-cnt-loglines.csv', 'a')
+  f = file(fdata, 'a')
   f.write('{0}, {1}\n'.format(outDate, result) )
   f.close()
   unlock(flock)
@@ -101,6 +102,13 @@ def lock(fname):
 def unlock(fname):
   if os.path.isfile(fname):
     os.remove(fname)
+
+def syslog_trace(trace):
+  # Log a python stack trace to syslog
+  log_lines = trace.split('\n')
+  for line in log_lines:
+    if len(line):
+      syslog.syslog(syslog.LOG_ALERT,line)
 
 if __name__ == "__main__":
   daemon = MyDaemon('/tmp/ubundiagd/15.pid')
