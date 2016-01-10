@@ -259,8 +259,6 @@ def graphs():
   pl.gcf().autofmt_xdate()
   pl.savefig('/tmp/ubundiagd/D11.png')
 
-  return
-
 def rainchance(pressure):
   Prain=10
   if (pressure < 1030):

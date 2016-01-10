@@ -101,7 +101,6 @@ def do_mv_data(rpath):
 
   unlock(clientlock)
   if DEBUG:print "unlocked..."
-  return
 
 def lock(fname):
   fd = open(fname, 'a').close()

@@ -229,7 +229,6 @@ def do_xml(rpath):
   f.write('</server>\n')
 
   f.close()
-  return
 
 def lock(fname):
   fd = open(fname, 'a').close()

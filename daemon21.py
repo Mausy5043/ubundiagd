@@ -169,7 +169,6 @@ def do_report(result, cnsql):
   cursql.execute(cmd, dat)
   cnsql.commit()
   cursql.close()
-  return
 
 def lock(fname):
   open(fname, 'a').close()
