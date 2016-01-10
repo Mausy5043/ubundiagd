@@ -2,7 +2,7 @@
 **Diagnostics Gatherer for Ubuntu Server**
 
 This repository provides a number of python-based daemons that gather various system diagnostics. Although specifically targeted at my own Ubuntu Server (15.04), most will probably work (with minor modifications) on any Debian-based installation and probably also on other Linux systems.
-The result of each deamon is a file containing comma-separated-values created in `/tmp/ubundiagd/`
+The result of each daemon is a file containing comma-separated-values created in `/tmp/ubundiagd/`
 
 The code used to daemonise python code was borrowed from previous work by:
 - Sander Marechal (see: http://www.jejik.com/articles/2007/02/a_simple_unix_linux_daemon_in_python/)
@@ -20,4 +20,15 @@ Following daemons are provided:
 - daemon15 - Size of logfiles (`kern.log`, `smartd.log` and `syslog.log`)
 - daemon19 - Temperature of the disk-array in degC (requires `smartmontools`)
 - daemon21 - Ambient temperature as supplied by the TEMPer USB device. (requires `temperv14`; source supplied with this repository)
-- daemon99 - Data uploading to the server
+- daemon97 - Push data to MySQL-server
+- daemon98 - Upload data to the server
+- daemon99 - XML-file creation
+
+The file `config.ini` contains the settings for each daemon. The following settings are provided:
+- reporttime:       Every <reporttime> seconds the daemon stores a result in the <resultfile>.
+- cycles:           Measurement data (samples) are kept and averaged across <cycles> number of reports. This setting-name is a bit of a misnomer. It will be renamed at a later time.
+- samplespercycle:  The number of samples per cycle.
+- lockfile:         The name of the file used for locking the resultfile.
+- resultfile:       The name of the file used by daemon97.
+- rawfile:          The name of the CSV-file used by daemon98.
+- sqlcmd:           The MySQL command used to add the data to the database.
