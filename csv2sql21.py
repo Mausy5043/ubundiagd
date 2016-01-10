@@ -36,10 +36,10 @@ def do_writesample(cnsql, sample):
       cnsql.commit()
       cursql.close()
     except mdb.Error, e:
-      print("*** MySQL error")
+      print "*** MySQL error"
       print "**** Error %d: %s" % (e.args[0],e.args[1])
       if cursql:    # attempt to close connection to MySQLdb
-        print("***** Closing cursor")
+        print "***** Closing cursor"
         cursql.close()
       print(e.__doc__)
 
@@ -55,12 +55,12 @@ if __name__ == "__main__":
       logtext = "{0} : {1}".format("Attached to MySQL server", versql)
       print logtext
   except mdb.Error, e:
-    print("MySQL error")
+    print "MySQL error"
     print "Error %d: %s" % (e.args[0],e.args[1])
     if consql:    # attempt to close connection to MySQLdb
-      print("Closing MySQL connection")
+      print "Closing MySQL connection"
       consql.close()
-      print("Closed MySQL connection")
+      print "Closed MySQL connection"
     print(e.__doc__)
     raise
 
