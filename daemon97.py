@@ -120,6 +120,11 @@ def do_sql_data(flock, inicnfg, cnsql):
   #endwhile
 
   for inisect in inicnfg.sections(): # Check each section of the config.ini file
+    try:
+      ifile = inicnfg.get(inisect,"resultfile")
+      if DEBUG:print ifile
+    except:
+      if DEBUG:print "No resultfile for section", inisect
     sqlcmd = []
     try:
       sqlcmd = inicnfg.get(inisect,"sqlcmd")
@@ -127,18 +132,22 @@ def do_sql_data(flock, inicnfg, cnsql):
       if DEBUG:print "No SQL command defined for section", inisect
 
     if (sqlcmd != []):
-      ifile = inicnfg.get(inisect,"resultfile")
-      if DEBUG:print ifile
       data = cat(ifile).splitlines()
-
-      if (len(data) >0):
+      if (len(data) > 0):
         for entry in range(0, len(data)):
           if DEBUG:print data[entry]
           do_writesample(cnsql, sqlcmd, data[entry])
-        ofile = inicnfg.get(inisect,"rawfile")
-        if DEBUG:print ofile
-        shutil.move(ifile, ofile)
+        #endfor
+      #endif
     #endif
+    try:
+      ofile = inicnfg.get(inisect,"rawfile")
+      if DEBUG:print ofile
+      if os.path.isfile(ifile):       # resultfile exists
+        if not os.path.isfile(ofile): # rawfile does not exist
+          shutil.move(ifile, ofile)   # then move the file over
+    except:
+      if DEBUG:print "No rawfile defined for section", inisect
   #endfor
   unlock(flock)
 
