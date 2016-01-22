@@ -75,12 +75,12 @@ class MyDaemon(Daemon):
             extern_time = time.time() + EXTERNAL_DATA_EXPIRY_TIME
 
           #windchill = calc_windchill(float(averages[1]), extern_data[0])
-          avg_ext = [format(s, '.3f') for s in data]
+          #avg_ext = [format(s, '.3f') for s in data]
           #avg_ext.append(windchill)
-          if DEBUG:
-            logtext = ":   Reporting avg_ext : {0}".format(avg_ext)
-            print logtext
-            syslog.syslog(syslog.LOG_DEBUG, logtext)
+          #if DEBUG:
+          #  logtext = ":   Reporting avg_ext : {0}".format(avg_ext)
+          #  print logtext
+          #  syslog.syslog(syslog.LOG_DEBUG, logtext)
 
           do_report(averages, flock, fdata)
 
