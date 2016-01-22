@@ -8,8 +8,8 @@ DROP TABLE IF EXISTS wind;
 CREATE TABLE `wind` (
   `sample_time`  datetime,
   `sample_epoch` int(11) unsigned,
-  `speed`    decimal(6,3),
-  `direction`  decimal(5,2),
+  `speed`        decimal(6,3),
+  `direction`    decimal(6,3),
   PRIMARY KEY (`sample_time`)
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
