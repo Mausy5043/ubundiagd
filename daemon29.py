@@ -140,7 +140,7 @@ def calc_windchill(T,W):
 
 def do_report(result, flock, fdata):
   # Get the time and date in human-readable form and UN*X-epoch...
-  outDate = time.strftime('%Y-%m-%dT%H:%M:%S')
+  outDate = time.strftime('%Y-%m-%dT%H:%M:%S, %s')
   ardtime = time.time()
   result = ', '.join(map(str, result))
   #ext_result = ', '.join(map(str, ext_result))
