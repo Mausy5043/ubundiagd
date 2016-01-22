@@ -61,7 +61,7 @@ class MyDaemon(Daemon):
           somma = map(sum,zip(*data))
           averages = [format(s / len(data), '.3f') for s in somma]
           if DEBUG:
-            logtext = ":   Reporting sample : {0}".format(averages)
+            logtext = ":   Reporting averages : {0}".format(averages)
             print logtext
             syslog.syslog(syslog.LOG_DEBUG, logtext)
 
@@ -75,10 +75,10 @@ class MyDaemon(Daemon):
             extern_time = time.time() + EXTERNAL_DATA_EXPIRY_TIME
 
           #windchill = calc_windchill(float(averages[1]), extern_data[0])
-          avg_ext = [format(s, '.3f') for s in extern_data]
+          avg_ext = [format(s, '.3f') for s in data]
           #avg_ext.append(windchill)
           if DEBUG:
-            logtext = ":   Reporting sample : {0}".format(avg_ext)
+            logtext = ":   Reporting avg_ext : {0}".format(avg_ext)
             print logtext
             syslog.syslog(syslog.LOG_DEBUG, logtext)
 
@@ -138,21 +138,21 @@ def calc_windchill(T,W):
 
   return JagTi
 
-def do_report(result, ext_result):
+def do_report(result):
   # Get the time and date in human-readable form and UN*X-epoch...
   outDate = time.strftime('%Y-%m-%dT%H:%M:%S')
   ardtime = time.time()
   result = ', '.join(map(str, result))
-  ext_result = ', '.join(map(str, ext_result))
+  #ext_result = ', '.join(map(str, ext_result))
   flock = '/tmp/raspdiagd/23.lock'
   lock(flock)
   f = file('/tmp/testser.txt', 'a')
-  f.write('{0}, {1}, {2}\n'.format(outDate, result, ext_result) )
+  f.write('{0}, {1}\n'.format(outDate, result) )
   f.close()
   unlock(flock)
   ardtime = time.time() - ardtime
   if DEBUG:
-    logtext = ":   [do_report] : {0}, {1}, {2}".format(outDate, result, ext_result)
+    logtext = ":   [do_report] : {0}, {1}".format(outDate, result)
     print logtext
     #syslog.syslog(syslog.LOG_DEBUG, logtext)
     logtext = ":   [do_report]       : {0:.2f} s".format(ardtime)
