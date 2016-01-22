@@ -82,7 +82,7 @@ class MyDaemon(Daemon):
             print logtext
             syslog.syslog(syslog.LOG_DEBUG, logtext)
 
-          do_report(averages)
+          do_report(averages, flock, fdata)
 
         waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
         if (waitTime > 0):                          # sync to sampleTime [s]
@@ -138,15 +138,15 @@ def calc_windchill(T,W):
 
   return JagTi
 
-def do_report(result):
+def do_report(result, flock, fdata):
   # Get the time and date in human-readable form and UN*X-epoch...
   outDate = time.strftime('%Y-%m-%dT%H:%M:%S')
   ardtime = time.time()
   result = ', '.join(map(str, result))
   #ext_result = ', '.join(map(str, ext_result))
-  flock = '/tmp/raspdiagd/23.lock'
+  #flock = '/tmp/raspdiagd/23.lock'
   lock(flock)
-  f = file('/tmp/testser.txt', 'a')
+  f = file(fdata, 'a')
   f.write('{0}, {1}\n'.format(outDate, result) )
   f.close()
   unlock(flock)
