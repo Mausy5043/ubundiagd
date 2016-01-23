@@ -6,8 +6,7 @@
 
 # Adapted by M.Hendrix [2016]
 
-# daemon26.py reads winddata from an external weatherstation managed by KNMI.
-
+# daemon29.py reads winddata from an external weatherstation managed by KNMI.
 
 import syslog, traceback
 import os, sys, time, math
@@ -174,7 +173,7 @@ def syslog_trace(trace):
       syslog.syslog(syslog.LOG_ALERT,line)
 
 if __name__ == "__main__":
-  daemon = MyDaemon('/tmp/raspdiagd/29.pid')
+  daemon = MyDaemon('/tmp/ubundiagd/29.pid')
   if len(sys.argv) == 2:
     if 'start' == sys.argv[1]:
       daemon.start()
