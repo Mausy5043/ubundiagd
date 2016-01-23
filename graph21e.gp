@@ -25,8 +25,8 @@ Y_max = Y_max + utc_offset - 946684800
 set xlabel "Date/Time"       # X-axis label
 set xdata time               # Define that data on X-axis should be interpreted as time
 set timefmt "%s"             # Time in log-file is given in Unix format
-set format x "%b"            # Display monthname on the X axis
-set xtics rotate by 40 right
+set format x "%b %y"            # Display monthname on the X axis
+#set xtics rotate by 40 right
 set xrange [ Y_min : Y_max ]
 
 # ***************************************************************** Y-axis *****
