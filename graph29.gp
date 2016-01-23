@@ -13,10 +13,10 @@ tz_offset = utc_offset / 3600 # GNUplot only works with UTC. Need to compensate
 # ************************************************************* Statistics *****
 # stats to be calculated here
 fname = "/tmp/sql29.csv"
-stats fname using 2 name "D" nooutput
+stats fname using 2 name "W" nooutput
 
-D_min = D_min + utc_offset - 946684800
-D_max = D_max + utc_offset - 946684800
+W_min = W_min + utc_offset - 946684800
+W_max = W_max + utc_offset - 946684800
 
 # ****************************************************************** Title *****
 #set title "Test graph -".utc_offset."-"
@@ -27,10 +27,10 @@ set xdata time               # Define that data on X-axis should be interpreted 
 set timefmt "%s"             # Time in log-file is given in Unix format
 set format x "%R"            # Display time in 24 hour notation on the X axis
 set xtics rotate by 40 right
-set xrange [ D_min : D_max ]
+set xrange [ W_min : W_max ]
 
 # ***************************************************************** Y-axis *****
-set ylabel "Windspeed []" # Title for Y-axis
+set ylabel "Windspeed [km/h]" # Title for Y-axis
 #set yrange [10:20]
 set autoscale y
 set format y "%4.1f"
@@ -43,6 +43,11 @@ set format y "%4.1f"
 # ***************************************************************** Legend *****
 # generate a legend which is placed underneath the plot
 #set key outside bottom center box title "-=legend=-"
+set key default
+set key box
+set key samplen .2
+set key inside vertical
+set key left top
 
 # ***************************************************************** Output *****
 set object 1 rect from screen 0,0 to screen 1,1 behind
@@ -51,5 +56,7 @@ set object 2 rect from graph 0,0 to graph 1,1 behind
 set object 2 rect fc rgb "#ffffff" fillstyle solid 1.0 noborder
 set output "/tmp/again29.png"
 
+kmh(x) = x * 3.6 # x in m/s -> km/h =>  * (3600 / 1000)
+
 # ***** PLOT *****
-plot "/tmp/sql29.csv"  using ($2+utc_offset):3 title "Windspeed []"      with points pt 5 ps 0.2\
+plot "/tmp/sql29.csv"  using ($2+utc_offset):kmh($3) title "Windspeed [km/h]"      with points pt 5 ps 0.2\
