@@ -18,8 +18,8 @@ def graphs():
   # 3=14= winddirection (Gilze-Rijen)
   # !=15= WindChill
 
-  A13 = np.array(C[:,2])
-  A14 = np.array(C[:,3])
+  Wspd = np.array(C[:,2])
+  Wdir = np.array(C[:,3])
 
   D = matplotlib.dates.num2date(C[:,0])
 
@@ -27,18 +27,18 @@ def graphs():
   d2r = (1/360.) * np.pi * 2.
   ms2kmh = 3.6
   # convert degrees to radians and m/s to km/hr
-  A14[:] = [x*d2r for x in A14]
-  A13[:] = [x*ms2kmh for x in A13]
-  startA14=0
-  if (len(A14) > (12*24*2)):
-    startA14 = len(A14) - (12*24*2)
+  Wdir[:] = [x*d2r for x in Wdir]
+  Wspd[:] = [x*ms2kmh for x in Wspd]
+  startWdir=0
+  if (len(Wdir) > (12*24*2)):
+    startWdir = len(Wdir) - (12*24*2)
   hrsmpls=6
-  l=len(A14)
-  last14 = A14[l-1]
-  last13 = A13[l-1]
+  l=len(Wdir)
+  last14 = Wdir[l-1]
+  last13 = Wspd[l-1]
   # create intermediate arrays
-  B13=A13
-  B14=A14
+  B13=Wspd
+  B14=Wdir
   # make the array-lengths a multiple of <hrsmpls>
   for x in range(hrsmpls - l % hrsmpls):
     B13 = np.append(B13,last13)
@@ -62,9 +62,9 @@ def graphs():
 
   pl.close()
   print "Windspeed trend"
-  pl.plot(D,A13,'.b', alpha=ahpla)
+  pl.plot(D,Wspd,'.b', alpha=ahpla)
   pl.title('Windspeed trend')
-  pl.ylabel('v(wind) [m/s]')
+  pl.ylabel('v(wind) [km/h]')
   pl.grid(True)
   pl.gcf().autofmt_xdate()
   pl.savefig('/tmp/ubundiagd/Dd.png')
