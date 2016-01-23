@@ -59,4 +59,4 @@ set output "/tmp/again29.png"
 kmh(x) = x * 3.6 # x in m/s -> km/h =>  * (3600 / 1000)
 
 # ***** PLOT *****
-plot "/tmp/sql29.csv"  using ($2+utc_offset):kmh($3) title "Windspeed [km/h]"      with points pt 5 ps 0.2\
+plot "/tmp/sql29.csv"  using ($2+utc_offset):(kmh($3)) title "Windspeed [km/h]"      with points pt 5 ps 0.2\
