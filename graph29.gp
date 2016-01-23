@@ -33,6 +33,7 @@ set xrange [ D_min : D_max ]
 set ylabel "Windspeed []" # Title for Y-axis
 #set yrange [10:20]
 set autoscale y
+set format y "%#"
 
 # **************************************************************** Y2-axis *****
 #set y2label "Raw values [mV]" # Title for Y2-axis
