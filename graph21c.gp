@@ -26,7 +26,7 @@ set xlabel "Date/Time"       # X-axis label
 set xdata time               # Define that data on X-axis should be interpreted as time
 set timefmt "%s"             # Time in log-file is given in Unix format
 set format x "%a %d"            # Display dayname of the week on the X axis
-#set xtics rotate by 40 right
+set xtics rotate by 40 right
 set xrange [ W_min : W_max ]
 
 # ***************************************************************** Y-axis *****
