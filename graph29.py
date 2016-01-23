@@ -60,16 +60,6 @@ def graphs():
 
   ahpla = 0.3
 
-  pl.close()
-  print "Windspeed trend"
-  pl.plot(D,Wspd,'.b', alpha=ahpla)
-  pl.title('Windspeed trend')
-  pl.ylabel('v(wind) [km/h]')
-  pl.grid(True)
-  pl.gcf().autofmt_xdate()
-  pl.savefig('/tmp/ubundiagd/Dd.png')
-
-  pl.close()
   print "Windroos"
   # bar plot on a polar axis.
   # number of datapoints to show
@@ -89,7 +79,7 @@ def graphs():
   bar.set_alpha(1.)
   print theta[r], radii[r], width[r]
   pl.title('Windroos')
-  pl.savefig('/tmp/ubundiagd/De.png')
+  pl.savefig('/tmp/ubundiagd/again29dir.png')
 
 
 if __name__ == "__main__":
