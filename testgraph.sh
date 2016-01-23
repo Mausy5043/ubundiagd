@@ -18,6 +18,6 @@ pushd $HOME/ubundiagd
   gnuplot -e "utc_offset='${UTCOFFSET}'" ./graph21e.gp
   gnuplot -e "utc_offset='${UTCOFFSET}'" ./graph29.gp
   chown beheer:users /tmp/*.png
-  mv /tmp/plot*.png /var/www/status/
-  mv /tmp/again*.png /var/ww/weer/
+  mv /tmp/plot*.png  /var/www/status/
+  mv /tmp/again*.png /var/www/weer/
 popd
