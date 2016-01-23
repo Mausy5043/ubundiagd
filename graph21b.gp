@@ -3,7 +3,7 @@
 # graph of Room temperature
 
 # ******************************************************* General settings *****
-set terminal png font "Helvetica" 11
+set terminal png font "Helvetica" 11 size 640,228
 set datafile separator ';'
 set datafile missing "NaN"   # Ignore missing values
 set grid
