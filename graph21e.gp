@@ -25,7 +25,7 @@ Y_max = Y_max + utc_offset - 946684800
 set xlabel "Date/Time"       # X-axis label
 set xdata time               # Define that data on X-axis should be interpreted as time
 set timefmt "%s"             # Time in log-file is given in Unix format
-set format x "%R"            # Display time in 24 hour notation on the X axis
+set format x "%b"            # Display monthname on the X axis
 set xtics rotate by 40 right
 set xrange [ Y_min : Y_max ]
 
@@ -47,4 +47,4 @@ set autoscale y
 set output "/tmp/plote.png"
 
 # ***** PLOT *****
-plot "/tmp/sql21e.csv"  using ($2+utc_offset):3 title "Temperature [degC]"      with points pt 5 ps 0.2\
+plot "/tmp/sql21e.csv"  using ($2+utc_offset):3 title "Temperature [degC]"      with dots\

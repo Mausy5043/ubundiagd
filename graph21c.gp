@@ -25,7 +25,7 @@ W_max = W_max + utc_offset - 946684800
 set xlabel "Date/Time"       # X-axis label
 set xdata time               # Define that data on X-axis should be interpreted as time
 set timefmt "%s"             # Time in log-file is given in Unix format
-set format x "%R"            # Display time in 24 hour notation on the X axis
+set format x "%a"            # Display dayname of the week on the X axis
 set xtics rotate by 40 right
 set xrange [ W_min : W_max ]
 
