@@ -3,7 +3,7 @@
 # graph of Room temperature
 
 # ******************************************************* General settings *****
-set terminal png font "Courier" 9 size 480,228
+set terminal png font "Courier" 10 size 480,228
 set datafile separator ';'
 set datafile missing "NaN"   # Ignore missing values
 set grid
