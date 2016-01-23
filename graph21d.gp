@@ -1,22 +1,22 @@
 #!/usr/bin/gnuplot
 
-# graph of TMP36
-
+# graph of Room temperature
 
 # ******************************************************* General settings *****
+set terminal png font "Helvetica" 11
 set datafile separator ';'
 set datafile missing "NaN"   # Ignore missing values
 set grid
 tz_offset = utc_offset / 3600 # GNUplot only works with UTC. Need to compensate
                               # for timezone ourselves.
-fname = "/tmp/sql21.csv"
 
 # ************************************************************* Statistics *****
 # stats to be calculated here
-stats fname using 2 name "T2" nooutput
+fname = "/tmp/sql21d.csv"
+stats fname using 2 name "M" nooutput
 
-T2_min = T2_min + utc_offset - 946684800
-T2_max = T2_max + utc_offset - 946684800
+M_min = M_min + utc_offset - 946684800
+M_max = M_max + utc_offset - 946684800
 
 # ****************************************************************** Title *****
 #set title "Test graph -".utc_offset."-"
@@ -26,8 +26,8 @@ set xlabel "Date/Time"       # X-axis label
 set xdata time               # Define that data on X-axis should be interpreted as time
 set timefmt "%s"             # Time in log-file is given in Unix format
 set format x "%R"            # Display time in 24 hour notation on the X axis
-set xtics rotate by 45 right
-set xrange [ T2_min : T2_max ]
+set xtics rotate by 40 right
+set xrange [ M_min : M_max ]
 
 # ***************************************************************** Y-axis *****
 set ylabel "Temperature [degC]" # Title for Y-axis
@@ -41,17 +41,10 @@ set autoscale y
 
 # ***************************************************************** Legend *****
 # generate a legend which is placed underneath the plot
-set key outside bottom center box title "-=legend=-"
+#set key outside bottom center box title "-=legend=-"
 
 # ***************************************************************** Output *****
-set terminal png large
-set output "/tmp/ubundiagd/plot.png"
-
-# Data columns are:
-# 2 is Unix Epoch time
-# 3 is TMP36 mV
-# 4 is calculated temperature
+set output "/tmp/plotd.png"
 
 # ***** PLOT *****
-plot "/tmp/sql21.csv"  using ($2+utc_offset):4 title "Temperature [degC]"      with points pt 5 ps 0.15\
-    ,"/tmp/sql21b.csv" using ($2+utc_offset):3 title "Room temperature [degC]" with points pt 5 ps 0.1\
+plot "/tmp/sql21d.csv"  using ($2+utc_offset):3 title "Temperature [degC]"      with points pt 5 ps 0.2\
