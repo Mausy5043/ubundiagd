@@ -76,7 +76,7 @@ if [[ -n "$DIFFd21" ]]; then
   ./daemon21.py stop
 fi
 if [[ -n "$DIFFd29" ]]; then
-  logger -t ubundiagd "Source daemon21 has changed."
+  logger -t ubundiagd "Source daemon29 has changed."
   ./daemon29.py stop
 fi
 if [[ -n "$DIFFd97" ]]; then
