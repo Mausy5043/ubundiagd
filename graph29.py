@@ -11,42 +11,42 @@ import os, time, libheadstails, commands
 os.nice(10)
 
 def graphs():
-  print "Loading sensor-data"
+  #print "Loading sensor-data"
   C=np.loadtxt('/tmp/sql29.csv',delimiter=';',converters={0:strpdate2num("%Y-%m-%d %H:%M:%S")})
 
   # 2=13= windspeed (Gilze-Rijen)
   # 3=14= winddirection (Gilze-Rijen)
   # !=15= WindChill
 
-  Wspd = np.array(C[:,2])
-  Wdir = np.array(C[:,3])
+  Wspd = np.array(C[:,2])                 # windspeeds [m/s]
+  Wdir = np.array(C[:,3])                 # windvector [deg]
 
+  # convert dates in C[:,0] to something matplotlib understands
   D = matplotlib.dates.num2date(C[:,0])
 
-  # First modify the wind data to get a nicer graph
-  d2r = (1/360.) * np.pi * 2.
-  ms2kmh = 3.6
-  # convert degrees to radians and m/s to km/hr
-  Wdir[:] = [x*d2r for x in Wdir]
-  Wspd[:] = [x*ms2kmh for x in Wspd]
-  startWdir=0
-  if (len(Wdir) > (12*24*2)):
-    startWdir = len(Wdir) - (12*24*2)
-  hrsmpls=6
-  l=len(Wdir)
-  last14 = Wdir[l-1]
-  last13 = Wspd[l-1]
+
+  d2r = (1/360.) * np.pi * 2.             # constant to convert from degrees to radians
+  ms2kmh = 3.6                            # constant to convert from m/s to km/h
+  # do the conversions
+  Wdir[:] = [(x * d2r) for x in Wdir]
+  Wspd[:] = [(x * ms2kmh) for x in Wspd]
+
+  hrsmpls=60                              # data contains this number of samples per hour
+                                          # the graph will show one slice per hour
+  lenWdir = len(Wdir)
+  last14  = Wdir[lenWdir - 1]
+  last13  = Wspd[lenWdir - 1]
   # create intermediate arrays
   B13=Wspd
   B14=Wdir
   # make the array-lengths a multiple of <hrsmpls>
-  for x in range(hrsmpls - l % hrsmpls):
+  for x in range(hrsmpls - lenWdir % hrsmpls):
     B13 = np.append(B13,last13)
     B14 = np.append(B14,last14)
 
   # Determine average speed and direction per 1-hour-period.
   radii=theta=width=np.array([])
-  for x in range(0, l-1, hrsmpls):
+  for x in range(0, lenWdir - 1, hrsmpls):
     radii = np.append(radii, np.mean(B13[x:x+5]))
 
     # Averaging of the bearings as per:
@@ -60,7 +60,7 @@ def graphs():
 
   ahpla = 0.3
 
-  print "Windroos"
+  #print "Windroos"
   # bar plot on a polar axis.
   # number of datapoints to show
   N = len(radii)
