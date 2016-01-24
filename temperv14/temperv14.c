@@ -47,6 +47,7 @@
 
 #include <usb.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <time.h>
 
 #include <string.h>
