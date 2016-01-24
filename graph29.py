@@ -6,9 +6,6 @@ from matplotlib.dates import strpdate2num
 import numpy as np
 import pylab as pl
 from cmath import rect, phase
-import os, time, libheadstails, commands
-
-os.nice(10)
 
 def graphs():
   #print "Loading sensor-data"
@@ -77,7 +74,7 @@ def graphs():
   # highlight the last bar (most recent value) by giving it a different color
   bar.set_facecolor(pl.cm.cool(1.))
   bar.set_alpha(1.)
-  print theta[r], radii[r], width[r]
+  #print theta[r], radii[r], width[r]
   pl.title('Windroos')
   pl.savefig('/tmp/again29dir.png')
 
