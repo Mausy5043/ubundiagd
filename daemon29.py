@@ -39,7 +39,7 @@ class MyDaemon(Daemon):
     data = []                                       # array for holding sampledata
 
     # Start by getting external data.
-    EXTERNAL_DATA_EXPIRY_TIME = 11*60 #seconds
+    EXTERNAL_DATA_EXPIRY_TIME = 5*60 #seconds
     # This decouples the fetching of external data
     # from the reporting cycle.
     result = do_work().split(', ')
