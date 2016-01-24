@@ -3,7 +3,7 @@
 # graph of Room temperature
 
 # ******************************************************* General settings *****
-set terminal png font "Courier" 10  size 640,480
+set terminal png font "Helvetica" 11 size 640,480
 set datafile separator ';'
 set datafile missing "NaN"   # Ignore missing values
 set grid
@@ -19,7 +19,7 @@ W_min = W_min + utc_offset - 946684800
 W_max = W_max + utc_offset - 946684800
 
 # ****************************************************************** Title *****
-#set title "Test graph -".utc_offset."-"
+set title "Wind Speed (Gilze-Rijen)"
 
 # ***************************************************************** X-axis *****
 set xlabel "Date/Time"       # X-axis label
