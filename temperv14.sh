@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 of="/tmp/ubundiagd/temperv14.dat"
 lf="/tmp/ubundiagd/temperv14.lock"
