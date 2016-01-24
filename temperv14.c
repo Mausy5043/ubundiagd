@@ -41,7 +41,6 @@
 *
 */
 
-
 #include <usb.h>
 #include <stdio.h>
 #include <time.h>
@@ -77,10 +76,22 @@ static int seconds=5;
 static int formato=0;
 static int mrtg=0;
 
+/*
+# SENSOR CALIBRATION PROCEDURE
+# Given the existing gain and offset.
+# 1 Determine a linear least-squares fit between the output of this program and
+#   data obtained from a reference sensor
+# 2 The least-squares fit will yield the gain(calc) and offset(calc)
+# 3 Determine gain(new) and offset(new) as shown here:
+#     gain(new)   = gain(old)   * gain(calc)
+#     offset(new) = offset(old) * gain(calc) + offset(calc)
+# 4 Replace the existing values for gain(old) and offset(old) with the values
+#   found for gain(new) and offset(new)
+*/
 
-/* EDIT THIS TO SUBSTRACT x DEGRESS CELSIUS FROM THE OUTPUT! - SOME TEMPer DEVICES SHOW TOO MUCH */
-static float substract = -0.08;
-static float slope = 1.0559;
+# gain(old):
+static float gain = 1.0559;
+# offset(old):
 static float offset = -2.5318;
 
 void bad(const char *why) {
@@ -410,7 +421,7 @@ int main( int argc, char **argv) {
          control_transfer(lvr_winusb, uTemperatura );
          interrupt_read_temperatura(lvr_winusb, &tempc);
   //tempc = (tempc - substract);
-  tempc *= slope;
+  tempc *= gain;
   tempc += offset;
 
          t = time(NULL);
