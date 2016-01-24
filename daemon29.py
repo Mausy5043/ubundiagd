@@ -139,14 +139,17 @@ def calc_windchill(T,W):
 
 def do_report(result, flock, fdata):
   # Get the time and date in human-readable form and UN*X-epoch...
-  outDate = time.strftime('%Y-%m-%dT%H:%M:%S, %s')
+  outDate = time.strftime('%Y-%m-%dT%H:%M:%S')
+  outEpoch = int(time.strftime('%s'))
+  # round to current minute to ease database JOINs
+  outEpoch = outEpoch - (outEpoch % 60)
   ardtime = time.time()
   result = ', '.join(map(str, result))
   #ext_result = ', '.join(map(str, ext_result))
   #flock = '/tmp/raspdiagd/23.lock'
   lock(flock)
   f = file(fdata, 'a')
-  f.write('{0}, {1}\n'.format(outDate, result) )
+  f.write('{0}, {1}, {2}\n'.format(outDate, outEpoch, result) )
   f.close()
   unlock(flock)
   ardtime = time.time() - ardtime
