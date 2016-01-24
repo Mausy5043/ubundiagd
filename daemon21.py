@@ -127,10 +127,13 @@ def do_work():
 
 def do_report(result, flock, fdata):
   # Get the time and date in human-readable form and UN*X-epoch...
-  outDate = time.strftime('%Y-%m-%dT%H:%M:%S, %s')
+  outDate = time.strftime('%Y-%m-%dT%H:%M:%S')
+  outEpoch = time.strftime('%s')
+  # round to current minute to ease database JOINs
+  outEpoch = outEpoch - (outEpoch % 60)
   lock(flock)
   f = file(fdata, 'a')
-  f.write('{0}, {1}\n'.format(outDate, result) )
+  f.write('{0}, {1}, {2}\n'.format(outDate, outEpoch, fresult) )
   f.close()
   unlock(flock)
 
