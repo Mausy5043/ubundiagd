@@ -93,9 +93,9 @@ static int mrtg=0;
 #   found for gain(new) and offset(new)
 */
 
-# gain(old):
+// gain(old):
 static float gain = 1.0559;
-# offset(old):
+// offset(old):
 static float offset = -2.5318;
 
 void bad(const char *why) {
