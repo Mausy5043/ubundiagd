@@ -79,7 +79,7 @@ def graphs():
   bar.set_alpha(1.)
   print theta[r], radii[r], width[r]
   pl.title('Windroos')
-  pl.savefig('/tmp/ubundiagd/again29dir.png')
+  pl.savefig('/tmp/again29dir.png')
 
 
 if __name__ == "__main__":
