@@ -31,7 +31,7 @@ set xrange [ W_min : W_max ]
 
 # ***************************************************************** Y-axis *****
 set ylabel "Windspeed [km/h]" # Title for Y-axis
-#set yrange [10:20]
+set yrange [0:]
 set autoscale y
 set format y "%4.1f"
 
