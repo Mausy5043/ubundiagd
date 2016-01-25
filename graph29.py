@@ -75,7 +75,7 @@ def graphs():
   bar.set_facecolor(pl.cm.cool(1.))
   bar.set_alpha(1.)
   #print theta[r], radii[r], width[r]
-  pl.title('Windroos')
+  #pl.title('Windroos')
   pl.savefig('/tmp/again29dir.png')
 
 
