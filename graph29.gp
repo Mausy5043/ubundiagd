@@ -9,6 +9,7 @@ set datafile missing "NaN"   # Ignore missing values
 set grid
 tz_offset = utc_offset / 3600 # GNUplot only works with UTC. Need to compensate
                               # for timezone ourselves.
+set timestamp bottom
 
 # ************************************************************* Statistics *****
 # stats to be calculated here
@@ -35,9 +36,9 @@ set yrange [0:]
 set format y "%4.1f"
 
 # **************************************************************** Y2-axis *****
-#set y2label "Raw values [mV]" # Title for Y2-axis
-#set autoscale y2
-#set y2tics border         # place ticks on second Y2-axis
+set y2label "Wind direction [deg]" # Title for Y2-axis
+set yrange2 [0:360]
+set y2tics border         # place ticks on second Y2-axis
 
 # ***************************************************************** Legend *****
 # generate a legend which is placed underneath the plot
@@ -49,6 +50,7 @@ set key inside vertical
 set key left top
 
 # ***************************************************************** Output *****
+set arrow from graph 0,graph 0 to graph 0,graph 1 nohead lc rgb "red" front
 set object 1 rect from screen 0,0 to screen 1,1 behind
 set object 1 rect fc rgb "#eeeeee" fillstyle solid 1.0 noborder
 set object 2 rect from graph 0,0 to graph 1,1 behind
@@ -58,6 +60,5 @@ set output "/tmp/again29.png"
 kmh(x) = x * 3.6 # x in m/s -> km/h =>  * (3600 / 1000)
 
 # ***** PLOT *****
-plot "/tmp/sql29.csv"  using ($2+utc_offset):(kmh($3)) title "Windspeed [km/h]"      with impulses\
-
-#points pt 5 ps 0.2\
+plot "/tmp/sql29.csv"  using ($2+utc_offset):(kmh($3)) title "Windspeed [km/h]" with impulses\
+    ,"/tmp/sql29.csv"  using ($2+utc_offset):4         title "Direction [deg]"  with points pt 5 ps 0.1\
