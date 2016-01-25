@@ -37,7 +37,7 @@ set format y "%4.1f"
 
 # **************************************************************** Y2-axis *****
 set y2label "Wind direction [deg]" # Title for Y2-axis
-set yrange2 [0:360]
+set y2range [0:360]
 set y2tics border         # place ticks on second Y2-axis
 
 # ***************************************************************** Legend *****
@@ -51,6 +51,7 @@ set key left top
 
 # ***************************************************************** Output *****
 set arrow from graph 0,graph 0 to graph 0,graph 1 nohead lc rgb "red" front
+set arrow from graph 1,graph 0 to graph 1,graph 1 nohead lc rgb "green" front
 set object 1 rect from screen 0,0 to screen 1,1 behind
 set object 1 rect fc rgb "#eeeeee" fillstyle solid 1.0 noborder
 set object 2 rect from graph 0,0 to graph 1,1 behind
@@ -61,4 +62,4 @@ kmh(x) = x * 3.6 # x in m/s -> km/h =>  * (3600 / 1000)
 
 # ***** PLOT *****
 plot "/tmp/sql29.csv"  using ($2+utc_offset):(kmh($3)) title "Windspeed [km/h]" with impulses\
-    ,"/tmp/sql29.csv"  using ($2+utc_offset):4         title "Direction [deg]"  with points pt 5 ps 0.1\
+    ,"/tmp/sql29.csv"  using ($2+utc_offset):4         title "Direction [deg]" axes x1y2 with points pt 5 ps 0.1\
