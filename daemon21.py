@@ -100,8 +100,9 @@ def do_work():
       logmessage = "That's odd... datafile has NULL-size!"
       # make something up
       Tamb = 43.210
-      if DEBUG:print logmessage
-      syslog.syslog(syslog.LOG_ALERT,logmessage)
+      if DEBUG:
+        print logmessage
+        syslog.syslog(syslog.LOG_INFO,logmessage)
   else:
     succes = False
     logmessage = "Datafile has vanished!"
