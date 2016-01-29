@@ -93,7 +93,7 @@ def do_writesample(cnsql, cmd, sample):
   dat = (sample.split(', '))
   try:
     cursql = cnsql.cursor()
-    if DEBUG:print cmd,dat
+    if DEBUG:print "   ",cmd,dat
     cursql.execute(cmd, dat)
     cnsql.commit()
     cursql.close()
@@ -135,21 +135,21 @@ def do_sql_data(flock, inicnfg, cnsql):
           data = cat(ifile).splitlines()
           if (len(data) > 0):
             for entry in range(0, len(data)):
-              if DEBUG:print data[entry]
+              #if DEBUG:print data[entry]
               do_writesample(cnsql, sqlcmd, data[entry])
             #endfor
           #endif
         except:
           errsql = True
-          if DEBUG:print "Error while attempting to write data to DB"
+          if DEBUG:print "** Error while attempting to write data to DB"
           syslog.syslog(syslog.LOG_ALERT,e.__doc__)
           syslog_trace(traceback.format_exc())
 
       except:
-        if DEBUG:print "No SQL command defined for section", inisect
+        if DEBUG:print " No SQL command defined for section", inisect
 
     except:
-      if DEBUG:print "No resultfile for section", inisect
+      if DEBUG:print " No resultfile for section", inisect
 
     try:
       ofile = inicnfg.get(inisect,"rawfile")
@@ -159,7 +159,7 @@ def do_sql_data(flock, inicnfg, cnsql):
           if not os.path.isfile(ofile): # rawfile does not exist
             shutil.move(ifile, ofile)   # then move the file over
     except:
-      if DEBUG:print "No rawfile defined for section or error while moving", inisect
+      if DEBUG:print " No rawfile defined for section or error while moving", inisect
   #endfor
   unlock(flock)
 
