@@ -18,6 +18,7 @@ pushd "$HOME/ubundiagd"
  # git log --graph --oneline --date-order --decorate --color --all
 
  DIFFlibd=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./libdaemon.py)
+ DIFFconf=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./config.ini)
  DIFFlibs=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./libsmart2.py)
  DIFFd11=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./daemon11.py)
  DIFFd12=$(git --no-pager diff --name-only "$branch..origin/$branch" -- ./daemon12.py)
@@ -92,7 +93,7 @@ if [[ -n "$DIFFd99" ]]; then
   ./daemon99.py stop
 fi
 
-if [[ -n "$DIFFlibd" ]]; then
+if [[ -n "$DIFFlibd" || -n "$DIFFconf" ]]; then
   logger -t ubundiagd "Source libdaemon has changed."
   # stop all daemons
   ./daemon11.py stop
