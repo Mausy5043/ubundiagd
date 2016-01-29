@@ -1,5 +1,5 @@
 # MySQL script
-# create table for TMP36 readings
+# create table for TEMPerv14 readings
 
 USE domotica;
 
