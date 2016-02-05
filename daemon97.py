@@ -33,7 +33,7 @@ class MyDaemon(Daemon):
     except mdb.Error, e:
       if DEBUG:
         print "Unexpected MySQL error"
-        print "Error %d: %s" % (e.args[0],e.args[1])
+        print "Error {0:d}: {1!s}".format(e.args[0], e.args[1])
       if consql:    # attempt to close connection to MySQLdb
         if DEBUG:print "Closing MySQL connection"
         consql.close()
@@ -100,7 +100,7 @@ def do_writesample(cnsql, cmd, sample):
     cursql.close()
   except mdb.Error, e:
     print "*** MySQL error"
-    print "**** Error %d: %s" % (e.args[0],e.args[1])
+    print "**** Error {0:d}: {1!s}".format(e.args[0], e.args[1])
     if cursql:    # attempt to close connection to MySQLdb
       print "***** Closing cursor"
       cursql.close()
@@ -201,5 +201,5 @@ if __name__ == "__main__":
       sys.exit(2)
     sys.exit(0)
   else:
-    print "usage: %s start|stop|restart|foreground" % sys.argv[0]
+    print "usage: {0!s} start|stop|restart|foreground".format(sys.argv[0])
     sys.exit(2)

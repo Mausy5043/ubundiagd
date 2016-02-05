@@ -113,12 +113,12 @@ def do_work():
     syslog.syslog(syslog.LOG_ALERT,logmessage)
 
   if (Tamb > 45.0) and succes:
-    logmessage = "*** Ambient temperature too high *** (%s)" % (Tamb)
+    logmessage = "*** Ambient temperature too high *** ({0!s})".format((Tamb))
     if DEBUG:print logmessage
     syslog.syslog(syslog.LOG_INFO,logmessage)
     succes = False
   if (Tamb < 5.0) and succes:
-    logmessage = "*** Ambient temperature too low *** (%s)" % (Tamb)
+    logmessage = "*** Ambient temperature too low *** ({0!s})".format((Tamb))
     if DEBUG:print logmessage
     syslog.syslog(syslog.LOG_INFO,logmessage)
     succes = False
@@ -186,5 +186,5 @@ if __name__ == "__main__":
       sys.exit(2)
     sys.exit(0)
   else:
-    print "usage: %s start|stop|restart|foreground" % sys.argv[0]
+    print "usage: {0!s} start|stop|restart|foreground".format(sys.argv[0])
     sys.exit(2)
