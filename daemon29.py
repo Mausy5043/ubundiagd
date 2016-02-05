@@ -18,13 +18,14 @@ from bs4 import BeautifulSoup
 
 DEBUG = False
 IS_SYSTEMD = os.path.isfile('/bin/journalctl')
+leaf = os.path.realpath(__file__).split('/').[-2]
 
 class MyDaemon(Daemon):
   def run(self):
     iniconf = ConfigParser.ConfigParser()
     inisection = "29"
     home = os.path.expanduser('~')
-    s = iniconf.read(home + '/ubundiagd/config.ini')
+    s = iniconf.read(home + '/' + leaf + '/config.ini')
     if DEBUG: print "config file : ", s
     if DEBUG: print iniconf.items(inisection)
     reportTime = iniconf.getint(inisection, "reporttime")
@@ -176,7 +177,7 @@ def syslog_trace(trace):
       syslog.syslog(syslog.LOG_ALERT,line)
 
 if __name__ == "__main__":
-  daemon = MyDaemon('/tmp/ubundiagd/29.pid')
+  daemon = MyDaemon('/tmp/' + leaf + '/29.pid')
   if len(sys.argv) == 2:
     if 'start' == sys.argv[1]:
       daemon.start()

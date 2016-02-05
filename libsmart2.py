@@ -8,7 +8,7 @@ class SmartDisk():
   """
   A class to access information on S.M.A.R.T. disks.
   This relies on a seperate script to read the S.M.A.R.T. data and store it in
-  the directory `/tmp/ubundiagd`
+  the directory `/tmp/' + leaf + '`
 
   Usage:
     from libsmart2 import SmartDisk
@@ -16,7 +16,7 @@ class SmartDisk():
     see example code at bottom of this file.
   """
   def __init__(self,diskid):
-    self.diskid   = "/tmp/ubundiagd/smartinfo-" + diskid
+    self.diskid   = "/tmp/' + leaf + '/smartinfo-" + diskid
     self.vars     = "-"
     self.health   = "-"
     self.selftest = "-"
