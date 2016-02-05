@@ -16,7 +16,7 @@ class SmartDisk():
     see example code at bottom of this file.
   """
   def __init__(self,diskid):
-    self.diskid   = "/tmp/' + leaf + '/smartinfo-" + diskid
+    self.diskid   = "/tmp/" + leaf + "/smartinfo-" + diskid
     self.vars     = "-"
     self.health   = "-"
     self.selftest = "-"
