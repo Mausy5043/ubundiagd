@@ -86,7 +86,7 @@ def do_work():
   # Prevent race conditions. Give `temperv14` some time to do its thing.
   time.sleep(3)
   while os.path.isfile(lockfile):
-    logmessage = "lockfile exists. Waiting..."
+    logmessage = "lockfile (" + lockfile+ ") already exists. Waiting..."
     if DEBUG:print logmessage
     syslog.syslog(syslog.LOG_INFO,logmessage)
     # wait while the server-app has locked the directory
@@ -106,7 +106,7 @@ def do_work():
         syslog.syslog(syslog.LOG_INFO,logmessage)
   else:
     succes = False
-    logmessage = "Datafile has vanished!"
+    logmessage = "Datafile ("+ datafile +") has vanished!"
     # make something up
     Tamb = 43.210
     if DEBUG:print logmessage
