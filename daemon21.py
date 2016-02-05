@@ -14,13 +14,14 @@ from libdaemon import Daemon
 import ConfigParser
 
 DEBUG = False
+leaf = os.path.realpath(__file__).split('/')[-2]
 
 class MyDaemon(Daemon):
   def run(self):
     iniconf = ConfigParser.ConfigParser()
     inisection = "21"
     home = os.path.expanduser('~')
-    s = iniconf.read(home + '/ubundiagd/config.ini')
+    s = iniconf.read(home + '/' + leaf + '/config.ini')
     if DEBUG: print "config file : ", s
     if DEBUG: print iniconf.items(inisection)
     reportTime = iniconf.getint(inisection, "reporttime")
@@ -78,14 +79,14 @@ def cat(filename):
   return ret
 
 def do_work():
-  lockfile="/tmp/ubundiagd/temperv14.lock"
-  datafile="/tmp/ubundiagd/temperv14.dat"
+  lockfile="/tmp/" + leaf + "/temperv14.lock"
+  datafile="/tmp/" + leaf + "/temperv14.dat"
   # We assume success and re-set flag on failure.
   succes = True
   # Prevent race conditions. Give `temperv14` some time to do its thing.
   time.sleep(3)
   while os.path.isfile(lockfile):
-    logmessage = "lockfile exists. Waiting..."
+    logmessage = "lockfile (" + lockfile+ ") already exists. Waiting..."
     if DEBUG:print logmessage
     syslog.syslog(syslog.LOG_INFO,logmessage)
     # wait while the server-app has locked the directory
@@ -105,7 +106,7 @@ def do_work():
         syslog.syslog(syslog.LOG_INFO,logmessage)
   else:
     succes = False
-    logmessage = "Datafile has vanished!"
+    logmessage = "Datafile ("+ datafile +") has vanished!"
     # make something up
     Tamb = 43.210
     if DEBUG:print logmessage
@@ -164,7 +165,7 @@ def syslog_trace(trace):
       syslog.syslog(syslog.LOG_ALERT,line)
 
 if __name__ == "__main__":
-  daemon = MyDaemon('/tmp/ubundiagd/21.pid')
+  daemon = MyDaemon('/tmp/' + leaf + '/21.pid')
   if len(sys.argv) == 2:
     if 'start' == sys.argv[1]:
       daemon.start()
