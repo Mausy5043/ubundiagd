@@ -79,8 +79,8 @@ def cat(filename):
   return ret
 
 def do_work():
-  lockfile="/tmp/' + leaf + '/temperv14.lock"
-  datafile="/tmp/' + leaf + '/temperv14.dat"
+  lockfile="/tmp/" + leaf + "/temperv14.lock"
+  datafile="/tmp/" + leaf + "/temperv14.dat"
   # We assume success and re-set flag on failure.
   succes = True
   # Prevent race conditions. Give `temperv14` some time to do its thing.
