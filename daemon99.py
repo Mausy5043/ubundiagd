@@ -25,7 +25,7 @@ sdd = SmartDisk("wwn-0x50014ee6055a237b") # WD-WMC4N0J6Y6LW"
 sde = SmartDisk("wwn-0x50014ee60507b79c") # WD-WMC4N0E24DVU"
 
 DEBUG = False
-leaf = os.path.realpath(__file__).split('/').[-2]
+leaf = os.path.realpath(__file__).split('/')[-2]
 
 class MyDaemon(Daemon):
   def run(self):

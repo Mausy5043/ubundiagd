@@ -15,7 +15,7 @@ import ConfigParser
 import subprocess
 
 DEBUG = False
-leaf = os.path.realpath(__file__).split('/').[-2]
+leaf = os.path.realpath(__file__).split('/')[-2]
 
 class MyDaemon(Daemon):
   def run(self):
