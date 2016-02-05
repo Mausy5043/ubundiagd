@@ -3,6 +3,7 @@
 import commands, time, os
 
 DEBUG = False
+leaf = os.path.realpath(__file__).split('/')[-2]
 
 class SmartDisk():
   """
