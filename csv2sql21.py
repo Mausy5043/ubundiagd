@@ -37,7 +37,7 @@ def do_writesample(cnsql, sample):
       cursql.close()
     except mdb.Error, e:
       print "*** MySQL error"
-      print "**** Error %d: %s" % (e.args[0],e.args[1])
+      print "**** Error {0:d}: {1!s}".format(e.args[0], e.args[1])
       if cursql:    # attempt to close connection to MySQLdb
         print "***** Closing cursor"
         cursql.close()
@@ -56,7 +56,7 @@ if __name__ == "__main__":
       print logtext
   except mdb.Error, e:
     print "MySQL error"
-    print "Error %d: %s" % (e.args[0],e.args[1])
+    print "Error {0:d}: {1!s}".format(e.args[0], e.args[1])
     if consql:    # attempt to close connection to MySQLdb
       print "Closing MySQL connection"
       consql.close()
