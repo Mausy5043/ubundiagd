@@ -73,7 +73,7 @@ class MyDaemon(Daemon):
 def cat(filename):
   ret = ""
   if os.path.isfile(filename):
-    with open(filename,'r') as f
+    with open(filename,'r') as f:
       ret = f.read().strip('\n')
   return ret
 
@@ -133,7 +133,7 @@ def do_report(result, flock, fdata):
   # round to current minute to ease database JOINs
   outEpoch = outEpoch - (outEpoch % 60)
   lock(flock)
-  with open(fdata, 'a') as f
+  with open(fdata, 'a') as f:
     f.write('{0}, {1}, {2:.2f}\n'.format(outDate, outEpoch, result) )
   unlock(flock)
 

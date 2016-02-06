@@ -80,7 +80,7 @@ def do_xml(rpath):
   #fcpu           =
 
   fi              = home +"/.ubundiagd.branch"
-  with open(fi,'r') as f
+  with open(fi,'r') as f:
     ubundiagdbranch = f.read().strip('\n')
 
   uptime          = commands.getoutput("uptime")
@@ -146,7 +146,7 @@ def do_xml(rpath):
   Infoe=sde.getinfo()
 
   #
-  with open(rpath + '/status.xml', 'w') as f
+  with open(rpath + '/status.xml', 'w') as f:
 
     f.write('<server>\n')
 

@@ -149,7 +149,7 @@ def do_report(result, flock, fdata):
   #ext_result = ', '.join(map(str, ext_result))
   #flock = '/tmp/raspdiagd/23.lock'
   lock(flock)
-  with open(fdata, 'a') as f
+  with open(fdata, 'a') as f:
     f.write('{0}, {1}, {2}\n'.format(outDate, outEpoch, result) )
   unlock(flock)
   ardtime = time.time() - ardtime

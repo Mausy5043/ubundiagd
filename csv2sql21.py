@@ -12,7 +12,7 @@ infile = "/srv/array1/datastore/boson/21-aux-ambient.csv"
 def cat(filename):
   ret = ""
   if os.path.isfile(filename):
-    with open(filename,'r') as f
+    with open(filename,'r') as f:
       ret = f.read().strip('\n')
   return ret
 
