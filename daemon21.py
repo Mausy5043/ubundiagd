@@ -49,7 +49,7 @@ class MyDaemon(Daemon):
 
         if (startTime % reportTime < sampleTime):
           if DEBUG:print data
-          if (len(data) > 0):
+          if data:
             averages = sum(data[:]) / len(data)
             if DEBUG:print averages
             if math.isnan(averages):
