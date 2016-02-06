@@ -149,7 +149,7 @@ def do_report(result, flock, fdata):
   #ext_result = ', '.join(map(str, ext_result))
   #flock = '/tmp/raspdiagd/23.lock'
   lock(flock)
-  f = file(fdata, 'a')
+  f = open(fdata, 'a')
   f.write('{0}, {1}, {2}\n'.format(outDate, outEpoch, result) )
   f.close()
   unlock(flock)

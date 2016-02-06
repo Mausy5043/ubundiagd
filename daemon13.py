@@ -62,7 +62,7 @@ class MyDaemon(Daemon):
 def cat(filename):
   ret = ""
   if os.path.isfile(filename):
-    f = file(filename,'r')
+    f = open(filename,'r')
     ret = f.read().strip('\n')
     f.close()
   return ret
@@ -100,7 +100,7 @@ def do_report(result, flock, fdata):
   outDate = commands.getoutput("date '+%F %H:%M:%S, %s'")
   result = ', '.join(map(str, result))
   lock(flock)
-  f = file(fdata, 'a')
+  f = open(fdata, 'a')
   f.write('{0}, {1}\n'.format(outDate, result) )
   f.close()
   unlock(flock)

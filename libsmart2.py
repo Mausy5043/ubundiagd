@@ -78,7 +78,7 @@ class SmartDisk():
   def cat(self,filename):
     ret = ""
     if os.path.isfile(filename):
-      f = file(filename,'r')
+      f = open(filename,'r')
       ret = f.read().strip('\n')
       f.close()
     return ret

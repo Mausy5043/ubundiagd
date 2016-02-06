@@ -80,7 +80,7 @@ def do_xml(rpath):
   #fcpu           =
 
   fi              = home +"/.ubundiagd.branch"
-  f 							= file(fi,'r')
+  f 							= open(fi,'r')
   ubundiagdbranch = f.read().strip('\n')
   f.close()
 
@@ -147,7 +147,7 @@ def do_xml(rpath):
   Infoe=sde.getinfo()
 
   #
-  f = file(rpath + '/status.xml', 'w')
+  f = open(rpath + '/status.xml', 'w')
 
   f.write('<server>\n')
 
