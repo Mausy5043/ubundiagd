@@ -12,9 +12,8 @@ infile = "/srv/array1/datastore/boson/21-aux-ambient.csv"
 def cat(filename):
   ret = ""
   if os.path.isfile(filename):
-    f = open(filename,'r')
-    ret = f.read().strip('\n')
-    f.close()
+    with open(filename,'r') as f
+      ret = f.read().strip('\n')
   return ret
 
 def do_writesample(cnsql, sample):

@@ -80,9 +80,8 @@ def do_xml(rpath):
   #fcpu           =
 
   fi              = home +"/.ubundiagd.branch"
-  f 							= open(fi,'r')
-  ubundiagdbranch = f.read().strip('\n')
-  f.close()
+  with open(fi,'r') as f
+    ubundiagdbranch = f.read().strip('\n')
 
   uptime          = commands.getoutput("uptime")
   dfh             = commands.getoutput("df -h")
@@ -147,85 +146,83 @@ def do_xml(rpath):
   Infoe=sde.getinfo()
 
   #
-  f = open(rpath + '/status.xml', 'w')
+  with open(rpath + '/status.xml', 'w') as f
 
-  f.write('<server>\n')
+    f.write('<server>\n')
 
-  f.write('<name>\n')
-  f.write(uname[1] + '\n')
-  f.write('</name>\n')
+    f.write('<name>\n')
+    f.write(uname[1] + '\n')
+    f.write('</name>\n')
 
-  f.write('<df>\n')
-  f.write(dfh + '\n')
-  f.write('-\n')
-  f.write(mds + '\n')
-  f.write('</df>\n')
+    f.write('<df>\n')
+    f.write(dfh + '\n')
+    f.write('-\n')
+    f.write(mds + '\n')
+    f.write('</df>\n')
 
-  f.write('<temperature>\n')
-  f.write('SSD: ' + Tsda + ' || disk1: ' + Tsdb + ' || disk2: ' + Tsdc + ' || disk3: ' + Tsdd + ' || disk4: ' + Tsde + ' [degC]\n')
-  f.write('\n')
-  f.write('---SSD---\n')
-  f.write(' Name      : ' + Infoa + '\n')
-  f.write(' PowerOn   : ' + Pta + '\n')
-  #f.write(' Last test : ' + 'Not available\n')
-  if not "PASSED" in Hda:
-    f.write('             ' + Hda +'\n')
-  if not(RBCsda=="0"):
-    f.write('              Retired Block Count (5) = ' + RBCsda +'\n')
-  f.write('---disk1---\n')
-  f.write(' Name      : ' + Infob + '\n')
-  f.write(' PowerOn   : ' + Ptb + '\n')
-  if not "without" in Testb:
-    f.write(' Last test : ' + Testb +'\n')
-  if not "PASSED" in Hdb:
-    f.write('             ' + Hdb +'\n')
-  if not(RBCsdb=="0") or not(OUsdb=="0"):
-    f.write('              Retired Block Count (5) = ' + RBCsdb + ' - Offline Uncorrectable (198) = ' + OUsdb +'\n')
-  f.write('---disk2---\n')
-  f.write(' Name      : ' + Infoc + '\n')
-  f.write(' PowerOn   : ' + Ptc + '\n')
-  if not "without" in Testc:
-    f.write(' Last test : ' + Testc +'\n')
-  if not "PASSED" in Hdc:
-    f.write('             ' + Hdc +'\n')
-  if not(RBCsdc=="0") or not(OUsdc=="0"):
-    f.write('              Retired Block Count (5) = ' + RBCsdc + ' - Offline Uncorrectable (198) = ' + OUsdc +'\n')
-  f.write('---disk3---\n')
-  f.write(' Name      : ' + Infod + '\n')
-  f.write(' PowerOn   : ' + Ptd + '\n')
-  if not "without" in Testd:
-    f.write(' Last test : ' + Testd +'\n')
-  if not "PASSED" in Hdd:
-    f.write('             ' + Hdd +'\n')
-  if not(RBCsdd=="0") or not(OUsdd=="0"):
-    f.write('              Retired Block Count (5) = ' + RBCsdd + ' - Offline Uncorrectable (198) = ' + OUsdd +'\n')
-  f.write('---disk4---\n')
-  f.write(' Name      : ' + Infoe + '\n')
-  f.write(' PowerOn   : ' + Pte + '\n')
-  if not "without" in Teste:
-    f.write(' Last test : ' + Teste +'\n')
-  if not "PASSED" in Hde:
-    f.write('             ' + Hde +'\n')
-  if not(RBCsde=="0") or not(OUsde=="0"):
-    f.write('              Retired Block Count (5) = ' + RBCsde + ' - Offline Uncorrectable (198) = ' + OUsde +'\n')
-  f.write(' ')
-  #f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
-  f.write('</temperature>\n')
+    f.write('<temperature>\n')
+    f.write('SSD: ' + Tsda + ' || disk1: ' + Tsdb + ' || disk2: ' + Tsdc + ' || disk3: ' + Tsdd + ' || disk4: ' + Tsde + ' [degC]\n')
+    f.write('\n')
+    f.write('---SSD---\n')
+    f.write(' Name      : ' + Infoa + '\n')
+    f.write(' PowerOn   : ' + Pta + '\n')
+    #f.write(' Last test : ' + 'Not available\n')
+    if not "PASSED" in Hda:
+      f.write('             ' + Hda +'\n')
+    if not(RBCsda=="0"):
+      f.write('              Retired Block Count (5) = ' + RBCsda +'\n')
+    f.write('---disk1---\n')
+    f.write(' Name      : ' + Infob + '\n')
+    f.write(' PowerOn   : ' + Ptb + '\n')
+    if not "without" in Testb:
+      f.write(' Last test : ' + Testb +'\n')
+    if not "PASSED" in Hdb:
+      f.write('             ' + Hdb +'\n')
+    if not(RBCsdb=="0") or not(OUsdb=="0"):
+      f.write('              Retired Block Count (5) = ' + RBCsdb + ' - Offline Uncorrectable (198) = ' + OUsdb +'\n')
+    f.write('---disk2---\n')
+    f.write(' Name      : ' + Infoc + '\n')
+    f.write(' PowerOn   : ' + Ptc + '\n')
+    if not "without" in Testc:
+      f.write(' Last test : ' + Testc +'\n')
+    if not "PASSED" in Hdc:
+      f.write('             ' + Hdc +'\n')
+    if not(RBCsdc=="0") or not(OUsdc=="0"):
+      f.write('              Retired Block Count (5) = ' + RBCsdc + ' - Offline Uncorrectable (198) = ' + OUsdc +'\n')
+    f.write('---disk3---\n')
+    f.write(' Name      : ' + Infod + '\n')
+    f.write(' PowerOn   : ' + Ptd + '\n')
+    if not "without" in Testd:
+      f.write(' Last test : ' + Testd +'\n')
+    if not "PASSED" in Hdd:
+      f.write('             ' + Hdd +'\n')
+    if not(RBCsdd=="0") or not(OUsdd=="0"):
+      f.write('              Retired Block Count (5) = ' + RBCsdd + ' - Offline Uncorrectable (198) = ' + OUsdd +'\n')
+    f.write('---disk4---\n')
+    f.write(' Name      : ' + Infoe + '\n')
+    f.write(' PowerOn   : ' + Pte + '\n')
+    if not "without" in Teste:
+      f.write(' Last test : ' + Teste +'\n')
+    if not "PASSED" in Hde:
+      f.write('             ' + Hde +'\n')
+    if not(RBCsde=="0") or not(OUsde=="0"):
+      f.write('              Retired Block Count (5) = ' + RBCsde + ' - Offline Uncorrectable (198) = ' + OUsde +'\n')
+    f.write(' ')
+    #f.write(str(Tcpu) + ' degC @ '+ str(fcpu) +' MHz\n')
+    f.write('</temperature>\n')
 
-  f.write('<memusage>\n')
-  f.write(freeh + '\n')
-  f.write('</memusage>\n')
+    f.write('<memusage>\n')
+    f.write(freeh + '\n')
+    f.write('</memusage>\n')
 
-  f.write('<uptime>\n')
-  f.write(uptime + '\n')
-  f.write(uname[0]+ ' ' +uname[1]+ ' ' +uname[2]+ ' ' +uname[3]+ ' ' +uname[4]+ ' ' +platform.platform() +'\n')
-  f.write(' - ubundiagd   on: '+ ubundiagdbranch +'\n')
-  f.write('\nTop 10 processes:\n' + psout +'\n')
-  f.write('</uptime>\n')
+    f.write('<uptime>\n')
+    f.write(uptime + '\n')
+    f.write(uname[0]+ ' ' +uname[1]+ ' ' +uname[2]+ ' ' +uname[3]+ ' ' +uname[4]+ ' ' +platform.platform() +'\n')
+    f.write(' - ubundiagd   on: '+ ubundiagdbranch +'\n')
+    f.write('\nTop 10 processes:\n' + psout +'\n')
+    f.write('</uptime>\n')
 
-  f.write('</server>\n')
-
-  f.close()
+    f.write('</server>\n')
 
 def lock(fname):
   fd = open(fname, 'a').close()

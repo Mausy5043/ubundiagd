@@ -73,9 +73,8 @@ class MyDaemon(Daemon):
 def cat(filename):
   ret = ""
   if os.path.isfile(filename):
-    f = open(filename,'r')
-    ret = f.read().strip('\n')
-    f.close()
+    with open(filename,'r') as f
+      ret = f.read().strip('\n')
   return ret
 
 def do_work():
@@ -134,21 +133,9 @@ def do_report(result, flock, fdata):
   # round to current minute to ease database JOINs
   outEpoch = outEpoch - (outEpoch % 60)
   lock(flock)
-  f = open(fdata, 'a')
-  f.write('{0}, {1}, {2:.2f}\n'.format(outDate, outEpoch, result) )
-  f.close()
+  with open(fdata, 'a') as f
+    f.write('{0}, {1}, {2:.2f}\n'.format(outDate, outEpoch, result) )
   unlock(flock)
-
-  # t_sample=outDate.split(',')
-  # cursql = cnsql.cursor()
-  # cmd = ('INSERT INTO temper '
-  #                   '(sample_time, sample_epoch, temperature) '
-  #                   'VALUES (%s, %s, %s)')
-  # if DEBUG: print cmd, "// result = ",result
-  # dat = (t_sample[0], int(t_sample[1]), result )
-  # cursql.execute(cmd, dat)
-  # cnsql.commit()
-  # cursql.close()
 
 def lock(fname):
   open(fname, 'a').close()

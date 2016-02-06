@@ -106,10 +106,8 @@ def do_report(result, flock, fdata):
   outDate = commands.getoutput("date '+%F %H:%M:%S, %s'")
   result = ', '.join(map(str, result))
   lock(flock)
-  f = open(fdata, 'a')
-  # write out a NaN for disks sdf and sdg
-  f.write('{0}, {1}, NaN, NaN\n'.format(outDate, result) )
-  f.close()
+  with open(fdata, 'a') as f
+    f.write('{0}, {1}, NaN, NaN\n'.format(outDate, result) )
   unlock(flock)
 
 def lock(fname):
