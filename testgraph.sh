@@ -13,7 +13,7 @@ pushd $HOME/ubundiagd
   mysql -h sql.lan --skip-column-names -e "USE domotica; SELECT * FROM temper where (sample_time) >=NOW() - INTERVAL 8 DAY;"   | sed 's/\t/;/g;s/\n//g' > /tmp/sql21c.csv
   mysql -h sql.lan --skip-column-names -e "USE domotica; SELECT * FROM temper where (sample_time) >=NOW() - INTERVAL 32 DAY;"  | sed 's/\t/;/g;s/\n//g' > /tmp/sql21d.csv
   mysql -h sql.lan --skip-column-names -e "USE domotica; SELECT * FROM temper where (sample_time) >=NOW() - INTERVAL 370 DAY;" | sed 's/\t/;/g;s/\n//g' > /tmp/sql21e.csv
-  mysql -h sql.lan --skip-column-names -e "USE domotica; SELECT * FROM wind where (sample_time) >=NOW() - INTERVAL 25 HOUR;" | sed 's/\t/;/g;s/\n//g' > /tmp/sql29.csv
+  mysql -h sql.lan --skip-column-names -e "USE domotica; SELECT * FROM wind where (sample_time) >=NOW() - INTERVAL 50 HOUR;" | sed 's/\t/;/g;s/\n//g' > /tmp/sql29.csv
 
   touch /tmp/ubundiagd/graph.lock
 
