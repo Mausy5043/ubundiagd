@@ -106,6 +106,7 @@ def do_writesample(cnsql, cmd, sample):
     print(e.__doc__)
     syslog.syslog(syslog.LOG_ALERT,e.__doc__)
     syslog_trace(traceback.format_exc())
+    raise
 
 def do_sql_data(flock, inicnfg, cnsql):
   if DEBUG:print "Pushing data to MySQL-server"
