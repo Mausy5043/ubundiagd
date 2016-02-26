@@ -137,11 +137,12 @@ destale 12
 destale 13
 destale 14
 destale 15
-destale 19
 destale 21
 destale 29
 destale 97
 destale 98
 destale 99
+
+sleep 120;destale 19
 
 popd
