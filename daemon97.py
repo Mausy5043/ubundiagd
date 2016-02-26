@@ -97,16 +97,13 @@ def do_writesample(cnsql, cmd, sample):
     cursql.execute(cmd, dat)
     cnsql.commit()
     cursql.close()
-  except mdb.Error, e:
-    print "*** MySQL error"
-    print "**** Error {0:d}: {1!s}".format(e.args[0], e.args[1])
-    if cursql:    # attempt to close connection to MySQLdb
-      print "***** Closing cursor"
-      cursql.close()
-    print(e.__doc__)
+  except IntegrityError as e:
     syslog.syslog(syslog.LOG_ALERT,e.__doc__)
-    syslog_trace(traceback.format_exc())
-    raise
+    if cursql:
+      if DEBUG:print " ** Closing MySQL connection"
+      cursql.close()
+      syslog.syslog(syslog.LOG_ALERT," ** Closed MySQL connection in do_writesample **")
+    pass
 
 def do_sql_data(flock, inicnfg, cnsql):
   if DEBUG:print "Pushing data to MySQL-server"
@@ -132,25 +129,21 @@ def do_sql_data(flock, inicnfg, cnsql):
         sqlcmd = []
         sqlcmd = inicnfg.get(inisect,"sqlcmd")
 
-        try:
-          data = cat(ifile).splitlines()
-          if data:
-            for entry in range(0, len(data)):
-              #if DEBUG:print data[entry]
-              do_writesample(cnsql, sqlcmd, data[entry])
-            #endfor
-          #endif
-        except:
-          errsql = True
-          if DEBUG:print "** Error while attempting to write data to DB"
-          syslog.syslog(syslog.LOG_ALERT,e.__doc__)
-          syslog_trace(traceback.format_exc())
-
-      except:
-        if DEBUG:print " No SQL command defined for section", inisect
-
-    except:
-      if DEBUG:print " No resultfile for section", inisect
+        data = cat(ifile).splitlines()
+        if data:
+          for entry in range(0, len(data)):
+            #if DEBUG:print data[entry]
+            do_writesample(cnsql, sqlcmd, data[entry])
+          #endfor
+        #endif
+      except Exception as e:  #no sqlcmd
+        if DEBUG:
+          print "Unexpected error:"
+          print e.message
+    except Exception as e:  #no ifile
+      if DEBUG:
+        print "Unexpected error:"
+        print e.message
 
     try:
       ofile = inicnfg.get(inisect,"rawfile")
@@ -159,9 +152,10 @@ def do_sql_data(flock, inicnfg, cnsql):
         if os.path.isfile(ifile):       # IF resultfile exists
           if not os.path.isfile(ofile): # AND rawfile does not exist
             shutil.move(ifile, ofile)   # THEN move the file over
-
-    except:
-      if DEBUG:print " No rawfile defined for section or error while moving", inisect
+    except Exception as e:  #no ofile
+      if DEBUG:
+        print "Unexpected error:"
+        print e.message
   #endfor
   unlock(flock)
 
