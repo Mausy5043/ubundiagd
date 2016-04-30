@@ -40,13 +40,14 @@ class MyDaemon(Daemon):
     data = []                                       # array for holding sampledata
 
     # Start by getting external data.
-    EXTERNAL_DATA_EXPIRY_TIME = 5*60 #seconds
+    EXTERNAL_DATA_EXPIRY_TIME = 5 * 60 #seconds
     # This decouples the fetching of external data
     # from the reporting cycle.
     result = do_work().split(', ')
-    if DEBUG:print "result   :",result
+    if DEBUG:print "result   :", result
     data.append(map(float, result))
-    if (len(data) > samples):data.pop(0)
+    if (len(data) > samples):
+      data.pop(0)
     extern_time = time.time() + EXTERNAL_DATA_EXPIRY_TIME
 
     while True:
@@ -54,12 +55,13 @@ class MyDaemon(Daemon):
         startTime = time.time()
 
         data.append(map(float, result))
-        if (len(data) > samples):data.pop(0)
+        if (len(data) > samples):
+          data.pop(0)
 
         # report sample average
         if (startTime % reportTime < sampleTime):   # sync reports to reportTime
-          somma = map(sum,zip(*data))
-          averages = [format(s / len(data), '.3f') for s in somma]
+          somma = map(sum, zip(*data))
+          averages = [format(sm / len(data), '.3f') for sm in somma]
           if DEBUG:
             logtext = ":   Reporting averages : {0}".format(averages)
             print logtext
@@ -74,17 +76,17 @@ class MyDaemon(Daemon):
             if (len(data) > samples):data.pop(0)
             extern_time = time.time() + EXTERNAL_DATA_EXPIRY_TIME
 
-          #windchill = calc_windchill(float(averages[1]), extern_data[0])
-          #avg_ext = [format(s, '.3f') for s in data]
-          #avg_ext.append(windchill)
-          #if DEBUG:
+          # windchill = calc_windchill(float(averages[1]), extern_data[0])
+          # avg_ext = [format(s, '.3f') for s in data]
+          # avg_ext.append(windchill)
+          # if DEBUG:
           #  logtext = ":   Reporting avg_ext : {0}".format(avg_ext)
           #  print logtext
           #  syslog.syslog(syslog.LOG_DEBUG, logtext)
 
           do_report(averages, flock, fdata)
 
-        waitTime = sampleTime - (time.time() - startTime) - (startTime%sampleTime)
+        waitTime = sampleTime - (time.time() - startTime) - (startTime % sampleTime)
         if (waitTime > 0):                          # sync to sampleTime [s]
           if DEBUG:print "Waiting {0} s".format(waitTime)
           time.sleep(waitTime)
@@ -92,16 +94,16 @@ class MyDaemon(Daemon):
         if DEBUG:
           print "Unexpected error:"
           print e.message
-        syslog.syslog(syslog.LOG_ALERT,e.__doc__)
+        syslog.syslog(syslog.LOG_ALERT, e.__doc__)
         syslog_trace(traceback.format_exc())
         raise
 
 def do_work():
-  #set defaults
+  # set defaults
   ms = 0
   gr = 270
 
-  ardtime=time.time()
+  ardtime = time.time()
   try:
     req = Request("http://xml.buienradar.nl/")
     response = urlopen(req, timeout=25)
@@ -111,9 +113,9 @@ def do_work():
 
     MSwind = str(soup.buienradarnl.weergegevens.actueel_weer.weerstations.find(id=6350).windsnelheidms)
     GRwind = str(soup.buienradarnl.weergegevens.actueel_weer.weerstations.find(id=6350).windrichtinggr)
-    #datum = str(soup.buienradarnl.weergegevens.actueel_weer.weerstations.find(id=6350).datum)
-    ms = MSwind.replace("<"," ").replace(">"," ").split()[1]
-    gr = GRwind.replace("<"," ").replace(">"," ").split()[1]
+    # datum = str(soup.buienradarnl.weergegevens.actueel_weer.weerstations.find(id=6350).datum)
+    ms = MSwind.replace("<", " ").replace(">", " ").split()[1]
+    gr = GRwind.replace("<", " ").replace(">", " ").split()[1]
 
     if DEBUG:
       logtext = ":   [do_work]       : {0:.2f} s".format(souptime)
@@ -129,7 +131,7 @@ def do_work():
   gilzerijen = '{0}, {1}'.format(ms, gr)
   return gilzerijen
 
-def calc_windchill(T,W):
+def calc_windchill(T, W):
   # use this data to determine the windchill temperature acc. JAG/TI
   # ref.: http://knmi.nl/bibliotheek/knmipubTR/TR309.pdf
   JagTi = 13.12 + 0.6215 * T - 11.37 * (W * 3.6)**0.16 + 0.3965 * T * (W * 3.6)**0.16
@@ -146,17 +148,17 @@ def do_report(result, flock, fdata):
   outEpoch = outEpoch - (outEpoch % 60)
   ardtime = time.time()
   result = ', '.join(map(str, result))
-  #ext_result = ', '.join(map(str, ext_result))
-  #flock = '/tmp/raspdiagd/23.lock'
+  # ext_result = ', '.join(map(str, ext_result))
+  # flock = '/tmp/raspdiagd/23.lock'
   lock(flock)
   with open(fdata, 'a') as f:
-    f.write('{0}, {1}, {2}\n'.format(outDate, outEpoch, result) )
+    f.write('{0}, {1}, {2}\n'.format(outDate, outEpoch, result))
   unlock(flock)
   ardtime = time.time() - ardtime
   if DEBUG:
     logtext = ":   [do_report] : {0}, {1}".format(outDate, result)
     print logtext
-    #syslog.syslog(syslog.LOG_DEBUG, logtext)
+    # syslog.syslog(syslog.LOG_DEBUG, logtext)
     logtext = ":   [do_report]       : {0:.2f} s".format(ardtime)
     print logtext
     syslog.syslog(syslog.LOG_DEBUG, logtext)
@@ -173,7 +175,7 @@ def syslog_trace(trace):
   log_lines = trace.split('\n')
   for line in log_lines:
     if line:
-      syslog.syslog(syslog.LOG_ALERT,line)
+      syslog.syslog(syslog.LOG_ALERT, line)
 
 if __name__ == "__main__":
   daemon = MyDaemon('/tmp/' + leaf + '/29.pid')
