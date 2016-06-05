@@ -1,6 +1,9 @@
 # ubundiagd
 **Diagnostics Gatherer for Ubuntu Server**
 
+# LEGACY
+This repository is superseded by the [lnxdiagd](https://github.com/Mausy5043/lnxdiagd) repository
+
 This repository provides a number of python-based daemons that gather various system diagnostics. Although specifically targeted at my own Ubuntu Server (15.04), most will probably work (with minor modifications) on any Debian-based installation and probably also on other Linux systems.
 The result of each daemon is a file containing comma-separated-values created in `/tmp/ubundiagd/`
 
