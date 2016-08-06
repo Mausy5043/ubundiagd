@@ -9,6 +9,7 @@ set datafile missing "NaN"   # Ignore missing values
 set grid
 tz_offset = utc_offset / 3600 # GNUplot only works with UTC. Need to compensate
                               # for timezone ourselves.
+if (GPVAL_VERSION == 4.6) {epoch_compensate = 946684800} else {if (GPVAL_VERSION == 5.0) {epoch_compensate = 0}}
 set timestamp '%Y-%m-%d %H:%M' bottom
 
 # ************************************************************* Statistics *****
@@ -16,8 +17,8 @@ set timestamp '%Y-%m-%d %H:%M' bottom
 fname = "/tmp/sql21b.csv"
 stats fname using 2 name "D" nooutput
 
-D_min = D_min + utc_offset - 946684800
-D_max = D_max + utc_offset - 946684800
+D_min = D_min + utc_offset - epoch_compensate
+D_max = D_max + utc_offset - epoch_compensate
 
 # ****************************************************************** Title *****
 #set title "Test graph -".utc_offset."-"
