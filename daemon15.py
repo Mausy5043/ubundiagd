@@ -4,7 +4,7 @@
 # Charles Menguy (see: http://stackoverflow.com/questions/10217067/implementing-a-full-python-unix-style-daemon-process)
 # and Sander Marechal (see: http://www.jejik.com/articles/2007/02/a_simple_unix_linux_daemon_in_python/)
 
-# Adapted by M.Hendrix [2015]
+# Adapted by M.Hendrix [2015] (deprecated)
 
 # daemon15.py measures the size of selected logfiles.
 # These are all counters, therefore no averaging is needed.

@@ -132,13 +132,13 @@ function destale {
   fi
 }
 
-destale 11
-destale 12
-destale 13
-destale 14
-destale 15
+#destale 11
+#destale 12
+#destale 13
+#destale 14
+#destale 15
 destale 21
-destale 29
+#destale 29
 destale 97
 destale 98
 destale 99
