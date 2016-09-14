@@ -8,9 +8,9 @@ DROP TABLE IF EXISTS temper;
 CREATE TABLE `temper` (
   `sample_time`  datetime,
   `sample_epoch` int(11) unsigned,
-#  `raw_value`    decimal(6,2),
   `temperature`  decimal(5,2),
-  PRIMARY KEY (`sample_time`)
+  PRIMARY KEY (`sample_time`),
+  INDEX (`sample_epoch`)
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 # retrieve data:
