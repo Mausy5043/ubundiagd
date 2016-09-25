@@ -143,6 +143,6 @@ destale 97
 destale 98
 destale 99
 
-sleep 120;destale 19
+# sleep 120;destale 19
 
 popd
